@@ -4,28 +4,41 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  --color-ink-950: #030814;
-  --color-ink-900: #061027;
-  --color-ink-850: #081633;
-  --color-ink-800: #0b1e46;
-  --color-ink-700: #122a5c;
-  --color-ink-600: #1d3f7a;
+  /* superfícies / textos */
+  --color-ink-950: #132f49;   /* texto principal (azul-petróleo profundo) */
+  --color-ink-900: #1e4159;
+  --color-ink-850: #2f577a;
+  --color-ink-800: #e8eef4;   /* superfície elevada */
+  --color-ink-700: #d8e2eb;
+  --color-ink-600: #c3d1de;
 
-  --color-brand-50: #eef6ff;
-  --color-brand-200: #c3e0ff;
-  --color-brand-300: #8cc6ff;
-  --color-brand-400: #5aa8ff;
-  --color-brand-500: #2f86f6;
-  --color-brand-600: #1c67d6;
-  --color-brand-700: #1750a8;
+  /* azul-petróleo (institucional) */
+  --color-brand-50: #eef6fb;
+  --color-brand-100: #d9ecf6;
+  --color-brand-200: #b6d8ec;
+  --color-brand-300: #83bcdd;
+  --color-brand-400: #4b9fcc;
+  --color-brand-500: #2384b4;
+  --color-brand-600: #166590;
+  --color-brand-700: #0e4f73;
+  --color-brand-800: #0a3d5a;
 
-  --color-gold-300: #fbd88a;
-  --color-gold-400: #f5c451;
-  --color-gold-500: #e0a935;
-  --color-gold-600: #b9821f;
+  /* ouro institucional */
+  --color-gold-300: #99781b;
+  --color-gold-400: #c99a2e;
+  --color-gold-500: #b5820f;
+  --color-gold-600: #966a08;
 
-  --color-jade-400: #34d399;
-  --color-jade-500: #10b981;
+  /* verde de sucesso */
+  --color-jade-200: #d7efe2;
+  --color-jade-300: #a8e2bd;
+  --color-jade-400: #2e9163;
+  --color-jade-500: #1e7a53;
+
+  /* vermelho suave (alertas) */
+  --color-red-200: #f6d7d9;
+  --color-red-300: #f0b9be;
+  --color-red-400: #ce4a53;
 
   --animate-float-slow: float 9s ease-in-out infinite;
   --animate-float-fast: float 6s ease-in-out infinite;
@@ -95,17 +108,17 @@
   }
 
   body {
-    background-color: var(--color-ink-950);
-    color: #e8eefc;
+    background-color: #f4f7fa;
+    color: var(--color-ink-950);
   }
 
   ::selection {
-    background: var(--color-brand-500);
+    background: var(--color-brand-600);
     color: white;
   }
 
   * {
-    scrollbar-color: rgba(148, 176, 226, 0.35) transparent;
+    scrollbar-color: rgba(31, 79, 115, 0.22) transparent;
   }
 
   ::-webkit-scrollbar {
@@ -114,10 +127,15 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(148, 176, 226, 0.28);
+    background: rgba(31, 79, 115, 0.22);
     border-radius: 999px;
     border: 2px solid transparent;
     background-clip: content-box;
+  }
+
+  /* Estilo claro para controles nativos */
+  :root {
+    color-scheme: light;
   }
 }
 
@@ -125,38 +143,40 @@
 
 .app-shell {
   background:
-    radial-gradient(1100px 620px at 12% -8%, rgba(47, 134, 246, 0.28), transparent 62%),
-    radial-gradient(880px 560px at 88% 4%, rgba(245, 196, 81, 0.16), transparent 60%),
-    radial-gradient(900px 700px at 50% 108%, rgba(16, 185, 129, 0.14), transparent 65%),
-    linear-gradient(180deg, #030814 0%, #05102a 42%, #030814 100%);
+    radial-gradient(1100px 640px at 12% -8%, rgba(35, 132, 180, 0.14), transparent 62%),
+    radial-gradient(880px 560px at 88% 4%, rgba(201, 154, 46, 0.1), transparent 60%),
+    radial-gradient(900px 700px at 50% 108%, rgba(30, 122, 83, 0.08), transparent 65%),
+    linear-gradient(180deg, #eef3f7 0%, #f7fafc 44%, #f4f7fa 100%);
 }
 
 .grid-overlay {
   background-image:
-    linear-gradient(to right, rgba(148, 176, 226, 0.09) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 176, 226, 0.09) 1px, transparent 1px);
+    linear-gradient(to right, rgba(22, 101, 144, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(22, 101, 144, 0.07) 1px, transparent 1px);
   background-size: 62px 62px;
   mask-image: radial-gradient(ellipse 78% 68% at 50% 34%, black 22%, transparent 78%);
 }
 
 .glass {
-  background: linear-gradient(155deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.028));
-  border: 1px solid rgba(178, 205, 255, 0.14);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.96), rgba(247, 251, 254, 0.9));
+  border: 1px solid rgba(14, 79, 115, 0.14);
+  box-shadow: 0 18px 48px -28px rgba(16, 62, 93, 0.18);
   backdrop-filter: blur(16px) saturate(130%);
 }
 
 .glass-soft {
-  background: linear-gradient(160deg, rgba(11, 30, 70, 0.72), rgba(3, 8, 20, 0.62));
-  border: 1px solid rgba(178, 205, 255, 0.1);
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(14, 79, 115, 0.12);
+  box-shadow: 0 14px 36px -28px rgba(16, 62, 93, 0.14);
   backdrop-filter: blur(12px);
 }
 
 .hairline {
-  border-top: 1px solid rgba(178, 205, 255, 0.1);
+  border-top: 1px solid rgba(14, 79, 115, 0.12);
 }
 
 .text-gradient {
-  background: linear-gradient(100deg, #ffffff 4%, #c3e0ff 42%, #f5c451 96%);
+  background: linear-gradient(100deg, #0e4f73 4%, #2384b4 44%, #b5820f 96%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -166,7 +186,7 @@
   background-image: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.55) 45%,
+    rgba(233, 245, 251, 0.95) 45%,
     transparent 92%
   );
   background-size: 200% 100%;
@@ -181,8 +201,8 @@
 
 .card-hover:hover {
   transform: translateY(-6px);
-  border-color: rgba(90, 168, 255, 0.45);
-  box-shadow: 0 26px 60px -32px rgba(47, 134, 246, 0.75);
+  border-color: rgba(35, 132, 180, 0.4);
+  box-shadow: 0 26px 56px -34px rgba(22, 101, 144, 0.35);
 }
 
 .reveal {
@@ -217,9 +237,9 @@ input[type="range"].slider::-webkit-slider-thumb {
   height: 26px;
   width: 26px;
   border-radius: 999px;
-  background: linear-gradient(160deg, #ffffff, #c3e0ff);
-  border: 3px solid #2f86f6;
-  box-shadow: 0 8px 22px -6px rgba(47, 134, 246, 0.95);
+  background: #ffffff;
+  border: 3px solid var(--color-brand-600);
+  box-shadow: 0 8px 22px -6px rgba(22, 101, 144, 0.6);
   cursor: pointer;
 }
 
@@ -227,8 +247,8 @@ input[type="range"].slider::-moz-range-thumb {
   height: 22px;
   width: 22px;
   border-radius: 999px;
-  background: linear-gradient(160deg, #ffffff, #c3e0ff);
-  border: 3px solid #2f86f6;
+  background: #ffffff;
+  border: 3px solid var(--color-brand-600);
   cursor: pointer;
 }
 

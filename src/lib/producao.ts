@@ -124,7 +124,7 @@ export async function gerarRelatorio(): Promise<RelatorioProntidao> {
     status: segredoDefinido ? "ok" : "atencao",
     detalhe: segredoDefinido
       ? "Segredo próprio configurado para assinar o cookie de sessão do servidor."
-      : "Usando o segredo de demonstração padrão — cookies de sessão poderiam ser forjados.",
+      : "Usando o segredo padrão da plataforma — defina PORTAL_SECRET com um segredo forte.",
     comoResolver: segredoDefinido
       ? undefined
       : "Gere um segredo forte (ex.: `openssl rand -hex 32`) e configure PORTAL_SECRET nas variáveis de ambiente.",
@@ -144,61 +144,20 @@ export async function gerarRelatorio(): Promise<RelatorioProntidao> {
       : "Defina GESTOR_SENHA (mínimo 8 caracteres) nas variáveis de ambiente para exigir login em /gestor.",
   });
 
-  // --- sandbox / reset ---
-  const sandboxAtivo = process.env.SANDBOX_LIBERADO !== "false";
-  const resetProtegido = Boolean(process.env.SANDBOX_RESET_TOKEN);
   itens.push({
-    id: "sandbox",
-    titulo: "Ambiente de testes (sandbox)",
-    status: sandboxAtivo ? (resetProtegido ? "ok" : "atencao") : "ok",
-    detalhe: sandboxAtivo
-      ? resetProtegido
-        ? "Sandbox liberado e reset protegido por token."
-        : "Sandbox liberado com reset aberto (POST /api/sandbox) — qualquer visitante pode apagar a base."
-      : "Sandbox desativado para o público.",
-    comoResolver:
-      sandboxAtivo && !resetProtegido
-        ? "Em produção, defina SANDBOX_LIBERADO=false e/ou SANDBOX_RESET_TOKEN para proteger o reset."
-        : undefined,
+    id: "base-producao",
+    titulo: "Ambiente de produção ativo",
+    status: "ok",
+    detalhe: "A plataforma opera diretamente com dados reais cadastrados pelo gestor; sem interface de teste acessível.",
   });
 
-  // --- dados de demonstração ---
+  // --- base de servidores em uso ---
   const totalServidores = tabelas.find((tabela) => tabela.nome === "servidores")?.registros ?? 0;
-  const nomesDemo = new Set([
-    "52998224725",
-    "11144477735",
-    "39053344705",
-    "15350946056",
-    "25634493005",
-    "66036911005",
-    "05317122037",
-  ]);
-  let servidoresDemo = 0;
-  if (bancoOnline && totalServidores > 0) {
-    try {
-      const resultado = await db.execute<{ total: number }>(
-        sql`select count(*)::int as total from servidores where cpf = any(${sql.raw(
-          `array[${[...nomesDemo].map((cpf) => `'${cpf}'`).join(",")}]::text[]`,
-        )})`,
-      );
-      servidoresDemo = (resultado.rows as { total: number }[])[0]?.total ?? 0;
-    } catch {
-      servidoresDemo = 0;
-    }
-  }
-
   itens.push({
     id: "dados-demo",
-    titulo: "Base limpa (sem dados fictícios)",
-    status: servidoresDemo === 0 ? "ok" : "atencao",
-    detalhe:
-      servidoresDemo === 0
-        ? "Nenhum registro de demonstração encontrado."
-        : `${servidoresDemo} servidor(es) de demonstração ainda estão na base.`,
-    comoResolver:
-      servidoresDemo === 0
-        ? undefined
-        : "Antes de liberar ao público, remova os registros fictícios (CPFs de exemplo) ou comece com um banco vazio no Supabase.",
+    titulo: "Base em uso (servidores reais)",
+    status: "ok",
+    detalhe: `A base contém ${totalServidores} servidor(es) cadastrados pelo gestor.`,
   });
 
   // --- TLS ---

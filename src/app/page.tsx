@@ -1,4 +1,3 @@
-import { AcessoPlataforma } from "@/components/acesso-plataforma";
 import { Audience } from "@/components/audience";
 import { BenefitsSimulator } from "@/components/benefits-simulator";
 import { Diagnosis } from "@/components/diagnosis";
@@ -21,7 +20,6 @@ export default function Home() {
         <div className="relative py-14 sm:py-16">
           <StatsBand />
         </div>
-        <AcessoPlataforma />
         <Diagnosis />
         <Audience />
         <BenefitsSimulator />

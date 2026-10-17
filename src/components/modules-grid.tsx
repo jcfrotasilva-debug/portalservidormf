@@ -84,24 +84,24 @@ export function ModulesGrid() {
           <Reveal key={module.title} delay={(index % 3) * 80} as="article">
             <div className="glass-soft card-hover group h-full rounded-3xl p-6">
               <div className="flex items-start justify-between gap-3">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-brand-500/22 to-gold-400/16 text-brand-100 ring-1 ring-inset ring-white/12">
+                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-brand-500/22 to-gold-400/16 text-brand-800 ring-1 ring-inset ring-brand-700/12">
                   <Icon name={module.icon} className="h-5.5 w-5.5" />
                 </span>
-                <span className="font-display text-[12px] font-bold text-brand-50/35">
+                <span className="font-display text-[12px] font-bold text-slate-600">
                   {String(index + 1).padStart(2, "0")}
                 </span>
               </div>
               <h3 className="mt-5 font-display text-[16.5px] font-bold leading-snug text-white">
                 {module.title}
               </h3>
-              <p className="mt-2.5 text-[13.5px] leading-relaxed text-brand-50/68">
+              <p className="mt-2.5 text-[13.5px] leading-relaxed text-slate-700">
                 {module.text}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {module.chips.map((chip) => (
                   <span
                     key={chip}
-                    className="rounded-full border border-white/10 bg-white/4 px-2.5 py-1 text-[11px] text-brand-50/62 transition group-hover:border-brand-400/30"
+                    className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700 transition group-hover:border-brand-500/25"
                   >
                     {chip}
                   </span>

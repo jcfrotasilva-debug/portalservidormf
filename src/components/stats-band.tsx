@@ -50,9 +50,9 @@ function Stat({
     <div className="relative px-2 py-6 text-center sm:px-4">
       <p className="font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
         {current}
-        <span className="text-gold-400">{suffix}</span>
+        <span className="text-gold-600">{suffix}</span>
       </p>
-      <p className="mx-auto mt-3 max-w-[15rem] text-[12.5px] leading-relaxed text-brand-50/62">
+      <p className="mx-auto mt-3 max-w-[15rem] text-[12.5px] leading-relaxed text-slate-700">
         {label}
       </p>
     </div>
@@ -84,14 +84,14 @@ export function StatsBand() {
   return (
     <div ref={ref} className="mx-auto max-w-7xl px-5 sm:px-6">
       <Reveal>
-        <div className="glass grid divide-y divide-white/10 rounded-[28px] px-2 sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
+        <div className="glass grid divide-y divide-slate-200 rounded-[28px] px-2 sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
           {STATS.map((stat) => (
             <Stat key={stat.label} {...stat} active={active} />
           ))}
         </div>
       </Reveal>
-      <p className="mt-3 text-center text-[11.5px] text-brand-50/40">
-        Metas de desempenho projetadas para órgãos de médio porte · indicadores ilustrativos
+      <p className="mt-3 text-center text-[11.5px] text-slate-600">
+        Plataforma de gestão de pessoas · indicadores calculados sobre a base real do órgão
       </p>
     </div>
   );

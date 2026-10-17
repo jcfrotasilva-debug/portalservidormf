@@ -47,7 +47,7 @@ export function Security() {
   return (
     <Section id="seguranca">
       <div className="glass relative overflow-hidden rounded-[36px] p-6 sm:p-10 lg:p-12">
-        <div className="pointer-events-none absolute -right-32 top-0 h-80 w-80 rounded-full bg-jade-400/12 blur-3xl" />
+        <div className="pointer-events-none absolute -right-32 top-0 h-80 w-80 rounded-full bg-jade-100 blur-3xl" />
         <div className="grid gap-12 lg:grid-cols-[1fr_0.9fr]">
           <div>
             <SectionHeading
@@ -66,15 +66,15 @@ export function Security() {
               {CONTROLS.slice(0, 4).map((control) => (
                 <div
                   key={control.title}
-                  className="rounded-2xl border border-white/10 bg-ink-950/50 p-5 transition hover:border-jade-400/35"
+                  className="rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-jade-400/40"
                 >
-                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-jade-400/14 text-jade-400">
+                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-jade-200 text-jade-400">
                     <Icon name={control.icon} className="h-4.5 w-4.5" />
                   </span>
                   <p className="mt-4 font-display text-[14.5px] font-bold text-white">
                     {control.title}
                   </p>
-                  <p className="mt-2 text-[13px] leading-relaxed text-brand-50/66">
+                  <p className="mt-2 text-[13px] leading-relaxed text-slate-700">
                     {control.text}
                   </p>
                 </div>
@@ -85,11 +85,11 @@ export function Security() {
               {BADGES.map((badge) => (
                 <span
                   key={badge.label}
-                  className="flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-3.5 py-2 text-[12px] text-brand-50/72"
+                  className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/5 px-3.5 py-2 text-[12px] text-slate-700"
                 >
                   <Icon name="badge-check" className="h-3.5 w-3.5 text-jade-400" />
                   <strong className="font-semibold text-white">{badge.label}</strong>
-                  <span className="text-brand-50/50">{badge.detail}</span>
+                  <span className="text-slate-600">{badge.detail}</span>
                 </span>
               ))}
             </div>
@@ -97,7 +97,7 @@ export function Security() {
 
           <div className="space-y-5">
             <Reveal delay={80}>
-              <div className="relative overflow-hidden rounded-3xl border border-white/12">
+              <div className="relative overflow-hidden rounded-3xl border border-slate-200">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="https://images.pexels.com/photos/8124246/pexels-photo-8124246.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=760&w=1000"
@@ -109,11 +109,11 @@ export function Security() {
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
                   <div className="glass-soft rounded-2xl px-4 py-3">
                     <p className="font-display text-lg font-extrabold text-white">100%</p>
-                    <p className="text-[11px] text-brand-50/68">das alterações auditadas</p>
+                    <p className="text-[11px] text-slate-700">das alterações auditadas</p>
                   </div>
                   <div className="glass-soft rounded-2xl px-4 py-3">
                     <p className="font-display text-lg font-extrabold text-jade-400">Sigilo</p>
-                    <p className="text-[11px] text-brand-50/68">dados de saúde protegidos</p>
+                    <p className="text-[11px] text-slate-700">dados de saúde protegidos</p>
                   </div>
                 </div>
               </div>
@@ -122,14 +122,14 @@ export function Security() {
             {CONTROLS.slice(4).map((control) => (
               <Reveal key={control.title} delay={140}>
                 <div className="glass-soft flex gap-4 rounded-2xl p-5">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-500/16 text-brand-200">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-100 text-brand-600">
                     <Icon name={control.icon} className="h-4.5 w-4.5" />
                   </span>
                   <div>
                     <p className="font-display text-[14.5px] font-bold text-white">
                       {control.title}
                     </p>
-                    <p className="mt-1.5 text-[13px] leading-relaxed text-brand-50/66">
+                    <p className="mt-1.5 text-[13px] leading-relaxed text-slate-700">
                       {control.text}
                     </p>
                   </div>

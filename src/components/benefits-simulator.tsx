@@ -14,10 +14,10 @@ const PRESETS = [
 ];
 
 const TAG_STYLE: Record<string, string> = {
-  financeiro: "bg-gold-400/15 text-gold-300 border-gold-400/25",
-  licenca: "bg-brand-500/18 text-brand-200 border-brand-400/25",
-  carreira: "bg-jade-400/15 text-jade-400 border-jade-400/25",
-  tempo: "bg-white/8 text-brand-50/75 border-white/14",
+  financeiro: "bg-gold-100 text-gold-400 border-gold-600/25",
+  licenca: "bg-brand-100 text-brand-600 border-brand-500/20",
+  carreira: "bg-jade-200 text-jade-400 border-jade-400/30",
+  tempo: "bg-brand-50 text-slate-700 border-brand-700/16",
 };
 
 const TAG_LABEL: Record<string, string> = {
@@ -50,8 +50,8 @@ export function BenefitsSimulator() {
 
       <Reveal delay={100} className="mt-12">
         <div className="glass relative overflow-hidden rounded-[32px] p-6 sm:p-9">
-          <div className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-brand-500/22 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-gold-400/14 blur-3xl" />
+          <div className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-brand-200 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-gold-100 blur-3xl" />
 
           <div className="relative grid gap-9 lg:grid-cols-[0.95fr_1.05fr]">
             <div>
@@ -63,8 +63,8 @@ export function BenefitsSimulator() {
                     onClick={() => setYears(preset.years)}
                     className={`rounded-full border px-3.5 py-1.5 text-[12px] font-semibold transition ${
                       years === preset.years
-                        ? "border-brand-400/60 bg-brand-500/18 text-white"
-                        : "border-white/12 text-brand-50/65 hover:border-brand-400/40 hover:text-white"
+                        ? "border-brand-500/50 bg-brand-100 text-ink-950"
+                        : "border-slate-200 text-slate-700 hover:border-brand-500/35 hover:text-ink-950"
                     }`}
                   >
                     {preset.label}
@@ -74,14 +74,14 @@ export function BenefitsSimulator() {
 
               <label
                 htmlFor="anos"
-                className="mt-8 block text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-200/80"
+                className="mt-8 block text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-600"
               >
                 Tempo de serviço
               </label>
               <div className="mt-3 flex items-baseline gap-2">
                 <span className="font-display text-5xl font-extrabold text-white">{years}</span>
-                <span className="text-lg text-brand-50/65">{years === 1 ? "ano" : "anos"}</span>
-                <span className="ml-auto rounded-full border border-white/12 bg-ink-950/60 px-3 py-1 text-[12px] text-brand-50/72">
+                <span className="text-lg text-slate-700">{years === 1 ? "ano" : "anos"}</span>
+                <span className="ml-auto rounded-full border border-slate-200 bg-white px-3 py-1 text-[12px] text-slate-700">
                   {result.quinquenios} quinquênio{result.quinquenios === 1 ? "" : "s"} completo
                   {result.quinquenios === 1 ? "" : "s"}
                 </span>
@@ -97,17 +97,17 @@ export function BenefitsSimulator() {
                 value={years}
                 onChange={(event) => setYears(Number(event.target.value))}
                 style={{
-                  background: `linear-gradient(90deg, #5aa8ff 0%, #f5c451 ${progress}%, rgba(255,255,255,0.14) ${progress}%, rgba(255,255,255,0.14) 100%)`,
+                  background: `linear-gradient(90deg, #5aa8ff 0%, #f5c451 ${progress}%, rgba(255,255,255,0.14) ${progress}%, rgba(14,79,115,0.1) 100%)`,
                 }}
               />
-              <div className="mt-2 flex justify-between text-[11px] text-brand-50/45">
+              <div className="mt-2 flex justify-between text-[11px] text-slate-600">
                 <span>0</span>
                 <span>{MAX_YEARS} anos</span>
               </div>
 
               <label
                 htmlFor="vencimento"
-                className="mt-7 block text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-200/80"
+                className="mt-7 block text-[12px] font-semibold uppercase tracking-[0.2em] text-brand-600"
               >
                 Vencimento base (R$)
               </label>
@@ -123,7 +123,7 @@ export function BenefitsSimulator() {
                     const value = Number(event.target.value);
                     setBasePay(Number.isFinite(value) ? Math.max(0, value) : 0);
                   }}
-                  className="w-40 rounded-xl border border-white/14 bg-ink-950/70 px-4 py-3 font-display text-[15px] font-bold text-white outline-none transition focus:border-brand-400/70"
+                  className="w-40 rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 font-display text-[15px] font-bold text-white outline-none transition focus:border-brand-500/70"
                 />
                 <div className="flex flex-wrap gap-2">
                   {[4200, 8240, 12500].map((value) => (
@@ -131,7 +131,7 @@ export function BenefitsSimulator() {
                       key={value}
                       type="button"
                       onClick={() => setBasePay(value)}
-                      className="rounded-lg border border-white/12 px-2.5 py-1.5 text-[11.5px] text-brand-50/68 transition hover:border-brand-400/45 hover:text-white"
+                      className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-[11.5px] text-slate-700 transition hover:border-brand-500/40 hover:text-white"
                     >
                       {formatBRL(value)}
                     </button>
@@ -145,13 +145,13 @@ export function BenefitsSimulator() {
                     label: "Adicional por tempo de serviço",
                     value: `+${result.adicionais}%`,
                     helper: formatBRL(result.impacto),
-                    tone: "text-gold-400",
+                    tone: "text-gold-600",
                   },
                   {
                     label: "Licença-prêmio acumulada",
                     value: `${result.licencaPremioMeses} meses`,
                     helper: `${result.quinquenios * 3} meses em 3 por quinquênio`,
-                    tone: "text-brand-200",
+                    tone: "text-brand-600",
                   },
                   {
                     label: "Férias já desfrutadas",
@@ -163,35 +163,35 @@ export function BenefitsSimulator() {
                     label: "Sexta-parte",
                     value: result.sextaParte ? "+25%" : "não elegível",
                     helper: result.sextaParte ? "carreiras elegíveis" : "requer 20 anos",
-                    tone: result.sextaParte ? "text-gold-400" : "text-brand-50/50",
+                    tone: result.sextaParte ? "text-gold-600" : "text-slate-600",
                   },
                 ].map((card) => (
                   <div
                     key={card.label}
-                    className="rounded-2xl border border-white/10 bg-ink-950/55 p-4 transition hover:border-brand-400/35"
+                    className="rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-brand-500/30"
                   >
-                    <p className="text-[11px] uppercase tracking-[0.14em] text-brand-50/55">
+                    <p className="text-[11px] uppercase tracking-[0.14em] text-slate-600">
                       {card.label}
                     </p>
                     <p className={`mt-1.5 font-display text-xl font-extrabold ${card.tone}`}>
                       {card.value}
                     </p>
-                    <p className="mt-1 text-[11.5px] text-brand-50/55">{card.helper}</p>
+                    <p className="mt-1 text-[11.5px] text-slate-600">{card.helper}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-6 rounded-2xl border border-brand-400/25 bg-gradient-to-r from-brand-500/18 to-transparent p-5">
+              <div className="mt-6 rounded-2xl border border-brand-500/20 bg-gradient-to-r from-brand-500/18 to-transparent p-5">
                 <div className="flex items-end justify-between gap-4">
                   <div>
-                    <p className="text-[11.5px] uppercase tracking-[0.18em] text-brand-200/80">
+                    <p className="text-[11.5px] uppercase tracking-[0.18em] text-brand-600">
                       Remuneração estimada com vantagens
                     </p>
                     <p className="mt-1.5 font-display text-3xl font-extrabold text-white">
                       {formatBRL(result.total)}
                     </p>
                   </div>
-                  <p className="text-right text-[12px] text-brand-50/62">
+                  <p className="text-right text-[12px] text-slate-700">
                     base {formatBRL(result.basePay)}
                     <span className="block font-semibold text-jade-400">
                       + {formatBRL(result.impacto)} de adicional
@@ -201,12 +201,12 @@ export function BenefitsSimulator() {
 
                 {result.nextMilestone ? (
                   <div className="mt-5">
-                    <div className="flex items-center justify-between text-[12px] text-brand-50/70">
+                    <div className="flex items-center justify-between text-[12px] text-slate-700">
                       <span>
                         Próximo marco: {result.nextMilestone.title} (
                         {result.nextMilestone.years} anos)
                       </span>
-                      <span className="font-semibold text-gold-400">
+                      <span className="font-semibold text-gold-600">
                         faltam {result.nextMilestone.years - years}{" "}
                         {result.nextMilestone.years - years === 1 ? "ano" : "anos"}
                       </span>
@@ -217,7 +217,7 @@ export function BenefitsSimulator() {
                         style={{ width: `${result.progressToNext}%` }}
                       />
                     </div>
-                    <p className="mt-2 text-[12.5px] text-brand-200">
+                    <p className="mt-2 text-[12.5px] text-brand-600">
                       Vantagem prevista: {result.nextMilestone.benefit}
                     </p>
                   </div>
@@ -234,7 +234,7 @@ export function BenefitsSimulator() {
                 <p className="font-display text-[15.5px] font-bold text-white">
                   Linha do tempo da carreira
                 </p>
-                <span className="rounded-full border border-white/12 px-3 py-1 text-[11.5px] text-brand-50/62">
+                <span className="rounded-full border border-slate-200 px-3 py-1 text-[11.5px] text-slate-700">
                   {result.unlocked.length}/{MILESTONES.length} marcos alcançados
                 </span>
               </div>
@@ -247,8 +247,8 @@ export function BenefitsSimulator() {
                       <div
                         className={`flex gap-4 rounded-2xl border p-4 transition ${
                           reached
-                            ? "border-white/14 bg-white/6"
-                            : "border-white/8 bg-ink-950/45 opacity-55"
+                            ? "border-brand-700/16 bg-white"
+                            : "border-slate-200 bg-white opacity-55"
                         }`}
                       >
                         <div className="flex flex-col items-center">
@@ -256,12 +256,12 @@ export function BenefitsSimulator() {
                             className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${
                               reached
                                 ? "bg-gradient-to-br from-brand-400/30 to-gold-400/22 text-white"
-                                : "bg-white/6 text-brand-50/45"
+                                : "bg-white text-slate-600"
                             }`}
                           >
                             <Icon name={milestone.icon} className="h-4.5 w-4.5" />
                           </span>
-                          <span className="mt-2 text-[11px] font-semibold text-brand-50/50">
+                          <span className="mt-2 text-[11px] font-semibold text-slate-600">
                             {milestone.years}a
                           </span>
                         </div>
@@ -276,15 +276,15 @@ export function BenefitsSimulator() {
                               {TAG_LABEL[milestone.tag]}
                             </span>
                             {reached ? (
-                              <span className="inline-flex items-center gap-1 rounded-full bg-jade-400/15 px-2 py-0.5 text-[10.5px] font-semibold text-jade-400">
+                              <span className="inline-flex items-center gap-1 rounded-full bg-jade-200 px-2 py-0.5 text-[10.5px] font-semibold text-jade-400">
                                 <Icon name="check" className="h-3 w-3" strokeWidth={2.4} /> adquirido
                               </span>
                             ) : null}
                           </div>
-                          <p className="mt-1.5 text-[12.5px] font-medium text-brand-200">
+                          <p className="mt-1.5 text-[12.5px] font-medium text-brand-600">
                             {milestone.benefit}
                           </p>
-                          <p className="mt-1 text-[12.5px] leading-relaxed text-brand-50/62">
+                          <p className="mt-1 text-[12.5px] leading-relaxed text-slate-700">
                             {milestone.detail}
                           </p>
                         </div>
@@ -294,7 +294,7 @@ export function BenefitsSimulator() {
                 })}
               </ol>
 
-              <p className="mt-4 flex items-start gap-2 text-[11.5px] leading-relaxed text-brand-50/48">
+              <p className="mt-4 flex items-start gap-2 text-[11.5px] leading-relaxed text-slate-600">
                 <Icon name="scale" className="mt-0.5 h-3.5 w-3.5 shrink-0" />
                 Simulação ilustrativa baseada nas regras de quinquênio de 5%, licença-prêmio de 3
                 meses a cada 5 anos e sexta-parte aos 20 anos. Na plataforma, cada órgão configura

@@ -4,8 +4,8 @@ import { Reveal } from "@/components/reveal";
 
 export function Eyebrow({ icon, children }: { icon: IconName; children: ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-3.5 py-1.5 text-[11.5px] font-semibold uppercase tracking-[0.2em] text-brand-200">
-      <Icon name={icon} className="h-3.5 w-3.5 text-gold-400" />
+    <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/5 px-3.5 py-1.5 text-[11.5px] font-semibold uppercase tracking-[0.2em] text-brand-600">
+      <Icon name={icon} className="h-3.5 w-3.5 text-gold-600" />
       {children}
     </span>
   );
@@ -35,7 +35,7 @@ export function SectionHeading({
         {title}
       </h2>
       {description ? (
-        <p className="mt-4 text-[16.5px] leading-relaxed text-brand-50/72">{description}</p>
+        <p className="mt-4 text-[16.5px] leading-relaxed text-slate-700">{description}</p>
       ) : null}
     </Reveal>
   );

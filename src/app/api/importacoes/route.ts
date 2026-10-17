@@ -65,7 +65,6 @@ export async function POST(request: Request) {
 
     let novas = 0;
     let atualizadas = 0;
-    const salvos: { id: number; nome: string; cpf: string | null; dtnasc: string | null; podeTestar: boolean }[] = [];
     let comPendencias = 0;
     let ignoradas = (corpo.linhas?.length ?? 0) - linhas.length;
     const detalhes: string[] = [];
@@ -94,8 +93,7 @@ export async function POST(request: Request) {
           )[0];
 
       if (existente) {
-        const [atualizado] = await db
-          .update(servidores)
+        await db.update(servidores)
           .set({
             ...dados,
             pendencias,
@@ -103,33 +101,17 @@ export async function POST(request: Request) {
             importacaoId: importacao.id,
             atualizadoEm: new Date(),
           })
-          .where(eq(servidores.id, existente.id))
-          .returning({
-            id: servidores.id,
-            nome: servidores.nome,
-            cpf: servidores.cpf,
-            dtnasc: servidores.dtnasc,
-          });
-        salvos.push({ ...atualizado, podeTestar: true });
+          .where(eq(servidores.id, existente.id));
         atualizadas += 1;
         detalhes.push(`Linha ${linha.linha}: atualizado cadastro de ${dados.nome}.`);
       } else {
-        const [criado] = await db
-          .insert(servidores)
-          .values({
-            ...dados,
-            pendencias,
-            camposVazios,
-            origem: "importacao",
-            importacaoId: importacao.id,
-          })
-          .returning({
-            id: servidores.id,
-            nome: servidores.nome,
-            cpf: servidores.cpf,
-            dtnasc: servidores.dtnasc,
-          });
-        salvos.push({ ...criado, podeTestar: true });
+        await db.insert(servidores).values({
+          ...dados,
+          pendencias,
+          camposVazios,
+          origem: "importacao",
+          importacaoId: importacao.id,
+        });
         novas += 1;
         detalhes.push(`Linha ${linha.linha}: cadastrado ${dados.nome}.`);
       }
@@ -152,7 +134,6 @@ export async function POST(request: Request) {
       importacaoId: importacao.id,
       resumo: { novas, atualizadas, ignoradas, comPendencias, total: linhas.length },
       detalhes: detalhes.slice(0, 50),
-      testes: salvos.slice(0, 200),
       chavesAmostra: linhas.slice(0, 3).map((linha) => chaveServidor(linha.payload as PayloadServidor)),
       rotulosAusentes: linhas
         .flatMap((linha) => linha.camposVazios ?? [])

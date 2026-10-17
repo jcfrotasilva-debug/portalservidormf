@@ -136,21 +136,21 @@ export function PainelGestor() {
             valor: metricas?.totalServidores ?? 0,
             detalhe: `${metricas?.ativos ?? 0} ativos`,
             icon: "users" as const,
-            tom: "text-white",
+            tom: "text-ink-950",
           },
           {
             label: "Quinquênios lançados",
             valor: metricas?.totalQuinquenios ?? 0,
             detalhe: `ATS médio +${metricas?.percentualMedioAts ?? 0}%`,
             icon: "clock" as const,
-            tom: "text-gold-400",
+            tom: "text-gold-600",
           },
           {
             label: "Projeções em 12 meses",
             valor: metricas?.proximos12Meses ?? 0,
             detalhe: "vencimentos de novos quinquênios",
             icon: "trending" as const,
-            tom: "text-brand-200",
+            tom: "text-brand-600",
           },
           {
             label: "Evoluções funcionais",
@@ -164,18 +164,18 @@ export function PainelGestor() {
             valor: metricas?.saldoLicencaTotal ?? 0,
             detalhe: `${metricas?.totalCertidoes ?? 0} certidões · ${metricas?.diasPecuniaTotal ?? 0} dias em pecúnia`,
             icon: "plane" as const,
-            tom: "text-gold-300",
+            tom: "text-gold-400",
           },
         ].map((card) => (
           <div key={card.label} className="glass-soft rounded-2xl p-5">
             <div className="flex items-center justify-between">
-              <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/12 bg-white/6 text-brand-200">
+              <span className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-brand-600">
                 <Icon name={card.icon} className="h-4.5 w-4.5" />
               </span>
               <span className={`font-display text-3xl font-extrabold ${card.tom}`}>{card.valor}</span>
             </div>
             <p className="mt-3 text-[13px] font-semibold text-white">{card.label}</p>
-            <p className="mt-0.5 text-[11.5px] text-brand-50/60">{card.detalhe}</p>
+            <p className="mt-0.5 text-[11.5px] text-slate-600">{card.detalhe}</p>
           </div>
         ))}
       </div>
@@ -185,30 +185,30 @@ export function PainelGestor() {
           <div className="relative min-w-[240px] flex-1">
             <Icon
               name="search"
-              className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-brand-50/45"
+              className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-slate-600"
             />
             <input
               value={busca}
               onChange={(evento) => setBusca(evento.target.value)}
               placeholder="Buscar por nome, CPF, cargo ou lotação"
-              className="w-full rounded-xl border border-white/12 bg-ink-950/70 py-3 pl-10 pr-3 text-[13px] text-white outline-none placeholder:text-brand-50/35 focus:border-brand-400/70"
+              className="w-full rounded-xl border border-slate-200 bg-white/70 py-3 pl-10 pr-3 text-[13px] text-white outline-none placeholder:text-slate-600 focus:border-brand-500/70"
             />
           </div>
           <select
             value={situacao}
             onChange={(evento) => setSituacao(evento.target.value)}
-            className="rounded-xl border border-white/12 bg-ink-950/70 px-3.5 py-3 text-[13px] text-white outline-none focus:border-brand-400/70"
+            className="rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13px] text-white outline-none focus:border-brand-500/70"
           >
-            <option value="todas" className="bg-ink-900">
+            <option value="todas" className="bg-brand-100">
               Todas as situações
             </option>
             {situacoes.map((item) => (
-              <option key={item} value={item} className="bg-ink-900">
+              <option key={item} value={item} className="bg-brand-100">
                 {item}
               </option>
             ))}
           </select>
-          <label className="flex items-center gap-2 rounded-xl border border-white/12 bg-ink-950/70 px-3.5 py-3 text-[12.5px] text-brand-50/80">
+          <label className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[12.5px] text-white">
             <input
               type="checkbox"
               checked={somenteAts}
@@ -220,7 +220,7 @@ export function PainelGestor() {
           <button
             type="button"
             onClick={() => setModal({ aberto: true, servidor: null })}
-            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 px-4 py-3 text-[13px] font-semibold text-white shadow-[0_18px_40px_-22px_rgba(47,134,246,1)] transition hover:from-brand-400"
+            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 px-4 py-3 text-[13px] font-semibold text-white shadow-[0_18px_40px_-22px_rgba(22,101,144,0.5)] transition hover:from-brand-400"
           >
             <Icon name="clock" className="h-4 w-4" />
             Lançar ATS / quinquênio
@@ -228,7 +228,7 @@ export function PainelGestor() {
           <button
             type="button"
             onClick={() => setModalEvolucao({ aberto: true, servidor: null })}
-            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-jade-500 to-jade-400 px-4 py-3 text-[13px] font-semibold text-ink-950 shadow-[0_18px_40px_-22px_rgba(16,185,129,1)]"
+            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-jade-500 to-jade-400 px-4 py-3 text-[13px] font-semibold text-white shadow-[0_18px_40px_-22px_rgba(30,122,83,0.4)]"
           >
             <Icon name="graduation" className="h-4 w-4" />
             Evolução funcional
@@ -236,7 +236,7 @@ export function PainelGestor() {
           <button
             type="button"
             onClick={() => setModalLicenca({ aberto: true, servidor: null })}
-            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gold-500 to-gold-400 px-4 py-3 text-[13px] font-semibold text-ink-950 shadow-[0_18px_40px_-22px_rgba(224,169,53,1)]"
+            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gold-500 to-gold-400 px-4 py-3 text-[13px] font-semibold text-white shadow-[0_18px_40px_-22px_rgba(181,130,15,0.35)]"
           >
             <Icon name="plane" className="h-4 w-4" />
             Licença-prêmio
@@ -244,14 +244,14 @@ export function PainelGestor() {
           <button
             type="button"
             onClick={() => setNovoServidor((valor) => !valor)}
-            className="inline-flex items-center gap-2 rounded-xl border border-white/14 px-4 py-3 text-[13px] font-semibold text-brand-50/85 transition hover:border-brand-400/60 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-3 text-[13px] font-semibold text-white transition hover:border-brand-500/50 hover:text-white"
           >
             <Icon name="users" className="h-4 w-4" />
             Cadastro manual
           </button>
           <Link
             href="/gestor/importar"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/14 px-4 py-3 text-[13px] font-semibold text-brand-50/85 transition hover:border-brand-400/60 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-3 text-[13px] font-semibold text-white transition hover:border-brand-500/50 hover:text-white"
           >
             <Icon name="download" className="h-4 w-4" />
             Importar planilha
@@ -259,33 +259,33 @@ export function PainelGestor() {
         </div>
 
         {novoServidor ? (
-          <div className="mt-4 grid gap-3 rounded-2xl border border-white/10 bg-ink-950/50 p-4 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="mt-4 grid gap-3 rounded-2xl border border-slate-200 bg-white p-4 sm:grid-cols-3 lg:grid-cols-6">
             <Campo rotulo="Nome">
               <input
                 value={form.nome}
                 onChange={(evento) => setForm({ ...form, nome: evento.target.value })}
-                className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-400/70"
+                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
               />
             </Campo>
             <Campo rotulo="CPF">
               <input
                 value={form.cpf}
                 onChange={(evento) => setForm({ ...form, cpf: evento.target.value })}
-                className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-400/70"
+                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
               />
             </Campo>
             <Campo rotulo="Cargo">
               <input
                 value={form.cargo}
                 onChange={(evento) => setForm({ ...form, cargo: evento.target.value })}
-                className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-400/70"
+                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
               />
             </Campo>
             <Campo rotulo="Lotação">
               <input
                 value={form.lotacao}
                 onChange={(evento) => setForm({ ...form, lotacao: evento.target.value })}
-                className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-400/70"
+                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
               />
             </Campo>
             <Campo rotulo="DI">
@@ -293,14 +293,14 @@ export function PainelGestor() {
                 type="date"
                 value={form.di}
                 onChange={(evento) => setForm({ ...form, di: evento.target.value })}
-                className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-400/70"
+                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
               />
             </Campo>
             <div className="flex items-end">
               <button
                 type="button"
                 onClick={cadastrarManual}
-                className="w-full rounded-lg bg-gradient-to-r from-jade-500 to-jade-400 px-3 py-2.5 text-[13px] font-semibold text-ink-950"
+                className="w-full rounded-lg bg-gradient-to-r from-jade-500 to-jade-400 px-3 py-2.5 text-[13px] font-semibold text-white"
               >
                 Salvar
               </button>
@@ -308,18 +308,18 @@ export function PainelGestor() {
           </div>
         ) : null}
 
-        {aviso ? <p className="mt-3 text-[12.5px] text-gold-300">{aviso}</p> : null}
+        {aviso ? <p className="mt-3 text-[12.5px] text-gold-400">{aviso}</p> : null}
       </div>
 
       <div className="glass-soft overflow-hidden rounded-2xl">
-        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
           <p className="font-display text-[15px] font-bold text-white">
             Cadastro funcional
-            <span className="ml-2 text-[12px] font-medium text-brand-50/55">
+            <span className="ml-2 text-[12px] font-medium text-slate-600">
               {carregando ? "carregando…" : `${servidores.length} registro(s)`}
             </span>
           </p>
-          <span className="text-[11.5px] text-brand-50/55">
+          <span className="text-[11.5px] text-slate-600">
             projeção do próximo quinquênio = vigência + 1825 dias
           </span>
         </div>
@@ -327,7 +327,7 @@ export function PainelGestor() {
         <div className="overflow-x-auto">
           <table className="w-full min-w-[1180px] border-collapse text-left">
             <thead>
-              <tr className="bg-ink-950/60 text-[11px] uppercase tracking-[0.14em] text-brand-50/55">
+              <tr className="bg-white text-[11px] uppercase tracking-[0.14em] text-slate-600">
                 <th className="px-4 py-3">Servidor</th>
                 <th className="px-4 py-3">CPF / RGCIN</th>
                 <th className="px-4 py-3">Cargo / classe</th>
@@ -343,48 +343,48 @@ export function PainelGestor() {
             </thead>
             <tbody>
               {servidores.map((item) => (
-                <tr key={item.id} className="border-t border-white/8 align-top transition hover:bg-white/4">
+                <tr key={item.id} className="border-t border-slate-200 align-top transition hover:bg-white">
                   <td className="px-4 py-3.5">
                     <Link
                       href={`/gestor/servidores/${item.id}`}
-                      className="font-display text-[13.5px] font-bold text-white hover:text-brand-200"
+                      className="font-display text-[13.5px] font-bold text-white hover:text-brand-600"
                     >
                       {item.nome}
                     </Link>
-                    <p className="mt-0.5 text-[11px] text-brand-50/55">
+                    <p className="mt-0.5 text-[11px] text-slate-600">
                       DI {formatarDataBR(item.di)} · {formatarTelefone(item.tel)}
                     </p>
                     {(item.pendencias ?? []).length > 0 ? (
-                      <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-gold-400/15 px-2 py-0.5 text-[10.5px] font-semibold text-gold-300">
+                      <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-gold-100 px-2 py-0.5 text-[10.5px] font-semibold text-gold-400">
                         <Icon name="bell" className="h-3 w-3" />
                         {item.pendencias.length} pendência(s)
                       </span>
                     ) : null}
                   </td>
-                  <td className="px-4 py-3.5 text-[12.5px] text-brand-50/78">
+                  <td className="px-4 py-3.5 text-[12.5px] text-white">
                     {formatarCpf(item.cpf)}
-                    <span className="mt-0.5 block text-[11px] text-brand-50/50">
+                    <span className="mt-0.5 block text-[11px] text-slate-600">
                       {item.rgcin ?? "RGCIN não informado"}
                     </span>
                   </td>
-                  <td className="px-4 py-3.5 text-[12.5px] text-brand-50/78">
+                  <td className="px-4 py-3.5 text-[12.5px] text-white">
                     {item.cargo ?? "—"}
-                    <span className="mt-0.5 block text-[11px] text-brand-50/50">
+                    <span className="mt-0.5 block text-[11px] text-slate-600">
                       {item.classe ?? "—"} · {item.categoria ?? "—"}
                     </span>
                   </td>
-                  <td className="px-4 py-3.5 text-[12.5px] text-brand-50/78">
+                  <td className="px-4 py-3.5 text-[12.5px] text-white">
                     {item.lotacao ?? "—"}
                   </td>
-                  <td className="px-4 py-3.5 text-[12.5px] text-brand-50/78">
+                  <td className="px-4 py-3.5 text-[12.5px] text-white">
                     {item.jornada ?? "—"}
                   </td>
                   <td className="px-4 py-3.5">
                     <span
                       className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${
                         item.situacao === "Ativo"
-                          ? "bg-jade-400/15 text-jade-400"
-                          : "bg-white/8 text-brand-50/75"
+                          ? "bg-jade-200 text-jade-400"
+                          : "bg-brand-50 text-slate-700"
                       }`}
                     >
                       {item.situacao}
@@ -393,15 +393,15 @@ export function PainelGestor() {
                   <td className="px-4 py-3.5">
                     {item.ats.temAts ? (
                       <>
-                        <p className="font-display text-[13px] font-bold text-gold-400">
+                        <p className="font-display text-[13px] font-bold text-gold-600">
                           +{item.ats.percentual}%
                         </p>
-                        <p className="text-[11px] text-brand-50/58">
+                        <p className="text-[11px] text-slate-600">
                           {item.ats.quantidade}º quinquênio · {PERCENTUAL_POR_QUINQUENIO}% cada
                         </p>
                       </>
                     ) : (
-                      <span className="text-[11.5px] text-brand-50/50">sem lançamento</span>
+                      <span className="text-[11.5px] text-slate-600">sem lançamento</span>
                     )}
                   </td>
                   <td className="px-4 py-3.5">
@@ -410,21 +410,21 @@ export function PainelGestor() {
                         <p className="text-[12.5px] font-semibold text-white">
                           {formatarDataBR(item.ats.proximaProjetada)}
                         </p>
-                        <p className="text-[11px] text-brand-50/55">
+                        <p className="text-[11px] text-slate-600">
                           {item.ats.diasParaProxima !== null && item.ats.diasParaProxima >= 0
                             ? `em ${item.ats.diasParaProxima} dias`
                             : "data já vencida — lançar"}
                         </p>
                       </>
                     ) : (
-                      <span className="text-[11.5px] text-brand-50/50">—</span>
+                      <span className="text-[11.5px] text-slate-600">—</span>
                     )}
                   </td>
                   <td className="px-4 py-3.5">
                     <p className="text-[12.5px] font-semibold text-white">
                       Nível {item.evolucao.nivelAtual}
                     </p>
-                    <p className="text-[11px] text-brand-50/58">
+                    <p className="text-[11px] text-slate-600">
                       {item.evolucao.temEvolucao
                         ? `${item.evolucao.quantidade} concessão(ões) · próxima ${formatarDataBR(item.evolucao.dataProxima)}`
                         : "sem concessão publicada"}
@@ -440,7 +440,7 @@ export function PainelGestor() {
                     <p className="text-[12.5px] font-semibold text-white">
                       {item.licenca.saldo} dia(s) de saldo
                     </p>
-                    <p className="text-[11px] text-brand-50/58">
+                    <p className="text-[11px] text-slate-600">
                       {item.licenca.certidoes} certidão(ões) · {item.licenca.diasGozo} gozo ·{" "}
                       {item.licenca.diasPecunia} pecúnia
                     </p>
@@ -453,43 +453,34 @@ export function PainelGestor() {
                       <button
                         type="button"
                         onClick={() => setModal({ aberto: true, servidor: item.id })}
-                        className="rounded-lg border border-brand-400/40 bg-brand-500/12 px-3 py-1.5 text-[11.5px] font-semibold text-brand-100 transition hover:bg-brand-500/22"
+                        className="rounded-lg border border-brand-500/35 bg-brand-100 px-3 py-1.5 text-[11.5px] font-semibold text-brand-800 transition hover:bg-brand-200"
                       >
                         ATS
                       </button>
                       <button
                         type="button"
                         onClick={() => setModalEvolucao({ aberto: true, servidor: item.id })}
-                        className="rounded-lg border border-jade-400/40 bg-jade-400/12 px-3 py-1.5 text-[11.5px] font-semibold text-jade-400 transition hover:bg-jade-400/22"
+                        className="rounded-lg border border-jade-400/40 bg-jade-100 px-3 py-1.5 text-[11.5px] font-semibold text-jade-400 transition hover:bg-jade-200"
                       >
                         Evolução
                       </button>
                       <button
                         type="button"
                         onClick={() => setModalLicenca({ aberto: true, servidor: item.id })}
-                        className="rounded-lg border border-gold-400/40 bg-gold-400/12 px-3 py-1.5 text-[11.5px] font-semibold text-gold-300 transition hover:bg-gold-400/22"
+                        className="rounded-lg border border-gold-400/40 bg-gold-100 px-3 py-1.5 text-[11.5px] font-semibold text-gold-400 transition hover:bg-gold-400/22"
                       >
                         Licença
                       </button>
                       <Link
                         href={`/gestor/servidores/${item.id}`}
-                        className="rounded-lg border border-white/12 px-3 py-1.5 text-[11.5px] font-semibold text-brand-50/80 transition hover:border-brand-400/50 hover:text-white"
+                        className="rounded-lg border border-slate-200 px-3 py-1.5 text-[11.5px] font-semibold text-white transition hover:border-brand-500/40 hover:text-white"
                       >
                         Ficha
                       </Link>
-                      <a
-                        href={`/api/sandbox/entrar?servidorId=${item.id}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="rounded-lg border border-white/12 px-3 py-1.5 text-[11.5px] font-semibold text-brand-50/80 transition hover:border-jade-400/50 hover:text-jade-400"
-                        title="Testar a área exclusiva deste servidor em outra aba"
-                      >
-                        Testar ↗
-                      </a>
                       <button
                         type="button"
                         onClick={() => excluir(item)}
-                        className="rounded-lg border border-white/12 px-2.5 py-1.5 text-[11.5px] text-brand-50/70 transition hover:border-red-400/50 hover:text-red-200"
+                        className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-[11.5px] text-slate-700 transition hover:border-red-400/40 hover:text-red-400"
                         aria-label="Excluir servidor"
                       >
                         <Icon name="close" className="h-3.5 w-3.5" />
@@ -500,9 +491,9 @@ export function PainelGestor() {
               ))}
               {servidores.length === 0 && !carregando ? (
                 <tr>
-                  <td colSpan={11} className="px-4 py-10 text-center text-[13px] text-brand-50/60">
+                  <td colSpan={11} className="px-4 py-10 text-center text-[13px] text-slate-600">
                     Nenhum servidor encontrado.{" "}
-                    <Link href="/gestor/importar" className="font-semibold text-brand-200">
+                    <Link href="/gestor/importar" className="font-semibold text-brand-600">
                       Importe a planilha de pré-cadastro
                     </Link>{" "}
                     ou faça um cadastro manual.
@@ -519,24 +510,24 @@ export function PainelGestor() {
           <p className="font-display text-[15px] font-bold text-white">Últimos lançamentos de ATS</p>
           <ul className="mt-4 space-y-3">
             {atividades.length === 0 ? (
-              <li className="text-[12.5px] text-brand-50/60">
+              <li className="text-[12.5px] text-slate-600">
                 Nenhum quinquênio lançado ainda.
               </li>
             ) : null}
             {atividades.map((item) => (
-              <li key={item.id} className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/4 p-3.5">
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gold-400/15 text-gold-400">
+              <li key={item.id} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-3.5">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gold-100 text-gold-600">
                   <Icon name="clock" className="h-4 w-4" />
                 </span>
                 <div className="min-w-0">
                   <p className="text-[13px] font-semibold text-white">
                     {item.tipo}º Quinquênio · {item.nome}
                   </p>
-                  <p className="text-[11.5px] text-brand-50/62">
+                  <p className="text-[11.5px] text-slate-700">
                     Vigência {formatarDataBR(item.dataVigencia)} · DOE {formatarDataBR(item.dataDoe)}{" "}
                     · projeção {formatarDataBR(item.dataProximoProjetada)}
                   </p>
-                  <p className="mt-0.5 text-[11px] text-brand-50/45">
+                  <p className="mt-0.5 text-[11px] text-slate-600">
                     {item.criadoPor} · {new Date(item.criadoEm).toLocaleString("pt-BR")}
                   </p>
                 </div>
@@ -550,16 +541,16 @@ export function PainelGestor() {
             <p className="font-display text-[15px] font-bold text-white">Cargas de planilha</p>
             <ul className="mt-4 space-y-3">
               {importacoes.length === 0 ? (
-                <li className="text-[12.5px] text-brand-50/60">Nenhuma importação realizada.</li>
+                <li className="text-[12.5px] text-slate-600">Nenhuma importação realizada.</li>
               ) : null}
               {importacoes.map((item) => (
-                <li key={item.id} className="rounded-xl border border-white/10 bg-white/4 p-3.5">
+                <li key={item.id} className="rounded-xl border border-slate-200 bg-white p-3.5">
                   <p className="text-[13px] font-semibold text-white">{item.arquivo}</p>
-                  <p className="mt-1 text-[11.5px] text-brand-50/62">
+                  <p className="mt-1 text-[11.5px] text-slate-700">
                     {item.novas} novos · {item.atualizadas} atualizados · {item.ignoradas} ignorados ·{" "}
                     {item.celulasVaziasTratadas} células vazias tratadas
                   </p>
-                  <p className="mt-0.5 text-[11px] text-brand-50/45">
+                  <p className="mt-0.5 text-[11px] text-slate-600">
                     {new Date(item.criadoEm).toLocaleString("pt-BR")}
                   </p>
                 </li>
@@ -571,16 +562,16 @@ export function PainelGestor() {
             <p className="font-display text-[15px] font-bold text-white">
               Pendências para saneamento
             </p>
-            <p className="mt-1 text-[12px] text-brand-50/60">
+            <p className="mt-1 text-[12px] text-slate-600">
               Servidores com células vazias ou dados a confirmar na carga da planilha.
             </p>
             <ul className="mt-4 space-y-2.5">
               {comPendencia.slice(0, 6).map((item) => (
-                <li key={item.id} className="rounded-xl border border-gold-400/20 bg-gold-400/8 p-3.5">
+                <li key={item.id} className="rounded-xl border border-gold-600/20 bg-gold-50 p-3.5">
                   <p className="text-[12.5px] font-semibold text-white">{item.nome}</p>
                   <ul className="mt-1.5 space-y-1">
                     {(item.pendencias ?? []).slice(0, 3).map((pendencia) => (
-                      <li key={pendencia} className="text-[11.5px] text-gold-100/85">
+                      <li key={pendencia} className="text-[11.5px] text-ink-900/85">
                         • {pendencia}
                       </li>
                     ))}
@@ -588,7 +579,7 @@ export function PainelGestor() {
                 </li>
               ))}
               {comPendencia.length === 0 ? (
-                <li className="text-[12.5px] text-brand-50/60">
+                <li className="text-[12.5px] text-slate-600">
                   Nenhuma pendência registrada na base filtrada.
                 </li>
               ) : null}
@@ -625,7 +616,7 @@ export function PainelGestor() {
 function Campo({ rotulo, children }: { rotulo: string; children: ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-brand-200/75">
+      <span className="mb-1.5 block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-brand-600">
         {rotulo}
       </span>
       {children}

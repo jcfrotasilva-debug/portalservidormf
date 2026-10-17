@@ -14,13 +14,12 @@ type ResumoCommit = {
   total: number;
 };
 
-type ServidorTeste = { id: number; nome: string; cpf: string | null; dtnasc: string | null };
 
 const CORES_STATUS: Record<string, string> = {
-  nova: "bg-jade-400/15 text-jade-400",
-  atualizar: "bg-brand-500/18 text-brand-200",
-  duplicada: "bg-gold-400/15 text-gold-300",
-  ignorada: "bg-red-400/12 text-red-200",
+  nova: "bg-jade-200 text-jade-400",
+  atualizar: "bg-brand-100 text-brand-600",
+  duplicada: "bg-gold-100 text-gold-400",
+  ignorada: "bg-red-200 text-red-400",
 };
 
 const ROTULO_STATUS: Record<string, string> = {
@@ -37,7 +36,6 @@ export function ImportarWizard() {
   const [erro, setErro] = useState<string | null>(null);
   const [commit, setCommit] = useState<ResumoCommit | null>(null);
   const [detalhes, setDetalhes] = useState<string[]>([]);
-  const [testes, setTestes] = useState<ServidorTeste[]>([]);
   const [filtro, setFiltro] = useState<"todas" | "nova" | "atualizar" | "duplicada" | "ignorada" | "pendencias">(
     "todas",
   );
@@ -82,12 +80,11 @@ export function ImportarWizard() {
         erro?: string;
         resumo?: ResumoCommit;
         detalhes?: string[];
-        testes?: ServidorTeste[];
+
       };
       if (!resposta.ok || !json.resumo) throw new Error(json.erro ?? "Falha ao gravar a importação.");
       setCommit(json.resumo);
       setDetalhes(json.detalhes ?? []);
-      setTestes(json.testes ?? []);
       setResultado(null);
     } catch (error) {
       setErro(error instanceof Error ? error.message : "Falha inesperada.");
@@ -112,7 +109,7 @@ export function ImportarWizard() {
             const arquivo = evento.dataTransfer.files?.[0];
             if (arquivo) enviar(arquivo);
           }}
-          className="glass-soft flex flex-col items-center justify-center rounded-3xl border border-dashed border-white/18 p-8 text-center"
+          className="glass-soft flex flex-col items-center justify-center rounded-3xl border border-dashed border-brand-700/18 p-8 text-center"
         >
           <span className="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-500/25 to-gold-400/20 text-white">
             <Icon name="download" className="h-6 w-6" />
@@ -120,7 +117,7 @@ export function ImportarWizard() {
           <h2 className="mt-4 font-display text-lg font-extrabold text-white">
             Solte aqui a planilha de pré-cadastro
           </h2>
-          <p className="mt-2 max-w-md text-[13px] text-brand-50/68">
+          <p className="mt-2 max-w-md text-[13px] text-slate-700">
             Colunas esperadas: NOME, CPF, RGCIN, DI, DTNASC, TEL, E-MAIL, CLASSE, CARGO, CATEGORIA,
             JORNADA, LOTACAO, SITUACAO. Aceita <strong className="text-white">.xlsx</strong> e{" "}
             <strong className="text-white">.csv</strong>. Células vazias são tratadas
@@ -130,14 +127,14 @@ export function ImportarWizard() {
             <button
               type="button"
               onClick={() => inputRef.current?.click()}
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 px-5 py-3 text-[13.5px] font-semibold text-white shadow-[0_20px_50px_-26px_rgba(47,134,246,1)]"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 px-5 py-3 text-[13.5px] font-semibold text-white shadow-[0_20px_50px_-26px_rgba(22,101,144,0.5)]"
             >
               <Icon name="file" className="h-4 w-4" />
               Selecionar arquivo
             </button>
             <a
               href="/api/importacoes/modelo"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/14 px-5 py-3 text-[13.5px] font-semibold text-brand-50/85 transition hover:border-brand-400/60 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-5 py-3 text-[13.5px] font-semibold text-white transition hover:border-brand-500/50 hover:text-white"
             >
               <Icon name="download" className="h-4 w-4" />
               Baixar modelo XLSX
@@ -154,10 +151,10 @@ export function ImportarWizard() {
             }}
           />
           {carregando ? (
-            <p className="mt-4 text-[12.5px] text-brand-200">Analisando a planilha…</p>
+            <p className="mt-4 text-[12.5px] text-brand-600">Analisando a planilha…</p>
           ) : null}
           {erro ? (
-            <p className="mt-4 rounded-xl border border-red-400/35 bg-red-400/10 px-4 py-2.5 text-[12.5px] text-red-200">
+            <p className="mt-4 rounded-xl border border-red-400/40 bg-red-200 px-4 py-2.5 text-[12.5px] text-red-400">
               {erro}
             </p>
           ) : null}
@@ -176,7 +173,7 @@ export function ImportarWizard() {
               "Linhas de total, subtotal e rodapé são descartadas automaticamente.",
               "CPF repetido no arquivo → apontado como duplicado e não gravado duas vezes.",
             ].map((texto) => (
-              <li key={texto} className="flex gap-2.5 text-[12.5px] leading-relaxed text-brand-50/72">
+              <li key={texto} className="flex gap-2.5 text-[12.5px] leading-relaxed text-slate-700">
                 <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-jade-400" strokeWidth={2.2} />
                 {texto}
               </li>
@@ -186,90 +183,33 @@ export function ImportarWizard() {
       </div>
 
       {commit ? (
-        <div className="glass rounded-3xl border border-jade-400/25 p-6">
+        <div className="glass rounded-3xl border border-jade-400/30 p-6">
           <div className="flex items-center gap-3">
-            <span className="grid h-11 w-11 place-items-center rounded-2xl bg-jade-400/16 text-jade-400">
+            <span className="grid h-11 w-11 place-items-center rounded-2xl bg-jade-200 text-jade-400">
               <Icon name="badge-check" className="h-5.5 w-5.5" />
             </span>
             <div>
               <p className="font-display text-[16.5px] font-extrabold text-white">
                 Importação concluída
               </p>
-              <p className="text-[12.5px] text-brand-50/68">
+              <p className="text-[12.5px] text-slate-700">
                 {commit.novas} novos cadastros · {commit.atualizadas} atualizados · {commit.ignoradas}{" "}
                 ignorados · {commit.comPendencias} com pendências
               </p>
             </div>
           </div>
           <details className="mt-4">
-            <summary className="cursor-pointer text-[12.5px] font-semibold text-brand-200">
+            <summary className="cursor-pointer text-[12.5px] font-semibold text-brand-600">
               Ver log da carga ({detalhes.length} registros processados)
             </summary>
-            <ul className="mt-3 max-h-60 space-y-1.5 overflow-y-auto rounded-xl border border-white/10 bg-ink-950/60 p-3.5">
+            <ul className="mt-3 max-h-60 space-y-1.5 overflow-y-auto rounded-xl border border-slate-200 bg-white p-3.5">
               {detalhes.map((linha) => (
-                <li key={linha} className="text-[11.5px] text-brand-50/70">
+                <li key={linha} className="text-[11.5px] text-slate-700">
                   {linha}
                 </li>
               ))}
             </ul>
           </details>
-          {testes.length ? (
-            <div className="mt-5 rounded-2xl border border-jade-400/25 bg-jade-400/8 p-4">
-              <p className="font-display text-[13.5px] font-bold text-white">
-                Testar os servidores importados em outra aba
-              </p>
-              <p className="mt-1 text-[11.5px] text-brand-50/65">
-                O acesso abre a área exclusiva já autenticada — inclusive para cadastros que vieram
-                sem CPF na planilha.
-              </p>
-              <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-                {testes.slice(0, 12).map((item) => (
-                  <li
-                    key={item.id}
-                    className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/10 bg-ink-950/50 px-3 py-2.5"
-                  >
-                    <span className="min-w-0">
-                      <span className="block truncate text-[12px] font-semibold text-white">
-                        {item.nome}
-                      </span>
-                      <span className="block text-[10.5px] text-brand-50/55">
-                        {item.cpf ? formatarCpf(item.cpf) : "sem CPF"} ·{" "}
-                        {item.dtnasc ? formatarDataBR(item.dtnasc) : "sem nascimento"}
-                      </span>
-                    </span>
-                    <span className="flex gap-1.5">
-                      <a
-                        href={`/api/sandbox/entrar?servidorId=${item.id}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="rounded-lg border border-jade-400/40 bg-jade-400/12 px-2.5 py-1.5 text-[10.5px] font-semibold text-jade-400"
-                      >
-                        Área ↗
-                      </a>
-                      <a
-                        href={`/gestor/servidores/${item.id}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="rounded-lg border border-white/14 px-2.5 py-1.5 text-[10.5px] font-semibold text-brand-50/80"
-                      >
-                        Ficha ↗
-                      </a>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              {testes.length > 12 ? (
-                <p className="mt-2 text-[10.5px] text-brand-50/50">
-                  + {testes.length - 12} servidor(es) importados — todos disponíveis em{" "}
-                  <a href="/sandbox" target="_blank" rel="noreferrer" className="font-semibold text-jade-400">
-                    /sandbox ↗
-                  </a>
-                  .
-                </p>
-              ) : null}
-            </div>
-          ) : null}
-
           <div className="mt-4 flex gap-3">
             <Link
               href="/gestor"
@@ -278,23 +218,13 @@ export function ImportarWizard() {
               <Icon name="chart" className="h-4 w-4" />
               Ver no painel
             </Link>
-            <a
-              href="/sandbox"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-jade-400/40 bg-jade-400/12 px-4 py-2.5 text-[13px] font-semibold text-jade-400"
-            >
-              <Icon name="refresh" className="h-4 w-4" />
-              Abrir sandbox ↗
-            </a>
             <button
               type="button"
               onClick={() => {
                 setCommit(null);
                 setDetalhes([]);
-                setTestes([]);
               }}
-              className="rounded-xl border border-white/14 px-4 py-2.5 text-[13px] font-semibold text-brand-50/85"
+              className="rounded-xl border border-brand-200 bg-white px-4 py-2.5 text-[13px] font-semibold text-brand-800"
             >
               Importar outra planilha
             </button>
@@ -306,15 +236,15 @@ export function ImportarWizard() {
         <div className="space-y-5">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
             {[
-              { label: "Linhas lidas", valor: resultado.totalLinhas, tom: "text-white" },
+              { label: "Linhas lidas", valor: resultado.totalLinhas, tom: "text-ink-950" },
               { label: "Novos cadastros", valor: resultado.resumo.novas, tom: "text-jade-400" },
-              { label: "Atualizações", valor: resultado.resumo.atualizar, tom: "text-brand-200" },
-              { label: "Duplicadas no arquivo", valor: resultado.resumo.duplicadas, tom: "text-gold-300" },
-              { label: "Células vazias tratadas", valor: resultado.celulasVaziasTratadas, tom: "text-gold-400" },
+              { label: "Atualizações", valor: resultado.resumo.atualizar, tom: "text-brand-600" },
+              { label: "Duplicadas no arquivo", valor: resultado.resumo.duplicadas, tom: "text-gold-400" },
+              { label: "Células vazias tratadas", valor: resultado.celulasVaziasTratadas, tom: "text-gold-600" },
             ].map((card) => (
               <div key={card.label} className="glass-soft rounded-2xl p-4">
                 <p className={`font-display text-2xl font-extrabold ${card.tom}`}>{card.valor}</p>
-                <p className="mt-1 text-[11.5px] text-brand-50/65">{card.label}</p>
+                <p className="mt-1 text-[11.5px] text-slate-700">{card.label}</p>
               </div>
             ))}
           </div>
@@ -325,7 +255,7 @@ export function ImportarWizard() {
                 <p className="font-display text-[15px] font-bold text-white">
                   Pré-visualização · {resultado.arquivo}
                 </p>
-                <p className="mt-1 text-[11.5px] text-brand-50/58">
+                <p className="mt-1 text-[11.5px] text-slate-600">
                   {resultado.linhasVaziasIgnoradas} linha(s) vazia(s) descartada(s) ·{" "}
                   {resultado.colunasAusentes.length} coluna(s) ausente(s):{" "}
                   {resultado.colunasAusentes.join(", ") || "nenhuma"}
@@ -348,8 +278,8 @@ export function ImportarWizard() {
                     onClick={() => setFiltro(chave)}
                     className={`rounded-full border px-3 py-1.5 text-[11.5px] font-semibold transition ${
                       filtro === chave
-                        ? "border-brand-400/60 bg-brand-500/18 text-white"
-                        : "border-white/12 text-brand-50/70 hover:text-white"
+                        ? "border-brand-500/50 bg-brand-100 text-ink-950"
+                        : "border-slate-200 text-slate-700 hover:text-ink-950"
                     }`}
                   >
                     {rotulo}
@@ -361,7 +291,7 @@ export function ImportarWizard() {
             {resultado.avisos.length ? (
               <ul className="mt-3 space-y-1">
                 {resultado.avisos.map((aviso) => (
-                  <li key={aviso} className="text-[11.5px] text-gold-300">
+                  <li key={aviso} className="text-[11.5px] text-gold-400">
                     • {aviso}
                   </li>
                 ))}
@@ -370,7 +300,7 @@ export function ImportarWizard() {
 
             <ul className="mt-4 space-y-2.5">
               {linhasFiltradas.map((linha: LinhaProcessada) => (
-                <li key={`${linha.linha}-${linha.payload?.nome ?? "x"}`} className="rounded-2xl border border-white/10 bg-white/4">
+                <li key={`${linha.linha}-${linha.payload?.nome ?? "x"}`} className="rounded-2xl border border-slate-200 bg-white">
                   <button
                     type="button"
                     onClick={() => setLinhaAberta(linhaAberta === linha.linha ? null : linha.linha)}
@@ -378,12 +308,12 @@ export function ImportarWizard() {
                   >
                     <div className="min-w-0">
                       <p className="font-display text-[13.5px] font-bold text-white">
-                        <span className="mr-2 text-[11px] font-medium text-brand-50/45">
+                        <span className="mr-2 text-[11px] font-medium text-slate-600">
                           linha {linha.linha}
                         </span>
                         {linha.payload?.nome ?? "(linha sem nome)"}
                       </p>
-                      <p className="mt-0.5 text-[11.5px] text-brand-50/62">
+                      <p className="mt-0.5 text-[11.5px] text-slate-700">
                         {linha.payload
                           ? `${formatarCpf(linha.payload.cpf)} · ${linha.payload.cargo ?? "cargo vazio"} · ${
                               linha.payload.lotacao ?? "lotação vazia"
@@ -393,12 +323,12 @@ export function ImportarWizard() {
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
                       {linha.camposVazios.length ? (
-                        <span className="rounded-full bg-white/8 px-2.5 py-1 text-[10.5px] text-brand-50/72">
+                        <span className="rounded-full bg-brand-50 px-2.5 py-1 text-[10.5px] text-slate-700">
                           {linha.camposVazios.length} célula(s) vazia(s)
                         </span>
                       ) : null}
                       {linha.pendencias.length ? (
-                        <span className="rounded-full bg-gold-400/15 px-2.5 py-1 text-[10.5px] font-semibold text-gold-300">
+                        <span className="rounded-full bg-gold-100 px-2.5 py-1 text-[10.5px] font-semibold text-gold-400">
                           {linha.pendencias.length} pendência(s)
                         </span>
                       ) : null}
@@ -407,21 +337,21 @@ export function ImportarWizard() {
                       >
                         {ROTULO_STATUS[linha.status]}
                       </span>
-                      <Icon name="chevron-down" className="h-3.5 w-3.5 text-brand-50/50" />
+                      <Icon name="chevron-down" className="h-3.5 w-3.5 text-slate-600" />
                     </div>
                   </button>
 
                   {linhaAberta === linha.linha ? (
-                    <div className="grid gap-4 border-t border-white/8 px-4 py-4 lg:grid-cols-3">
+                    <div className="grid gap-4 border-t border-slate-200 px-4 py-4 lg:grid-cols-3">
                       <div>
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-200/75">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-600">
                           Como ficará no cadastro
                         </p>
                         <ul className="mt-2.5 space-y-1.5">
                           {linha.payload
                             ? Object.entries(linha.payload).map(([campo, valor]) => (
                                 <li key={campo} className="flex justify-between gap-3 text-[11.5px]">
-                                  <span className="text-brand-50/55">
+                                  <span className="text-slate-600">
                                     {LABELS_CAMPOS[campo] ?? campo}
                                   </span>
                                   <span className="text-right font-medium text-white">
@@ -440,31 +370,31 @@ export function ImportarWizard() {
                       </div>
 
                       <div>
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-200/75">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-600">
                           Tratamento aplicado
                         </p>
                         <ul className="mt-2.5 space-y-1.5">
                           {linha.tratamentos.length === 0 ? (
-                            <li className="text-[11.5px] text-brand-50/58">
+                            <li className="text-[11.5px] text-slate-600">
                               Nenhuma célula vazia nesta linha.
                             </li>
                           ) : null}
                           {linha.tratamentos.map((texto) => (
-                            <li key={texto} className="text-[11.5px] text-brand-50/72">
+                            <li key={texto} className="text-[11.5px] text-slate-700">
                               • {texto}
                             </li>
                           ))}
                         </ul>
-                        <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-200/75">
+                        <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-600">
                           Destino
                         </p>
-                        <p className="mt-1.5 text-[11.5px] text-brand-50/72">
+                        <p className="mt-1.5 text-[11.5px] text-slate-700">
                           {linha.motivo ?? linha.destino ?? "—"}
                         </p>
                       </div>
 
                       <div>
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-200/75">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-600">
                           Pendências para o RH
                         </p>
                         <ul className="mt-2.5 space-y-1.5">
@@ -485,18 +415,18 @@ export function ImportarWizard() {
                 </li>
               ))}
               {linhasFiltradas.length === 0 ? (
-                <li className="py-6 text-center text-[12.5px] text-brand-50/60">
+                <li className="py-6 text-center text-[12.5px] text-slate-600">
                   Nenhuma linha neste filtro.
                 </li>
               ) : null}
             </ul>
 
-            <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-white/10 pt-5">
+            <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-slate-200 pt-5">
               <button
                 type="button"
                 onClick={confirmar}
                 disabled={gravando || resultado.resumo.novas + resultado.resumo.atualizar === 0}
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-jade-500 to-jade-400 px-5 py-3 text-[13.5px] font-semibold text-ink-950 transition disabled:opacity-50"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-jade-500 to-jade-400 px-5 py-3 text-[13.5px] font-semibold text-white transition disabled:opacity-50"
               >
                 <Icon name="check" className="h-4 w-4" strokeWidth={2.4} />
                 {gravando
@@ -506,7 +436,7 @@ export function ImportarWizard() {
               <button
                 type="button"
                 onClick={() => setResultado(null)}
-                className="rounded-xl border border-white/14 px-4 py-3 text-[13px] font-semibold text-brand-50/85"
+                className="rounded-xl border border-brand-200 bg-white px-4 py-3 text-[13px] font-semibold text-brand-800"
               >
                 Descartar
               </button>

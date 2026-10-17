@@ -243,16 +243,16 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-ink-950/80 px-4 py-8 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-white/90 px-4 py-8 backdrop-blur-sm">
       <div className="glass w-full max-w-6xl rounded-[28px] p-5 shadow-2xl sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-start gap-3">
-            <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-gold-400/30 to-brand-500/25 text-white ring-1 ring-inset ring-white/12">
+            <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-gold-400/30 to-brand-500/25 text-white ring-1 ring-inset ring-brand-700/12">
               <Icon name="plane" className="h-5 w-5" />
             </span>
             <div>
               <h2 className="font-display text-xl font-extrabold text-white">Licença-Prêmio</h2>
-              <p className="mt-1 text-[12.5px] text-brand-50/65">
+              <p className="mt-1 text-[12.5px] text-slate-700">
                 Certidões de {DIAS_CERTIDAO} dias · gozo em {OPCOES_GOZO.join("/")} dias · pecúnia de {DIAS_PECUNIA} dias
               </p>
             </div>
@@ -260,7 +260,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
           <button
             type="button"
             onClick={onFechar}
-            className="grid h-10 w-10 place-items-center rounded-xl border border-white/15 text-brand-50/80 transition hover:bg-white/8 hover:text-white"
+            className="grid h-10 w-10 place-items-center rounded-xl border border-brand-700/16 text-white transition hover:bg-brand-50 hover:text-white"
             aria-label="Fechar"
           >
             <Icon name="close" className="h-4.5 w-4.5" />
@@ -270,16 +270,16 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
         <div className="mt-5 grid gap-5 lg:grid-cols-[1.02fr_0.98fr]">
           <div className="space-y-4">
             <div>
-              <span className="mb-1.5 block text-[11.5px] font-semibold uppercase tracking-[0.16em] text-brand-200/80">
+              <span className="mb-1.5 block text-[11.5px] font-semibold uppercase tracking-[0.16em] text-brand-600">
                 Servidor
               </span>
               <div className="relative">
-                <Icon name="search" className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-brand-50/45" />
+                <Icon name="search" className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-slate-600" />
                 <input
                   value={buscaServidor}
                   onChange={(evento) => setBuscaServidor(evento.target.value)}
                   placeholder="Filtrar por nome, CPF ou cargo"
-                  className="mb-2 w-full rounded-xl border border-white/12 bg-ink-950/70 py-2.5 pl-10 pr-3 text-[13px] text-white outline-none placeholder:text-brand-50/35 focus:border-brand-400/70"
+                  className="mb-2 w-full rounded-xl border border-slate-200 bg-white/70 py-2.5 pl-10 pr-3 text-[13px] text-white outline-none placeholder:text-slate-600 focus:border-brand-500/70"
                 />
                 <select
                   value={servidorId}
@@ -288,13 +288,13 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                     setMensagem(null);
                   }}
                   size={4}
-                  className="w-full rounded-xl border border-white/12 bg-ink-950/70 p-2 text-[13px] text-white outline-none focus:border-brand-400/70"
+                  className="w-full rounded-xl border border-slate-200 bg-white/70 p-2 text-[13px] text-white outline-none focus:border-brand-500/70"
                 >
-                  <option value="" className="bg-ink-900">
+                  <option value="" className="bg-brand-100">
                     — selecione o servidor —
                   </option>
                   {listaFiltrada.map((item) => (
-                    <option key={item.id} value={item.id} className="bg-ink-900">
+                    <option key={item.id} value={item.id} className="bg-brand-100">
                       {item.nome} · {item.cargo ?? "sem cargo"}
                     </option>
                   ))}
@@ -303,35 +303,35 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
             </div>
 
             {servidorSelecionado ? (
-              <div className="rounded-2xl border border-white/10 bg-white/4 p-4">
+              <div className="rounded-2xl border border-slate-200 bg-white p-4">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <p className="font-display text-[15px] font-bold text-white">{servidorSelecionado.nome}</p>
-                    <p className="text-[12px] text-brand-50/65">
+                    <p className="text-[12px] text-slate-700">
                       {servidorSelecionado.cargo ?? "cargo não informado"} · {servidorSelecionado.lotacao ?? "sem lotação"}
                     </p>
                   </div>
-                  <span className="rounded-full border border-gold-400/30 bg-gold-400/12 px-3 py-1 text-[11px] font-semibold text-gold-300">
+                  <span className="rounded-full border border-gold-600/30 bg-gold-100 px-3 py-1 text-[11px] font-semibold text-gold-400">
                     Saldo {resumo?.saldo ?? 0} dia(s)
                   </span>
                 </div>
                 <div className="mt-3 grid grid-cols-4 gap-2 text-center">
                   {[
-                    { label: "certidões", valor: resumo?.certidoes ?? 0, tom: "text-white" },
-                    { label: "concedidos", valor: resumo?.diasConcedidos ?? 0, tom: "text-brand-200" },
+                    { label: "certidões", valor: resumo?.certidoes ?? 0, tom: "text-ink-950" },
+                    { label: "concedidos", valor: resumo?.diasConcedidos ?? 0, tom: "text-brand-600" },
                     { label: "gozo", valor: resumo?.diasGozo ?? 0, tom: "text-jade-400" },
-                    { label: "pecúnia", valor: resumo?.diasPecunia ?? 0, tom: "text-gold-400" },
+                    { label: "pecúnia", valor: resumo?.diasPecunia ?? 0, tom: "text-gold-600" },
                   ].map((card) => (
-                    <div key={card.label} className="rounded-xl border border-white/8 bg-ink-950/50 p-2">
+                    <div key={card.label} className="rounded-xl border border-slate-200 bg-white p-2">
                       <p className={`font-display text-[14px] font-bold ${card.tom}`}>{card.valor}</p>
-                      <p className="text-[10px] text-brand-50/60">{card.label}</p>
+                      <p className="text-[10px] text-slate-600">{card.label}</p>
                     </div>
                   ))}
                 </div>
               </div>
             ) : null}
 
-            <div className="flex gap-2 rounded-xl border border-white/10 bg-ink-950/55 p-1.5">
+            <div className="flex gap-2 rounded-xl border border-slate-200 bg-white p-1.5">
               {(
                 [
                   ["certidoes", "Certidões concedidas"],
@@ -345,7 +345,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                   className={`flex-1 rounded-lg px-3 py-2.5 text-[12.5px] font-semibold transition ${
                     aba === chave
                       ? "bg-gradient-to-r from-brand-500 to-brand-600 text-white"
-                      : "text-brand-50/70 hover:text-white"
+                      : "text-slate-700 hover:text-ink-950"
                   }`}
                 >
                   {rotulo}
@@ -354,14 +354,14 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
             </div>
 
             {aba === "certidoes" ? (
-              <div className="space-y-3 rounded-2xl border border-white/10 bg-ink-950/40 p-4">
+              <div className="space-y-3 rounded-2xl border border-slate-200 bg-white p-4">
                 <div className="grid gap-3 sm:grid-cols-2">
                   <Campo rotulo="Nº da certidão">
                     <input
                       value={numero}
                       onChange={(evento) => setNumero(evento.target.value)}
                       placeholder="Ex.: 014"
-                      className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-400/70"
+                      className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
                     />
                   </Campo>
                   <Campo rotulo="Ano da certidão">
@@ -369,7 +369,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                       value={ano}
                       onChange={(evento) => setAno(evento.target.value)}
                       inputMode="numeric"
-                      className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-400/70"
+                      className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
                     />
                   </Campo>
                   <Campo rotulo="Data do período inicial">
@@ -377,7 +377,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                       type="date"
                       value={periodoInicial}
                       onChange={(evento) => setPeriodoInicial(evento.target.value)}
-                      className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-400/70"
+                      className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
                     />
                   </Campo>
                   <Campo rotulo="Data do período final">
@@ -385,7 +385,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                       type="date"
                       value={periodoFinal}
                       onChange={(evento) => setPeriodoFinal(evento.target.value)}
-                      className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-400/70"
+                      className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
                     />
                   </Campo>
                   <Campo rotulo="Publicação em DOE (livre)">
@@ -393,14 +393,14 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                       type="date"
                       value={doeCertidao}
                       onChange={(evento) => setDoeCertidao(evento.target.value)}
-                      className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-400/70"
+                      className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
                     />
-                    <span className="mt-1 block text-[10.5px] leading-snug text-brand-50/50">
+                    <span className="mt-1 block text-[10.5px] leading-snug text-slate-600">
                       Aceita DOE anterior ao fim do período aquisitivo.
                     </span>
                   </Campo>
                   <Campo rotulo="Saldo da certidão">
-                    <div className="flex items-center gap-2 rounded-lg border border-jade-400/30 bg-jade-400/10 px-3 py-2.5">
+                    <div className="flex items-center gap-2 rounded-lg border border-jade-400/35 bg-jade-100 px-3 py-2.5">
                       <Icon name="check" className="h-4 w-4 text-jade-400" strokeWidth={2.4} />
                       <span className="font-display text-[13px] font-bold text-white">
                         {DIAS_CERTIDAO} dias positivos
@@ -409,7 +409,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                   </Campo>
                 </div>
                 {periodoInicial && periodoFinal ? (
-                  <p className="text-[11.5px] text-brand-50/60">
+                  <p className="text-[11.5px] text-slate-600">
                     Período aquisitivo de {diasDoPeriodo(periodoInicial, periodoFinal)} dias corridos.
                   </p>
                 ) : null}
@@ -418,7 +418,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                     value={obsCertidao}
                     onChange={(evento) => setObsCertidao(evento.target.value)}
                     placeholder="Processo administrativo, livro, folha do DOE…"
-                    className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none placeholder:text-brand-50/35 focus:border-brand-400/70"
+                    className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none placeholder:text-slate-600 focus:border-brand-500/70"
                   />
                 </Campo>
                 <button
@@ -432,18 +432,18 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                 </button>
               </div>
             ) : (
-              <div className="space-y-3 rounded-2xl border border-white/10 bg-ink-950/40 p-4">
+              <div className="space-y-3 rounded-2xl border border-slate-200 bg-white p-4">
                 <Campo rotulo="Certidão a debitar">
                   <select
                     value={certidaoId}
                     onChange={(evento) => setCertidaoId(evento.target.value ? Number(evento.target.value) : "")}
-                    className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-400/70"
+                    className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
                   >
-                    <option value="" className="bg-ink-900">
+                    <option value="" className="bg-brand-100">
                       — selecione a certidão —
                     </option>
                     {certidoes.map((item) => (
-                      <option key={item.id} value={item.id} className="bg-ink-900">
+                      <option key={item.id} value={item.id} className="bg-brand-100">
                         Certidão {item.numero}/{item.ano} · saldo {item.resumo.saldo} dias
                       </option>
                     ))}
@@ -451,13 +451,13 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                 </Campo>
 
                 {certidaoSelecionada ? (
-                  <div className="rounded-xl border border-white/10 bg-white/4 p-3">
-                    <div className="flex items-center justify-between text-[11.5px] text-brand-50/70">
+                  <div className="rounded-xl border border-slate-200 bg-white p-3">
+                    <div className="flex items-center justify-between text-[11.5px] text-slate-700">
                       <span>
                         Período {formatarDataBR(certidaoSelecionada.periodoInicial)} a{" "}
                         {formatarDataBR(certidaoSelecionada.periodoFinal)}
                       </span>
-                      <span className="font-semibold text-gold-300">{certidaoSelecionada.resumo.saldo} dias</span>
+                      <span className="font-semibold text-gold-400">{certidaoSelecionada.resumo.saldo} dias</span>
                     </div>
                     <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/12">
                       <div
@@ -465,7 +465,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                         style={{ width: `${certidaoSelecionada.resumo.percentualUtilizado}%` }}
                       />
                     </div>
-                    <p className="mt-1.5 text-[10.5px] text-brand-50/55">
+                    <p className="mt-1.5 text-[10.5px] text-slate-600">
                       {certidaoSelecionada.resumo.diasUtilizados} de {certidaoSelecionada.resumo.diasConcedidos} dias
                       utilizados ({certidaoSelecionada.resumo.diasGozo} em gozo · {certidaoSelecionada.resumo.diasPecunia} em pecúnia)
                     </p>
@@ -485,8 +485,8 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                       onClick={() => setTipo(valor)}
                       className={`flex items-center justify-center gap-2 rounded-xl border px-3 py-2.5 text-[12.5px] font-semibold transition ${
                         tipo === valor
-                          ? "border-brand-400/60 bg-brand-500/18 text-white"
-                          : "border-white/12 text-brand-50/70 hover:text-white"
+                          ? "border-brand-500/50 bg-brand-100 text-white"
+                          : "border-slate-200 text-slate-700 hover:text-white"
                       }`}
                     >
                       <Icon name={icone} className="h-4 w-4" />
@@ -507,8 +507,8 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                             disabled={opcao > saldoCertidao}
                             className={`rounded-lg border px-3 py-2 text-[12px] font-semibold transition disabled:cursor-not-allowed disabled:opacity-35 ${
                               dias === opcao
-                                ? "border-brand-400/60 bg-brand-500/18 text-white"
-                                : "border-white/12 text-brand-50/70 hover:text-white"
+                                ? "border-brand-500/50 bg-brand-100 text-white"
+                                : "border-slate-200 text-slate-700 hover:text-white"
                             }`}
                           >
                             {opcao} dias
@@ -525,7 +525,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                             setDataInicio(evento.target.value);
                             if (evento.target.value) setDataFim(calcularDataFimGozo(evento.target.value, dias));
                           }}
-                          className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-400/70"
+                          className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
                         />
                       </Campo>
                       <Campo rotulo="Data fim do gozo">
@@ -533,12 +533,12 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                           type="date"
                           value={dataFim}
                           onChange={(evento) => setDataFim(evento.target.value)}
-                          className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-400/70"
+                          className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
                         />
                       </Campo>
                     </div>
                     {dataInicio ? (
-                      <p className="text-[11.5px] text-brand-200">
+                      <p className="text-[11.5px] text-brand-600">
                         Fim calculado para {dias} dias: {formatarDataBR(fimCalculado)}
                         {diasPeriodo ? ` · período informado tem ${diasPeriodo} dias` : ""}
                       </p>
@@ -548,7 +548,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                         type="date"
                         value={doeAutorizacao}
                         onChange={(evento) => setDoeAutorizacao(evento.target.value)}
-                        className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-400/70"
+                        className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
                       />
                     </Campo>
                   </>
@@ -560,7 +560,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                           value={anoPecunia}
                           onChange={(evento) => setAnoPecunia(evento.target.value)}
                           inputMode="numeric"
-                          className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-400/70"
+                          className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
                         />
                       </Campo>
                       <Campo rotulo="DOE da pecúnia (opcional)">
@@ -568,11 +568,11 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                           type="date"
                           value={doePecunia}
                           onChange={(evento) => setDoePecunia(evento.target.value)}
-                          className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-400/70"
+                          className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
                         />
                       </Campo>
                     </div>
-                    <p className="rounded-xl border border-gold-400/30 bg-gold-400/10 px-3 py-2.5 text-[11.5px] text-gold-200">
+                    <p className="rounded-xl border border-gold-600/30 bg-gold-100 px-3 py-2.5 text-[11.5px] text-gold-200">
                       Conversão em pecúnia equivale a {DIAS_PECUNIA} dias, debitados do saldo da certidão
                       selecionada.
                     </p>
@@ -584,12 +584,12 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                     value={obsFruicao}
                     onChange={(evento) => setObsFruicao(evento.target.value)}
                     placeholder="Portaria de autorização, processo, substituição…"
-                    className="w-full rounded-lg border border-white/12 bg-ink-950/70 px-3 py-2.5 text-[13px] text-white outline-none placeholder:text-brand-50/35 focus:border-brand-400/70"
+                    className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none placeholder:text-slate-600 focus:border-brand-500/70"
                   />
                 </Campo>
 
                 {saldoInsuficiente && certidaoSelecionada ? (
-                  <p className="rounded-lg border border-red-400/35 bg-red-400/10 px-3 py-2 text-[11.5px] text-red-200">
+                  <p className="rounded-lg border border-red-400/40 bg-red-200 px-3 py-2 text-[11.5px] text-red-400">
                     Saldo insuficiente: {saldoCertidao} dia(s) disponível(is) nesta certidão.
                   </p>
                 ) : null}
@@ -598,7 +598,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                   type="button"
                   onClick={salvarFruicao}
                   disabled={ocupado || saldoInsuficiente || !certidaoId}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-jade-500 to-jade-400 px-4 py-3 text-[13.5px] font-semibold text-ink-950 disabled:opacity-50"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-jade-500 to-jade-400 px-4 py-3 text-[13.5px] font-semibold text-white disabled:opacity-50"
                 >
                   <Icon name={tipo === "gozo" ? "plane" : "coins"} className="h-4 w-4" />
                   {tipo === "gozo" ? "Registrar gozo" : "Registrar pecúnia"} ({diasEfetivos} dias)
@@ -610,8 +610,8 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
               <p
                 className={`rounded-xl px-3.5 py-2.5 text-[12.5px] ${
                   mensagem.tom === "ok"
-                    ? "border border-jade-400/30 bg-jade-400/10 text-jade-400"
-                    : "border border-red-400/35 bg-red-400/10 text-red-200"
+                    ? "border border-jade-400/35 bg-jade-100 text-jade-400"
+                    : "border border-red-400/40 bg-red-200 text-red-400"
                 }`}
               >
                 {mensagem.texto}
@@ -620,42 +620,42 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
           </div>
 
           <div className="space-y-4">
-            <div className="rounded-2xl border border-white/10 bg-ink-950/45 p-4">
+            <div className="rounded-2xl border border-slate-200 bg-white p-4">
               <div className="flex items-center justify-between">
                 <p className="font-display text-[14px] font-bold text-white">Certidões do servidor</p>
-                <span className="rounded-full border border-white/12 px-2.5 py-1 text-[11px] text-brand-50/65">
+                <span className="rounded-full border border-slate-200 px-2.5 py-1 text-[11px] text-slate-700">
                   {certidoes.length}
                 </span>
               </div>
               {carregando ? (
-                <p className="mt-3 text-[12.5px] text-brand-50/60">Carregando…</p>
+                <p className="mt-3 text-[12.5px] text-slate-600">Carregando…</p>
               ) : !servidorId ? (
-                <p className="mt-3 text-[12.5px] text-brand-50/60">Selecione um servidor.</p>
+                <p className="mt-3 text-[12.5px] text-slate-600">Selecione um servidor.</p>
               ) : certidoes.length === 0 ? (
-                <p className="mt-3 rounded-xl border border-dashed border-white/15 p-4 text-center text-[12px] text-brand-50/68">
+                <p className="mt-3 rounded-xl border border-dashed border-brand-700/16 p-4 text-center text-[12px] text-slate-700">
                   Nenhuma certidão cadastrada. Cada certidão concede {DIAS_CERTIDAO} dias de licença-prêmio.
                 </p>
               ) : (
                 <ul className="mt-3 max-h-64 space-y-2.5 overflow-y-auto pr-1">
                   {certidoes.map((item) => (
-                    <li key={item.id} className="rounded-xl border border-white/10 bg-white/4 p-3">
+                    <li key={item.id} className="rounded-xl border border-slate-200 bg-white p-3">
                       <div className="flex items-start justify-between gap-2">
                         <div>
                           <p className="font-display text-[12.5px] font-bold text-white">
                             Certidão {item.numero}/{item.ano}
                           </p>
-                          <p className="text-[11px] text-brand-50/62">
+                          <p className="text-[11px] text-slate-700">
                             {formatarDataBR(item.periodoInicial)} a {formatarDataBR(item.periodoFinal)} · DOE{" "}
                             {formatarDataBR(item.dataDoe)}
                           </p>
-                          <p className="mt-1 text-[11px] text-gold-300">
+                          <p className="mt-1 text-[11px] text-gold-400">
                             saldo {item.resumo.saldo} de {item.resumo.diasConcedidos} dias
                           </p>
                         </div>
                         <button
                           type="button"
                           onClick={() => excluir("certidao", item.id)}
-                          className="grid h-7 w-7 shrink-0 place-items-center rounded-lg border border-white/12 text-brand-50/75 transition hover:border-red-400/50 hover:text-red-200"
+                          className="grid h-7 w-7 shrink-0 place-items-center rounded-lg border border-slate-200 text-slate-700 transition hover:border-red-400/40 hover:text-red-400"
                           aria-label="Excluir certidão"
                         >
                           <Icon name="close" className="h-3 w-3" />
@@ -673,10 +673,10 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
               )}
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-ink-950/45 p-4">
+            <div className="rounded-2xl border border-slate-200 bg-white p-4">
               <p className="font-display text-[14px] font-bold text-white">Fruições lançadas</p>
               {fruicoes.length === 0 ? (
-                <p className="mt-3 rounded-xl border border-dashed border-white/15 p-4 text-center text-[12px] text-brand-50/68">
+                <p className="mt-3 rounded-xl border border-dashed border-brand-700/16 p-4 text-center text-[12px] text-slate-700">
                   Nenhum gozo ou pecúnia registrado. Cada lançamento baixa automaticamente do saldo.
                 </p>
               ) : (
@@ -684,19 +684,19 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                   {fruicoes.map((item) => {
                     const certidao = certidoes.find((registro) => registro.id === item.certidaoId);
                     return (
-                      <li key={item.id} className="rounded-xl border border-white/10 bg-white/4 p-3">
+                      <li key={item.id} className="rounded-xl border border-slate-200 bg-white p-3">
                         <div className="flex items-start justify-between gap-2">
                           <div>
                             <p className="font-display text-[12.5px] font-bold text-white">
                               {item.tipo === "gozo" ? "Gozo" : "Pecúnia"} · {item.dias} dias
                             </p>
-                            <p className="text-[11px] text-brand-50/62">
+                            <p className="text-[11px] text-slate-700">
                               Certidão {certidao?.numero ?? "—"}/{certidao?.ano ?? "—"} ·{" "}
                               {item.tipo === "gozo"
                                 ? `${formatarDataBR(item.dataInicio)} a ${formatarDataBR(item.dataFim)}`
                                 : `ano ${item.ano ?? "—"}`}
                             </p>
-                            <p className="text-[11px] text-brand-50/55">
+                            <p className="text-[11px] text-slate-600">
                               DOE{" "}
                               {formatarDataBR(
                                 item.tipo === "gozo" ? item.dataDoeAutorizacao : item.dataDoePecunia,
@@ -706,7 +706,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
                           <button
                             type="button"
                             onClick={() => excluir("fruicao", item.id)}
-                            className="grid h-7 w-7 shrink-0 place-items-center rounded-lg border border-white/12 text-brand-50/75 transition hover:border-red-400/50 hover:text-red-200"
+                            className="grid h-7 w-7 shrink-0 place-items-center rounded-lg border border-slate-200 text-slate-700 transition hover:border-red-400/40 hover:text-red-400"
                             aria-label="Excluir fruição"
                           >
                             <Icon name="close" className="h-3 w-3" />
@@ -719,11 +719,11 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
               )}
             </div>
 
-            <div className="rounded-2xl border border-jade-400/25 bg-jade-400/8 p-4">
+            <div className="rounded-2xl border border-jade-400/30 bg-jade-400/8 p-4">
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-jade-400">
                 Regras aplicadas
               </p>
-              <ul className="mt-2 space-y-1.5 text-[11.5px] text-brand-50/72">
+              <ul className="mt-2 space-y-1.5 text-[11.5px] text-slate-700">
                 <li>• Certidão nasce com {DIAS_CERTIDAO} dias positivos.</li>
                 <li>• Gozo vinculado ao servidor + certidão, em {OPCOES_GOZO.join(", ")} dias.</li>
                 <li>• Pecúnia fixa em {DIAS_PECUNIA} dias, com ano e DOE opcional.</li>
@@ -741,7 +741,7 @@ export function LicencaModal({ aberto, servidores, servidorInicial, onFechar, on
 function Campo({ rotulo, children }: { rotulo: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-brand-200/75">
+      <span className="mb-1.5 block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-brand-600">
         {rotulo}
       </span>
       {children}

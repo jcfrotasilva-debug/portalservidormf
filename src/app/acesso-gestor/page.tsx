@@ -39,14 +39,14 @@ export default function AcessoGestor() {
             <Icon name="layers" className="h-4.5 w-4.5 text-white" />
           </span>
           <span className="font-display text-[15.5px] font-extrabold text-white">
-            SERVIDOR<span className="text-gold-400">360</span>
+            SERVIDOR<span className="text-gold-600">360</span>
           </span>
         </Link>
 
         <h1 className="mt-6 font-display text-2xl font-extrabold text-white">Acesso do gestor</h1>
-        <p className="mt-2 text-[13px] leading-relaxed text-brand-50/70">
+        <p className="mt-2 text-[13px] leading-relaxed text-slate-700">
           Área restrita de gestão de pessoas. Informe a senha administrativa configurada no ambiente
-          (<code className="rounded bg-white/10 px-1.5 py-0.5 text-[11.5px] text-brand-100">GESTOR_SENHA</code>).
+          (<code className="rounded bg-brand-50 px-1.5 py-0.5 text-[11.5px] text-brand-800">GESTOR_SENHA</code>).
         </p>
 
         <form
@@ -57,7 +57,7 @@ export default function AcessoGestor() {
           }}
         >
           <label className="block">
-            <span className="mb-1.5 block text-[11.5px] font-semibold uppercase tracking-[0.16em] text-brand-200/80">
+            <span className="mb-1.5 block text-[11.5px] font-semibold uppercase tracking-[0.16em] text-brand-600">
               Senha administrativa
             </span>
             <input
@@ -65,12 +65,12 @@ export default function AcessoGestor() {
               value={senha}
               onChange={(evento) => setSenha(evento.target.value)}
               autoComplete="current-password"
-              className="w-full rounded-xl border border-white/12 bg-ink-950/70 px-4 py-3 text-[14px] text-white outline-none focus:border-brand-400/70"
+              className="w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-[14px] text-white outline-none focus:border-brand-500/70"
             />
           </label>
 
           {erro ? (
-            <p className="rounded-xl border border-red-400/35 bg-red-400/10 px-3.5 py-2.5 text-[12.5px] text-red-200">
+            <p className="rounded-xl border border-red-400/40 bg-red-200 px-3.5 py-2.5 text-[12.5px] text-red-400">
               {erro}
             </p>
           ) : null}
@@ -85,9 +85,9 @@ export default function AcessoGestor() {
           </button>
         </form>
 
-        <div className="mt-5 flex flex-wrap gap-3 text-[12px] text-brand-50/60">
-          <Link href="/sandbox" target="_blank" rel="noreferrer" className="text-jade-400 hover:text-white">
-            Sandbox de testes ↗
+        <div className="mt-5 flex flex-wrap gap-3 text-[12px] text-slate-600">
+          <Link href="/" className="text-jade-400 hover:text-white">
+            Página inicial
           </Link>
           <Link href="/servidor" className="hover:text-white">
             Área do servidor

@@ -67,17 +67,17 @@ export function Implementation() {
         {STEPS.map((step, index) => (
           <Reveal key={step.step} delay={index * 80} as="article">
             <div className="glass-soft card-hover relative h-full rounded-3xl p-6">
-              <span className="absolute right-5 top-5 font-display text-[13px] font-bold text-brand-50/30">
+              <span className="absolute right-5 top-5 font-display text-[13px] font-bold text-slate-600">
                 {step.step}
               </span>
-              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-brand-500/25 to-gold-400/18 text-white ring-1 ring-inset ring-white/12">
+              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-brand-500/25 to-gold-400/18 text-white ring-1 ring-inset ring-brand-700/12">
                 <Icon name={step.icon} className="h-5.5 w-5.5" />
               </span>
               <h3 className="mt-5 font-display text-[16px] font-bold leading-snug text-white">
                 {step.title}
               </h3>
-              <p className="mt-2.5 text-[13.5px] leading-relaxed text-brand-50/68">{step.text}</p>
-              <p className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/4 px-3 py-1 text-[11px] text-brand-200">
+              <p className="mt-2.5 text-[13.5px] leading-relaxed text-slate-700">{step.text}</p>
+              <p className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-[11px] text-brand-600">
                 <Icon name="clock" className="h-3.5 w-3.5" />
                 {step.time}
               </p>
@@ -90,11 +90,11 @@ export function Implementation() {
         {VOICES.map((voice, index) => (
           <Reveal key={voice.author} delay={index * 100}>
             <figure className="glass relative h-full overflow-hidden rounded-3xl p-7">
-              <Icon name="quote" className="h-8 w-8 text-gold-400/50" />
-              <blockquote className="mt-4 font-display text-[17px] font-semibold leading-relaxed text-white/92">
+              <Icon name="quote" className="h-8 w-8 text-gold-600/50" />
+              <blockquote className="mt-4 font-display text-[17px] font-semibold leading-relaxed text-ink-950/92">
                 “{voice.quote}”
               </blockquote>
-              <figcaption className="mt-5 flex items-center gap-3 border-t border-white/10 pt-5">
+              <figcaption className="mt-5 flex items-center gap-3 border-t border-slate-200 pt-5">
                 <span className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-brand-500/35 to-gold-400/25 text-[12px] font-bold text-white">
                   {voice.author
                     .split(" ")
@@ -106,7 +106,7 @@ export function Implementation() {
                   <span className="block text-[13.5px] font-semibold text-white">
                     {voice.author}
                   </span>
-                  <span className="block text-[12px] text-brand-50/58">{voice.role}</span>
+                  <span className="block text-[12px] text-slate-600">{voice.role}</span>
                 </span>
               </figcaption>
             </figure>

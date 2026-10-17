@@ -61,17 +61,17 @@ export function Diagnosis() {
           <Reveal key={problem.title} delay={index * 90} as="article">
             <div className="glass-soft card-hover h-full rounded-3xl p-7">
               <div className="flex items-center justify-between">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl border border-brand-400/25 bg-brand-500/12 text-brand-200">
+                <span className="grid h-12 w-12 place-items-center rounded-2xl border border-brand-500/20 bg-brand-100 text-brand-600">
                   <Icon name={problem.icon} className="h-5.5 w-5.5" />
                 </span>
-                <span className="rounded-full border border-white/12 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-brand-50/55">
+                <span className="rounded-full border border-slate-200 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-slate-600">
                   {problem.tag}
                 </span>
               </div>
               <h3 className="mt-6 font-display text-[19px] font-bold leading-snug text-white">
                 {problem.title}
               </h3>
-              <p className="mt-3 text-[14.5px] leading-relaxed text-brand-50/68">{problem.text}</p>
+              <p className="mt-3 text-[14.5px] leading-relaxed text-slate-700">{problem.text}</p>
             </div>
           </Reveal>
         ))}
@@ -79,12 +79,12 @@ export function Diagnosis() {
 
       <Reveal delay={120} className="mt-16">
         <div className="glass relative overflow-hidden rounded-[32px] p-7 sm:p-10">
-          <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-brand-500/25 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-28 left-12 h-56 w-56 rounded-full bg-gold-400/15 blur-3xl" />
+          <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-brand-100 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-28 left-12 h-56 w-56 rounded-full bg-gold-100 blur-3xl" />
 
           <div className="relative flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p className="text-[11.5px] font-semibold uppercase tracking-[0.22em] text-gold-400">
+              <p className="text-[11.5px] font-semibold uppercase tracking-[0.22em] text-gold-600">
                 A proposta
               </p>
               <h3 className="mt-2 font-display text-2xl font-extrabold text-white sm:text-[1.75rem]">
@@ -93,7 +93,7 @@ export function Diagnosis() {
             </div>
             <a
               href="#ambientes"
-              className="group inline-flex items-center gap-2 rounded-full border border-white/16 bg-white/5 px-5 py-3 text-[13.5px] font-semibold text-white transition hover:border-brand-400/60 hover:bg-white/10"
+              className="group inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/5 px-5 py-3 text-[13.5px] font-semibold text-white transition hover:border-brand-500/50 hover:bg-brand-50"
             >
               Ver os dois ambientes
               <Icon
@@ -105,19 +105,19 @@ export function Diagnosis() {
 
           <div className="relative mt-9 grid gap-6 sm:grid-cols-3">
             {PILLARS.map((pillar, index) => (
-              <div key={pillar.title} className="rounded-2xl border border-white/10 bg-ink-950/45 p-5">
+              <div key={pillar.title} className="rounded-2xl border border-slate-200 bg-white p-5">
                 <div className="flex items-center gap-3">
                   <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-400/25 to-gold-400/20 text-white">
                     <Icon name={pillar.icon} className="h-4.5 w-4.5" />
                   </span>
-                  <span className="font-display text-[13px] font-bold text-brand-200">
+                  <span className="font-display text-[13px] font-bold text-brand-600">
                     0{index + 1}
                   </span>
                 </div>
                 <p className="mt-4 font-display text-[15.5px] font-bold text-white">
                   {pillar.title}
                 </p>
-                <p className="mt-2 text-[13.5px] leading-relaxed text-brand-50/68">{pillar.text}</p>
+                <p className="mt-2 text-[13.5px] leading-relaxed text-slate-700">{pillar.text}</p>
               </div>
             ))}
           </div>

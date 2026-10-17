@@ -6,6 +6,7 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
     links: [
       { label: "Visão geral", href: "#visao" },
       { label: "Pré-cadastro em Excel", href: "/gestor/importar" },
+      { label: "Diagnóstico de produção", href: "/producao" },
       { label: "Vantagens por tempo", href: "#vantagens" },
       { label: "Módulos", href: "#modulos" },
     ],
@@ -32,7 +33,7 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
 
 export function SiteFooter() {
   return (
-    <footer className="relative mt-8 border-t border-white/10 bg-ink-950/85">
+    <footer className="relative mt-8 border-t border-slate-200 bg-white/90">
       <div className="mx-auto max-w-7xl px-5 py-14 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>
@@ -41,19 +42,19 @@ export function SiteFooter() {
                 <Icon name="layers" className="h-5 w-5 text-white" />
               </span>
               <span className="font-display text-[17px] font-extrabold text-white">
-                SERVIDOR<span className="text-gold-400">360</span>
+                SERVIDOR<span className="text-gold-600">360</span>
               </span>
             </div>
-            <p className="mt-4 max-w-sm text-[13.5px] leading-relaxed text-brand-50/62">
+            <p className="mt-4 max-w-sm text-[13.5px] leading-relaxed text-slate-700">
               Plataforma de gestão do cadastro funcional de servidores públicos e das vantagens
-              pessoais adquiridas ao longo da carreira — com área exclusiva para o servidor e painel
-              de curadoria para o gestor.
+              pessoais adquiridas ao longo da carreira. Servidor acessa sua área exclusiva; o gestor
+              alimenta, valida e audita cada informação. Dados protegidos segundo a LGPD.
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               {["LGPD", "LAI", "ICP-Brasil"].map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border border-white/12 bg-white/4 px-3 py-1 text-[11px] text-brand-50/62"
+                  className="rounded-full border border-slate-200 bg-white px-3 py-1 text-[11px] text-slate-700"
                 >
                   {tag}
                 </span>
@@ -63,7 +64,7 @@ export function SiteFooter() {
 
           {COLUMNS.map((column) => (
             <div key={column.title}>
-              <p className="font-display text-[12px] font-bold uppercase tracking-[0.18em] text-brand-200/80">
+              <p className="font-display text-[12px] font-bold uppercase tracking-[0.18em] text-brand-600">
                 {column.title}
               </p>
               <ul className="mt-4 space-y-2.5">
@@ -71,7 +72,7 @@ export function SiteFooter() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-[13.5px] text-brand-50/62 transition hover:text-white"
+                      className="text-[13.5px] text-slate-700 transition hover:text-ink-950"
                     >
                       {link.label}
                     </a>
@@ -82,23 +83,18 @@ export function SiteFooter() {
           ))}
         </div>
 
-        <div className="hairline mt-12 flex flex-col gap-4 pt-6 text-[12px] text-brand-50/45 sm:flex-row sm:items-center sm:justify-between">
+        <div className="hairline mt-12 flex flex-col gap-4 pt-6 text-[12px] text-slate-600 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} SERVIDOR 360 · Plataforma de gestão de pessoas públicas.</p>
           <p className="flex flex-wrap items-center gap-4">
-            <a
-              href="/sandbox"
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-1.5 text-jade-400 hover:text-white"
-            >
+            <span className="flex items-center gap-1.5 text-jade-500">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-2 w-2 animate-pulse-ring rounded-full bg-jade-400" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-jade-400" />
               </span>
-              Sandbox liberado para testes
-            </a>
+              Ambiente de produção
+            </span>
             <span className="flex items-center gap-1.5">
-              <Icon name="lock" className="h-3.5 w-3.5" /> Dados fictícios · v1.1
+              <Icon name="lock" className="h-3.5 w-3.5" /> Dados reais · LGPD · v1.1
             </span>
           </p>
         </div>

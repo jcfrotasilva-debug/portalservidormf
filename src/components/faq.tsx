@@ -11,15 +11,15 @@ const ITEMS = [
   },
   {
     q: "Como as vantagens são calculadas?",
-    a: "Existe um motor de regras configurável: percentual de adicional por tempo de serviço, periodicidade dos quinquênios, licença-prêmio, progressões por titulação e mérito, sexta-parte, abono de permanência e vedações de acumulação. Cada órgão cadastra a própria norma, com vigência histórica, e o sistema recalcula o legado.",
+    a: "Existe um motor de regras que aplica o estatuto do órgão: adicional por tempo de serviço, quinquênios, licença-prêmio, progressões por titulação e mérito, sexta-parte, abono de permanência e vedações de acumulação, com vigência histórica. Cada concessão já publicada é registrada com vigência, DOE e projeções.",
   },
   {
     q: "O servidor precisa de treinamento para usar a área exclusiva?",
     a: "Não. A área do servidor foi desenhada para uso imediato: painel único, linguagem simples e nenhuma etapa obrigatória de configuração. O acesso é feito por login único gov.br ou por CPF e matrícula, com autenticação em dois fatores.",
   },
   {
-    q: "O que acontece com os dados que hoje estão em papel e em planilhas?",
-    a: "A implantação inclui carga assistida do cadastro existente, saneamento de duplicidades, vinculação de documentos digitalizados e conciliação com a folha. Um lote piloto é processado em paralelo para conferência antes do go-live.",
+    q: "O que acontece com o cadastro atual de servidores?",
+    a: "O gestor importa a planilha de pré-cadastro real ou cadastra manualmente. O sistema trata células vazias, valida CPF e datas, deduplica por CPF e soma a cada servidor as vantagens já publicadas no decorrer da carreira.",
   },
   {
     q: "Quem consegue ver os dados de um servidor?",
@@ -50,7 +50,7 @@ export function Faq() {
           className="lg:sticky lg:top-24"
         />
 
-        <div className="divide-y divide-white/10 overflow-hidden rounded-3xl border border-white/10 bg-ink-950/45">
+        <div className="divide-y divide-slate-200 overflow-hidden rounded-3xl border border-slate-200 bg-white">
           {ITEMS.map((item, index) => {
             const isOpen = open === index;
             return (
@@ -59,11 +59,11 @@ export function Faq() {
                   type="button"
                   onClick={() => setOpen(isOpen ? null : index)}
                   aria-expanded={isOpen}
-                  className="flex w-full items-start justify-between gap-5 px-5 py-5 text-left transition hover:bg-white/4 sm:px-6"
+                  className="flex w-full items-start justify-between gap-5 px-5 py-5 text-left transition hover:bg-white sm:px-6"
                 >
                   <span
                     className={`font-display text-[15.5px] font-bold leading-snug transition ${
-                      isOpen ? "text-white" : "text-brand-50/85"
+                      isOpen ? "text-ink-950" : "text-ink-900"
                     }`}
                   >
                     {item.q}
@@ -71,8 +71,8 @@ export function Faq() {
                   <span
                     className={`mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border transition ${
                       isOpen
-                        ? "rotate-180 border-brand-400/60 bg-brand-500/18 text-white"
-                        : "border-white/15 text-brand-50/70"
+                        ? "rotate-180 border-brand-500/50 bg-brand-100 text-ink-950"
+                        : "border-brand-700/16 text-slate-700"
                     }`}
                   >
                     <Icon name="chevron-down" className="h-3.5 w-3.5" />
@@ -84,7 +84,7 @@ export function Faq() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="px-5 pb-6 text-[14px] leading-relaxed text-brand-50/70 sm:px-6">
+                    <p className="px-5 pb-6 text-[14px] leading-relaxed text-slate-700 sm:px-6">
                       {item.a}
                     </p>
                   </div>
