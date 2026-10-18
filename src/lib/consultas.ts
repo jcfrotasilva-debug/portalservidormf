@@ -7,6 +7,7 @@ import {
   importacoes,
   licencaCertidoes,
   licencaFruicoes,
+  requerimentos,
   servidores,
 } from "@/db/schema";
 import { regraPorNivel, resumoVazio, type ResumoEvolucao } from "@/lib/evolucao";
@@ -295,11 +296,22 @@ export async function obterMetricas(): Promise<MetricasBase> {
       ),
     );
 
+  const [reqTotais] = await db
+    .select({
+      total: sql<number>`count(*)`.mapWith(Number),
+      pendentes: sql<number>`count(*) filter (where ${requerimentos.status} in ('protocolado','em_analise'))`.mapWith(
+        Number,
+      ),
+    })
+    .from(requerimentos);
+
   const todasCertidoes = await db.select().from(licencaCertidoes);
   const todasFruicoes = await db.select().from(licencaFruicoes);
   const resumoLicencaGlobal = resumirLicenca(todasCertidoes, todasFruicoes);
 
   return {
+    requerimentosTotal: reqTotais?.total ?? 0,
+    requerimentosPendentes: reqTotais?.pendentes ?? 0,
     totalCertidoes: resumoLicencaGlobal.certidoes,
     saldoLicencaTotal: resumoLicencaGlobal.saldo,
     diasGozoTotal: resumoLicencaGlobal.diasGozo,

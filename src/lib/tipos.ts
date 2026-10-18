@@ -48,6 +48,8 @@ export type MetricasBase = {
   percentualMedioAts: number;
   totalEvolucoes: number;
   evolucoesProximas12Meses: number;
+  requerimentosTotal: number;
+  requerimentosPendentes: number;
   totalCertidoes: number;
   saldoLicencaTotal: number;
   diasGozoTotal: number;

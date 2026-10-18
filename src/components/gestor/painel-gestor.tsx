@@ -129,7 +129,7 @@ export function PainelGestor() {
 
   return (
     <div className="space-y-7">
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
         {[
           {
             label: "Servidores na base",
@@ -158,6 +158,13 @@ export function PainelGestor() {
             detalhe: `${metricas?.evolucoesProximas12Meses ?? 0} interstícios vencendo em 12 meses`,
             icon: "graduation" as const,
             tom: "text-jade-400",
+          },
+          {
+            label: "Requerimentos pendentes",
+            valor: metricas?.requerimentosPendentes ?? 0,
+            detalhe: `${metricas?.requerimentosTotal ?? 0} no total · analisar e decidir`,
+            icon: "file" as const,
+            tom: "text-brand-700",
           },
           {
             label: "Licença-prêmio",
@@ -249,6 +256,13 @@ export function PainelGestor() {
             <Icon name="users" className="h-4 w-4" />
             Cadastro manual
           </button>
+          <Link
+            href="/gestor/requerimentos"
+            className="inline-flex items-center gap-2 rounded-xl border border-brand-200 bg-white px-4 py-3 text-[13px] font-semibold text-brand-800 transition hover:border-brand-400"
+          >
+            <Icon name="file" className="h-4 w-4" />
+            Requerimentos
+          </Link>
           <Link
             href="/gestor/importar"
             className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-3 text-[13px] font-semibold text-ink-950 transition hover:border-brand-500/50 hover:text-ink-950"

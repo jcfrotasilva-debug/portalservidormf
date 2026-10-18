@@ -188,6 +188,57 @@ export const importacoes = pgTable("importacoes", {
 });
 
 /**
+ * Requerimentos abertos pelo servidor na área exclusiva.
+ * Fluxo: protocolado → em análise → deferido ou indeferido pelo gestor.
+ */
+export const requerimentos = pgTable(
+  "requerimentos",
+  {
+    id: serial("id").primaryKey(),
+    servidorId: integer("servidor_id")
+      .notNull()
+      .references(() => servidores.id, { onDelete: "cascade" }),
+    protocolo: text("protocolo").notNull(),
+    tipo: text("tipo").notNull(),
+    assunto: text("assunto").notNull(),
+    descricao: text("descricao").notNull(),
+    /** protocolado | em_analise | deferido | indeferido */
+    status: text("status").notNull().default("protocolado"),
+    parecer: text("parecer"),
+    analisadoPor: text("analisado_por"),
+    analisadoEm: timestamp("analisado_em", { withTimezone: true }),
+    criadoEm: timestamp("criado_em", { withTimezone: true }).notNull().defaultNow(),
+    atualizadoEm: timestamp("atualizado_em", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("requerimentos_protocolo_unico").on(table.protocolo),
+    index("requerimentos_servidor_idx").on(table.servidorId),
+    index("requerimentos_status_idx").on(table.status),
+  ],
+);
+
+/** Documentos anexados ao requerimento, pelo servidor ou pelo gestor. */
+export const requerimentoAnexos = pgTable(
+  "requerimento_anexos",
+  {
+    id: serial("id").primaryKey(),
+    requerimentoId: integer("requerimento_id")
+      .notNull()
+      .references(() => requerimentos.id, { onDelete: "cascade" }),
+    nome: text("nome").notNull(),
+    mime: text("mime").notNull(),
+    tamanho: integer("tamanho").notNull(),
+    /** Conteúdo do arquivo em base64. */
+    conteudo: text("conteudo").notNull(),
+    /** servidor | gestor */
+    origem: text("origem").notNull(),
+    autor: text("autor").notNull(),
+    criadoEm: timestamp("criado_em", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index("requerimento_anexos_req_idx").on(table.requerimentoId)],
+);
+
+/**
  * Usuários com acesso ao painel do gestor.
  * Cada usuário tem email e senha próprios; o perfil define permissões:
  *  - "admin"  → gerencia usuários, cria e desativa acessos

@@ -21,6 +21,7 @@ export async function GestorShell({
 
   const LINKS: { href: string; label: string; icon: IconName; somenteAdmin?: boolean }[] = [
     { href: "/gestor", label: "Painel", icon: "chart" },
+    { href: "/gestor/requerimentos", label: "Requerimentos", icon: "file" },
     { href: "/gestor/importar", label: "Importar planilha", icon: "download" },
     { href: "/gestor/usuarios", label: "Usuários", icon: "users", somenteAdmin: true },
   ];

@@ -17,6 +17,7 @@ import {
 } from "@/lib/ats";
 import { resumoVazio, rotuloTipoEvolucao } from "@/lib/evolucao";
 import { resumirCertidao } from "@/lib/licenca";
+import { RequerimentosServidor } from "@/components/portal/requerimentos-servidor";
 import type {
   AtsQuinquenio,
   Evolucao,
@@ -238,6 +239,13 @@ export function PortalServidor() {
             </div>
           </div>
           <div className="flex flex-wrap gap-2.5">
+            <a
+              href="#requerimentos"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 px-4 py-2.5 text-[12.5px] font-semibold text-white"
+            >
+              <Icon name="file" className="h-4 w-4" />
+              Requerimento
+            </a>
             <button
               type="button"
               onClick={() => window.print()}
@@ -299,6 +307,8 @@ export function PortalServidor() {
           ))}
         </div>
       </div>
+
+      <RequerimentosServidor />
 
       <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="glass-soft rounded-3xl p-5">
