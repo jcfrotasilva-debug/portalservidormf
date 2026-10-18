@@ -1,4 +1,5 @@
 import {
+  boolean,
   date,
   index,
   integer,
@@ -186,7 +187,29 @@ export const importacoes = pgTable("importacoes", {
   criadoEm: timestamp("criado_em", { withTimezone: true }).notNull().defaultNow(),
 });
 
-/** Configurações internas da plataforma (ex.: senha do gestor). */
+/**
+ * Usuários com acesso ao painel do gestor.
+ * Cada usuário tem email e senha próprios; o perfil define permissões:
+ *  - "admin"  → gerencia usuários, cria e desativa acessos
+ *  - "gestor" → opera o cadastro, vantagens e importações
+ */
+export const gestores = pgTable(
+  "gestores",
+  {
+    id: serial("id").primaryKey(),
+    nome: text("nome").notNull(),
+    email: text("email").notNull(),
+    senhaHash: text("senha_hash").notNull(),
+    perfil: text("perfil").notNull().default("gestor"),
+    ativo: boolean("ativo").notNull().default(true),
+    ultimoAcesso: timestamp("ultimo_acesso", { withTimezone: true }),
+    criadoEm: timestamp("criado_em", { withTimezone: true }).notNull().defaultNow(),
+    atualizadoEm: timestamp("atualizado_em", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [uniqueIndex("gestores_email_unico").on(table.email)],
+);
+
+/** Configurações internas da plataforma. */
 export const configs = pgTable("configs", {
   chave: text("chave").primaryKey(),
   valor: text("valor").notNull(),

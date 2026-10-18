@@ -15,6 +15,13 @@
       "when": 1792282971108,
       "tag": "0001_di_digito_identificacao",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792284455587,
+      "tag": "0002_usuarios_gestores",
+      "breakpoints": true
     }
   ]
 }

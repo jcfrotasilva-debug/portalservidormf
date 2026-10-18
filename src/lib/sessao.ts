@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { servidores } from "@/db/schema";
-import { gestorProtegido } from "@/lib/gestor";
+import { obterGestorPorId, type Gestor } from "@/lib/gestor";
 
 const COOKIE = "s360_sessao";
 const COOKIE_GESTOR = "s360_gestor";
@@ -28,6 +28,8 @@ export function lerToken(valor: string | undefined): number | null {
   if (a.length !== b.length) return null;
   return timingSafeEqual(a, b) ? id : null;
 }
+
+/* ------------------- sessão do servidor (portal) ------------------- */
 
 export async function definirSessao(id: number) {
   const jar = await cookies();
@@ -54,17 +56,11 @@ export async function servidorDaSessao() {
 
 export const NOME_COOKIE = COOKIE;
 
-/* ------------------------------------------------------------------ */
-/* Sessão do gestor                                                    */
-/* ------------------------------------------------------------------ */
+/* -------------------- sessão do gestor (usuários) ------------------ */
 
-function assinarGestor() {
-  return createHmac("sha256", `${SEGREDO}:gestor`).update("gestor360").digest("hex").slice(0, 32);
-}
-
-export async function definirSessaoGestor() {
+export async function definirSessaoGestor(id: number) {
   const jar = await cookies();
-  jar.set(COOKIE_GESTOR, assinarGestor(), {
+  jar.set(COOKIE_GESTOR, criarToken(id), {
     httpOnly: true,
     sameSite: "lax",
     path: "/",
@@ -77,18 +73,22 @@ export async function encerrarSessaoGestor() {
   jar.delete(COOKIE_GESTOR);
 }
 
-/**
- * true apenas quando o painel está liberado (acesso livre explícito no
- * ambiente local) OU quando o cookie de sessão do gestor é válido.
- * Nunca abre sem senha configurada automaticamente.
- */
-export async function gestorAutenticado(): Promise<boolean> {
-  if (!(await gestorProtegido())) return true;
+/** Usuário gestor autenticado (e ativo) ou null. */
+export async function gestorDaSessao(): Promise<Gestor | null> {
   const jar = await cookies();
-  const valor = jar.get(COOKIE_GESTOR)?.value ?? "";
-  const esperado = assinarGestor();
-  const a = Buffer.from(valor);
-  const b = Buffer.from(esperado);
-  if (a.length !== b.length) return false;
-  return timingSafeEqual(a, b);
+  const id = lerToken(jar.get(COOKIE_GESTOR)?.value);
+  if (!id) return null;
+  const gestor = await obterGestorPorId(id);
+  if (!gestor || !gestor.ativo) return null;
+  return gestor;
+}
+
+/** Administrador autenticado ou null. */
+export async function gestorAdminDaSessao(): Promise<Gestor | null> {
+  const gestor = await gestorDaSessao();
+  return gestor && gestor.perfil === "admin" ? gestor : null;
+}
+
+export async function gestorAutenticado(): Promise<boolean> {
+  return (await gestorDaSessao()) !== null;
 }

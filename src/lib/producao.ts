@@ -2,7 +2,7 @@ import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { sql } from "drizzle-orm";
 import { db, descricaoConexao } from "@/db";
-import { gestorProtegido } from "@/lib/gestor";
+import { contarGestores } from "@/lib/gestor";
 
 export type StatusItem = "ok" | "atencao" | "bloqueio";
 
@@ -131,18 +131,20 @@ export async function gerarRelatorio(): Promise<RelatorioProntidao> {
       : "Gere um segredo forte (ex.: `openssl rand -hex 32`) e configure PORTAL_SECRET nas variáveis de ambiente.",
   });
 
-  // --- autenticação do gestor ---
-  const painelProtegido = await gestorProtegido();
+  // --- usuários gestores ---
+  const totalGestores = await contarGestores();
   itens.push({
     id: "gestor-auth",
-    titulo: "Área do gestor protegida",
-    status: painelProtegido ? "ok" : "bloqueio",
-    detalhe: painelProtegido
-      ? "Painel do gestor exige senha de acesso (GESTOR_SENHA ou senha gravada no banco)."
-      : "ATENÇÃO: o painel do gestor está aberto sem senha — configure GESTOR_SENHA ou crie a senha pela tela /acesso-gestor.",
-    comoResolver: painelProtegido
-      ? undefined
-      : "Abra /acesso-gestor para criar a senha administrativa, ou defina GESTOR_SENHA nas variáveis de ambiente.",
+    titulo: "Usuários com acesso ao painel",
+    status: totalGestores > 0 ? "ok" : "atencao",
+    detalhe:
+      totalGestores > 0
+        ? `${totalGestores} usuário(s) gestor(es) cadastrado(s) com e-mail e senha próprios.`
+        : "Nenhum usuário gestor cadastrado — o painel exige login, mas é preciso criar o primeiro administrador.",
+    comoResolver:
+      totalGestores > 0
+        ? undefined
+        : "Abra /acesso-gestor para criar o primeiro administrador (a tela se desativa depois).",
   });
 
   itens.push({
