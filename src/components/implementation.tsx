@@ -73,7 +73,7 @@ export function Implementation() {
               <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-brand-500/25 to-gold-400/18 text-white ring-1 ring-inset ring-brand-700/12">
                 <Icon name={step.icon} className="h-5.5 w-5.5" />
               </span>
-              <h3 className="mt-5 font-display text-[16px] font-bold leading-snug text-white">
+              <h3 className="mt-5 font-display text-[16px] font-bold leading-snug text-ink-950">
                 {step.title}
               </h3>
               <p className="mt-2.5 text-[13.5px] leading-relaxed text-slate-700">{step.text}</p>
@@ -103,7 +103,7 @@ export function Implementation() {
                     .join("")}
                 </span>
                 <span>
-                  <span className="block text-[13.5px] font-semibold text-white">
+                  <span className="block text-[13.5px] font-semibold text-ink-950">
                     {voice.author}
                   </span>
                   <span className="block text-[12px] text-slate-600">{voice.role}</span>

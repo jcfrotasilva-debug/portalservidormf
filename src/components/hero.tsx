@@ -32,20 +32,23 @@ export function Hero() {
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[12px] font-semibold uppercase tracking-[0.18em] text-brand-600">
               <Icon name="sparkles" className="h-3.5 w-3.5 text-gold-600" />
-              Plataforma de gestão de pessoas do setor público
+EE Profa. Marlene Frattini
             </span>
           </Reveal>
 
           <Reveal delay={80}>
-            <h1 className="mt-6 font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-[3.75rem]">
+            <p className="mt-6 font-display text-[15px] font-bold uppercase tracking-[0.16em] text-brand-700">
+              EE Profa. Marlene Frattini
+            </p>
+            <h1 className="mt-2 font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-ink-950 sm:text-5xl lg:text-[3.6rem]">
               Todo o cadastro funcional dos servidores
               <span className="text-gradient"> e cada vantagem conquistada</span> em um só lugar.
             </h1>
           </Reveal>
 
           <Reveal delay={140}>
-            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-white">
-              O <strong className="font-semibold text-white">SERVIDOR 360</strong> reúne o dossiê
+            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-ink-950">
+              O <strong className="font-semibold text-ink-950">SERVIDOR 360</strong> reúne o dossiê
               completo do servidor, a vida funcional e a evolução automática das vantagens pessoais
               adquiridas ao longo da carreira — com área exclusiva para o servidor consultar seus
               dados e um painel para o gestor alimentar e auditar cada informação.
@@ -83,7 +86,7 @@ export function Hero() {
                 { k: "100%", v: "auditável e rastreável" },
               ].map((item) => (
                 <div key={item.k}>
-                  <dt className="font-display text-xl font-extrabold text-white">{item.k}</dt>
+                  <dt className="font-display text-xl font-extrabold text-ink-950">{item.k}</dt>
                   <dd className="mt-1 text-[12.5px] leading-snug text-slate-700">{item.v}</dd>
                 </div>
               ))}
@@ -106,7 +109,7 @@ export function Hero() {
                       Mariana A. de Souza
                     </p>
                     <p className="text-[12px] text-ink-850">
-                      Analista de Gestão Pública · Matrícula 45.208-1
+                      PEB II · DI 1 · Efetivo
                     </p>
                   </div>
                 </div>

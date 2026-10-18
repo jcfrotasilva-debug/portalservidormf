@@ -31,7 +31,7 @@ export function SectionHeading({
   return (
     <Reveal className={`flex flex-col ${alignment} ${className}`}>
       <Eyebrow icon={eyebrowIcon}>{eyebrow}</Eyebrow>
-      <h2 className="mt-5 font-display text-3xl font-extrabold leading-[1.12] tracking-tight text-white sm:text-[2.6rem]">
+      <h2 className="mt-5 font-display text-3xl font-extrabold leading-[1.12] tracking-tight text-ink-950 sm:text-[2.6rem]">
         {title}
       </h2>
       {description ? (

@@ -38,7 +38,7 @@ export function FinalCta() {
               <Icon name="sparkles" className="h-3.5 w-3.5 text-gold-600" />
               Próximo passo
             </span>
-            <h2 className="mt-5 font-display text-3xl font-extrabold leading-[1.12] tracking-tight text-white sm:text-[2.4rem]">
+            <h2 className="mt-5 font-display text-3xl font-extrabold leading-[1.12] tracking-tight text-ink-950 sm:text-[2.4rem]">
               Leve o SERVIDOR 360 para a gestão de pessoas
               <span className="text-gradient"> do seu órgão</span>
             </h2>
@@ -54,7 +54,7 @@ export function FinalCta() {
                 { icon: "eye", text: "Demonstração guiada dos dois ambientes" },
                 { icon: "scale", text: "Checklist de conformidade com LGPD e LAI" },
               ] as { icon: IconName; text: string }[]).map((item) => (
-                <li key={item.text} className="flex items-center gap-3 text-[14.5px] text-white">
+                <li key={item.text} className="flex items-center gap-3 text-[14.5px] text-ink-950">
                   <span className="grid h-9 w-9 place-items-center rounded-xl border border-jade-400/30 bg-jade-100 text-jade-400">
                     <Icon name={item.icon} className="h-4 w-4" />
                   </span>
@@ -80,18 +80,18 @@ export function FinalCta() {
                 <span className="grid h-14 w-14 place-items-center rounded-2xl bg-jade-200 text-jade-400">
                   <Icon name="badge-check" className="h-6.5 w-6.5" />
                 </span>
-                <h3 className="mt-5 font-display text-xl font-extrabold text-white">
+                <h3 className="mt-5 font-display text-xl font-extrabold text-ink-950">
                   Solicitação registrada, {form.nome.split(" ")[0]}!
                 </h3>
                 <p className="mt-3 text-[14px] leading-relaxed text-slate-700">
                   Sua solicitação entra na esteira de implantação e nossa equipe retorna com o
                 roteiro adequado para{" "}
-                  <strong className="font-semibold text-white">{form.orgao || "seu órgão"}</strong>.
+                  <strong className="font-semibold text-ink-950">{form.orgao || "seu órgão"}</strong>.
                 </p>
                 <button
                   type="button"
                   onClick={() => setSent(false)}
-                  className="mt-6 inline-flex items-center gap-2 rounded-full border border-brand-200 px-5 py-3 text-[13.5px] font-semibold text-white transition hover:border-brand-500/50"
+                  className="mt-6 inline-flex items-center gap-2 rounded-full border border-brand-200 px-5 py-3 text-[13.5px] font-semibold text-ink-950 transition hover:border-brand-500/50"
                 >
                   <Icon name="refresh" className="h-4 w-4" /> Preencher novamente
                 </button>
@@ -105,7 +105,7 @@ export function FinalCta() {
                   setSent(true);
                 }}
               >
-                <p className="font-display text-[16.5px] font-bold text-white">
+                <p className="font-display text-[16.5px] font-bold text-ink-950">
                   Solicitar roteiro de implantação
                 </p>
 
@@ -115,7 +115,7 @@ export function FinalCta() {
                     value={form.nome}
                     onChange={update("nome")}
                     placeholder="Como devemos chamar você"
-                    className="w-full rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 text-[14px] text-white outline-none transition placeholder:text-slate-600 focus:border-brand-500/70"
+                    className="w-full rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 text-[14px] text-ink-950 outline-none transition placeholder:text-slate-400 focus:border-brand-500/70"
                   />
                 </Field>
 
@@ -126,7 +126,7 @@ export function FinalCta() {
                     value={form.email}
                     onChange={update("email")}
                     placeholder="nome@orgao.gov.br"
-                    className="w-full rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 text-[14px] text-white outline-none transition placeholder:text-slate-600 focus:border-brand-500/70"
+                    className="w-full rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 text-[14px] text-ink-950 outline-none transition placeholder:text-slate-400 focus:border-brand-500/70"
                   />
                 </Field>
 
@@ -136,7 +136,7 @@ export function FinalCta() {
                     value={form.orgao}
                     onChange={update("orgao")}
                     placeholder="Prefeitura, secretaria, autarquia..."
-                    className="w-full rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 text-[14px] text-white outline-none transition placeholder:text-slate-600 focus:border-brand-500/70"
+                    className="w-full rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 text-[14px] text-ink-950 outline-none transition placeholder:text-slate-400 focus:border-brand-500/70"
                   />
                 </Field>
 
@@ -145,10 +145,10 @@ export function FinalCta() {
                     <select
                       value={form.perfil}
                       onChange={update("perfil")}
-                      className="w-full rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 text-[14px] text-white outline-none transition focus:border-brand-500/70"
+                      className="w-full rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 text-[14px] text-ink-950 outline-none transition focus:border-brand-500/70"
                     >
                       {PERFIS.map((perfil) => (
-                        <option key={perfil} value={perfil} className="bg-brand-100">
+                        <option key={perfil} value={perfil} className="bg-white">
                           {perfil}
                         </option>
                       ))}
@@ -158,10 +158,10 @@ export function FinalCta() {
                     <select
                       value={form.porte}
                       onChange={update("porte")}
-                      className="w-full rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 text-[14px] text-white outline-none transition focus:border-brand-500/70"
+                      className="w-full rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 text-[14px] text-ink-950 outline-none transition focus:border-brand-500/70"
                     >
                       {PORTES.map((porte) => (
-                        <option key={porte} value={porte} className="bg-brand-100">
+                        <option key={porte} value={porte} className="bg-white">
                           {porte}
                         </option>
                       ))}
@@ -175,7 +175,7 @@ export function FinalCta() {
                     value={form.mensagem}
                     onChange={update("mensagem")}
                     placeholder="Ex.: controlar quinquênios e licenças-prêmio sem planilhas paralelas."
-                    className="w-full resize-none rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 text-[14px] text-white outline-none transition placeholder:text-slate-600 focus:border-brand-500/70"
+                    className="w-full resize-none rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 text-[14px] text-ink-950 outline-none transition placeholder:text-slate-400 focus:border-brand-500/70"
                   />
                 </Field>
 

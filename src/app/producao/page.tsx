@@ -76,7 +76,7 @@ export default async function PaginaProducao() {
               <Icon name="layers" className="h-4.5 w-4.5 text-white" />
             </span>
             <span className="leading-tight">
-              <span className="block font-display text-[15.5px] font-extrabold text-white">
+              <span className="block font-display text-[15.5px] font-extrabold text-ink-950">
                 SERVIDOR<span className="text-gold-600">360</span>
               </span>
               <span className="block text-[10.5px] uppercase tracking-[0.2em] text-brand-600">
@@ -119,12 +119,12 @@ export default async function PaginaProducao() {
                 <Icon name={pronto ? "badge-check" : "bell"} className="h-3.5 w-3.5" />
                 {pronto ? "Pronto para publicar" : "Ajustes necessários antes do go-live"}
               </span>
-              <h1 className="mt-3 font-display text-2xl font-extrabold text-white sm:text-3xl">
+              <h1 className="mt-3 font-display text-2xl font-extrabold text-ink-950 sm:text-3xl">
                 Diagnóstico do ambiente
               </h1>
               <p className="mt-1.5 max-w-2xl text-[13px] text-slate-700">
                 Verificação em tempo real de banco, schema, migrações, segredos e exposição de áreas
-                administrativas. Ambiente: <strong className="text-white">{relatorio.ambiente}</strong>.
+                administrativas. Ambiente: <strong className="text-ink-950">{relatorio.ambiente}</strong>.
               </p>
             </div>
             <div className="grid grid-cols-3 gap-2 text-center">
@@ -161,15 +161,15 @@ export default async function PaginaProducao() {
           {relatorio.itens.map((item) => (
             <div key={item.id} className={`rounded-2xl border p-5 ${CORES[item.status]}`}>
               <div className="flex items-start justify-between gap-3">
-                <p className="font-display text-[14px] font-bold text-white">{item.titulo}</p>
+                <p className="font-display text-[14px] font-bold text-ink-950">{item.titulo}</p>
                 <span className="shrink-0 rounded-full border border-current px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-[0.12em]">
                   {ROTULO[item.status]}
                 </span>
               </div>
-              <p className="mt-2 text-[12.5px] leading-relaxed text-white">{item.detalhe}</p>
+              <p className="mt-2 text-[12.5px] leading-relaxed text-ink-950">{item.detalhe}</p>
               {item.comoResolver ? (
                 <p className="mt-2 rounded-xl bg-white px-3 py-2 text-[11.5px] leading-relaxed text-slate-700">
-                  <strong className="text-white">Como resolver:</strong> {item.comoResolver}
+                  <strong className="text-ink-950">Como resolver:</strong> {item.comoResolver}
                 </p>
               ) : null}
             </div>
@@ -177,14 +177,14 @@ export default async function PaginaProducao() {
         </div>
 
         <div className="glass-soft rounded-3xl p-5">
-          <p className="font-display text-[15px] font-bold text-white">Tabelas no banco</p>
+          <p className="font-display text-[15px] font-bold text-ink-950">Tabelas no banco</p>
           <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
             {relatorio.tabelas.map((tabela) => (
               <div
                 key={tabela.nome}
                 className="rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[12px]"
               >
-                <p className="flex items-center gap-1.5 font-semibold text-white">
+                <p className="flex items-center gap-1.5 font-semibold text-ink-950">
                   <Icon
                     name={tabela.existe ? "check" : "close"}
                     className={`h-3.5 w-3.5 ${tabela.existe ? "text-jade-400" : "text-red-400"}`}
@@ -209,11 +209,11 @@ export default async function PaginaProducao() {
 
         <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="glass-soft rounded-3xl p-5">
-            <p className="font-display text-[15px] font-bold text-white">Passo a passo no Supabase</p>
+            <p className="font-display text-[15px] font-bold text-ink-950">Passo a passo no Supabase</p>
             <ol className="mt-4 space-y-3">
               {PASSOS_SUPABASE.map((passo) => (
                 <li key={passo.titulo} className="rounded-xl border border-slate-200 bg-white p-3.5">
-                  <p className="text-[12.5px] font-semibold text-white">{passo.titulo}</p>
+                  <p className="text-[12.5px] font-semibold text-ink-950">{passo.titulo}</p>
                   <p className="mt-1 text-[11.5px] leading-relaxed text-slate-700">{passo.texto}</p>
                 </li>
               ))}
@@ -222,7 +222,7 @@ export default async function PaginaProducao() {
 
           <div className="space-y-5">
             <div className="glass-soft rounded-3xl p-5">
-              <p className="font-display text-[15px] font-bold text-white">Variáveis de ambiente</p>
+              <p className="font-display text-[15px] font-bold text-ink-950">Variáveis de ambiente</p>
               <ul className="mt-3 space-y-2">
                 {VARIAVEIS.map((variavel) => (
                   <li key={variavel.nome} className="rounded-xl border border-slate-200 bg-white p-3">
@@ -245,7 +245,7 @@ export default async function PaginaProducao() {
             </div>
 
             <div className="glass-soft rounded-3xl border border-gold-600/25 p-5">
-              <p className="font-display text-[15px] font-bold text-white">Antes de liberar ao público</p>
+              <p className="font-display text-[15px] font-bold text-ink-950">Antes de liberar ao público</p>
               <ul className="mt-3 space-y-2 text-[12px] leading-relaxed text-slate-700">
                 <li>• Importar a planilha real do órgão na tela de importação.</li>
                 <li>• Definir GESTOR_SENHA e PORTAL_SECRET; revisar quem acessa o quê.</li>

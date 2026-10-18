@@ -31,6 +31,7 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
   const [dataDoe, setDataDoe] = useState("");
   const [observacao, setObservacao] = useState("");
   const [editando, setEditando] = useState<number | null>(null);
+  const [dataBase, setDataBase] = useState("");
   const [mensagem, setMensagem] = useState<{ tom: "ok" | "erro"; texto: string } | null>(null);
   const [ocupado, setOcupado] = useState(false);
   const [quinquenios, setQuinquenios] = useState<AtsQuinquenio[]>([]);
@@ -153,7 +154,11 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
       const resposta = await fetch("/api/ats", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ servidorId: Number(servidorId), dataDoe: dataDoe || null }),
+        body: JSON.stringify({
+          servidorId: Number(servidorId),
+          dataDoe: dataDoe || null,
+          base: dataBase || null,
+        }),
       });
       const dados = (await resposta.json()) as {
         erro?: string;
@@ -166,7 +171,7 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
       setMensagem({
         tom: "ok",
         texto: dados.criados?.length
-          ? `Gerados ${dados.criados.length} quinquênio(s) a partir da DI ${formatarDataBR(dados.base)}.`
+          ? `Gerados ${dados.criados.length} quinquênio(s) a partir de ${formatarDataBR(dados.base)}.`
           : "Nenhum quinquênio novo: os direitos até hoje já estavam lançados.",
       });
       onAtualizado();
@@ -202,7 +207,7 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
               <Icon name="clock" className="h-5 w-5" />
             </span>
             <div>
-              <h2 className="font-display text-xl font-extrabold text-white">
+              <h2 className="font-display text-xl font-extrabold text-ink-950">
                 ATS · Adicional por Tempo de Serviço
               </h2>
               <p className="mt-1 text-[12.5px] text-slate-700">
@@ -214,7 +219,7 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
           <button
             type="button"
             onClick={onFechar}
-            className="grid h-10 w-10 place-items-center rounded-xl border border-brand-700/16 text-white transition hover:bg-brand-50 hover:text-white"
+            className="grid h-10 w-10 place-items-center rounded-xl border border-brand-700/16 text-ink-950 transition hover:bg-brand-50 hover:text-ink-950"
             aria-label="Fechar"
           >
             <Icon name="close" className="h-4.5 w-4.5" />
@@ -236,7 +241,7 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
                   value={buscaServidor}
                   onChange={(evento) => setBuscaServidor(evento.target.value)}
                   placeholder="Filtrar por nome, CPF, cargo ou lotação"
-                  className="mb-2 w-full rounded-xl border border-slate-200 bg-white/70 py-2.5 pl-10 pr-3 text-[13px] text-white outline-none placeholder:text-slate-600 focus:border-brand-500/70"
+                  className="mb-2 w-full rounded-xl border border-slate-200 bg-white/70 py-2.5 pl-10 pr-3 text-[13px] text-ink-950 outline-none placeholder:text-slate-400 focus:border-brand-500/70"
                 />
                 <select
                   value={servidorId}
@@ -246,14 +251,15 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
                     setMensagem(null);
                   }}
                   size={6}
-                  className="w-full rounded-xl border border-slate-200 bg-white/70 p-2 text-[13px] text-white outline-none focus:border-brand-500/70"
+                  className="w-full rounded-xl border border-slate-200 bg-white/70 p-2 text-[13px] text-ink-950 outline-none focus:border-brand-500/70"
                 >
-                  <option value="" className="bg-brand-100">
+                  <option value="" className="bg-white">
                     — selecione o servidor —
                   </option>
                   {listaFiltrada.map((item) => (
-                    <option key={item.id} value={item.id} className="bg-brand-100">
-                      {item.nome} · {item.lotacao ?? "sem lotação"} · {item.ats.temAts ? `${item.ats.quantidade}º quinq.` : "sem ATS"}
+                    <option key={item.id} value={item.id} className="bg-white">
+                      {item.nome}{item.di ? ` · DI ${item.di}` : ""} · {item.lotacao ?? "sem lotação"} ·{" "}
+                      {item.ats.temAts ? `${item.ats.quantidade}º quinq.` : "sem ATS"}
                     </option>
                   ))}
                 </select>
@@ -264,7 +270,7 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
               <div className="rounded-2xl border border-slate-200 bg-white p-4">
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="font-display text-[15px] font-bold text-white">
+                    <p className="font-display text-[15px] font-bold text-ink-950">
                       {servidorSelecionado.nome}
                     </p>
                     <p className="text-[12px] text-slate-700">
@@ -272,13 +278,13 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
                       {servidorSelecionado.lotacao ?? "lotação não informada"}
                     </p>
                   </div>
-                  <span className="shrink-0 rounded-full border border-slate-200 bg-white px-3 py-1 text-[11px] text-brand-600">
-                    DI {formatarDataBR(servidorSelecionado.di)}
+                  <span className="shrink-0 rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-[11px] font-semibold text-brand-800">
+                    {servidorSelecionado.di ? `DI ${servidorSelecionado.di}` : "sem DI"}
                   </span>
                 </div>
                 <div className="mt-3 grid grid-cols-3 gap-2 text-center">
                   <div className="rounded-xl border border-slate-200 bg-white p-2.5">
-                    <p className="font-display text-base font-bold text-white">
+                    <p className="font-display text-base font-bold text-ink-950">
                       {servidorSelecionado.ats.quantidade}
                     </p>
                     <p className="text-[10.5px] text-slate-600">quinquênios</p>
@@ -296,15 +302,32 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
                     <p className="text-[10.5px] text-slate-600">próximo projetado</p>
                   </div>
                 </div>
-                <button
-                  type="button"
-                  onClick={gerarAutomatico}
-                  disabled={ocupado}
-                  className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-brand-500/35 bg-brand-100 px-4 py-2.5 text-[12.5px] font-semibold text-brand-800 transition hover:bg-brand-100 disabled:opacity-50"
-                >
-                  <Icon name="sparkles" className="h-4 w-4" />
-                  Gerar quinquênios automaticamente pela DI (regra +{DIAS_QUINQUENIO} dias)
-                </button>
+                <div className="mt-3 rounded-xl border border-brand-200 bg-brand-50 p-3">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-700">
+                    Gerar quinquênios em série
+                  </p>
+                  <p className="mt-1 text-[11px] leading-snug text-ink-850">
+                    Informe a data base (início do exercício neste vínculo). Cada quinquênio é
+                    calculado com +{DIAS_QUINQUENIO} dias.
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    <input
+                      type="date"
+                      value={dataBase}
+                      onChange={(evento) => setDataBase(evento.target.value)}
+                      className="min-w-[150px] flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-[12.5px] text-ink-950 outline-none focus:border-brand-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={gerarAutomatico}
+                      disabled={ocupado || !dataBase}
+                      className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-brand-500 to-brand-600 px-4 py-2 text-[12.5px] font-semibold text-white disabled:opacity-50"
+                    >
+                      <Icon name="sparkles" className="h-4 w-4" />
+                      Gerar
+                    </button>
+                  </div>
+                </div>
               </div>
             ) : null}
 
@@ -316,10 +339,10 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
                 <select
                   value={tipo}
                   onChange={(evento) => setTipo(Number(evento.target.value))}
-                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13.5px] text-white outline-none focus:border-brand-500/70"
+                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13.5px] text-ink-950 outline-none focus:border-brand-500/70"
                 >
                   {TIPOS.map((item) => (
-                    <option key={item.tipo} value={item.tipo} className="bg-brand-100">
+                    <option key={item.tipo} value={item.tipo} className="bg-white">
                       {item.label} — {item.percentual}%
                     </option>
                   ))}
@@ -339,7 +362,7 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
                   type="date"
                   value={dataVigencia}
                   onChange={(evento) => setDataVigencia(evento.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13.5px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
+                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13.5px] text-ink-950 outline-none focus:border-brand-500/70"
                 />
               </label>
 
@@ -351,7 +374,7 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
                   type="date"
                   value={dataDoe}
                   onChange={(evento) => setDataDoe(evento.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13.5px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
+                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13.5px] text-ink-950 outline-none focus:border-brand-500/70"
                 />
               </label>
 
@@ -362,7 +385,7 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
                 <div className="flex items-center gap-3 rounded-xl border border-gold-600/30 bg-gold-50 px-3.5 py-2.5">
                   <Icon name="trending" className="h-4 w-4 text-gold-600" />
                   <div>
-                    <p className="font-display text-[14.5px] font-bold text-white">
+                    <p className="font-display text-[14.5px] font-bold text-ink-950">
                       {projeccao ? formatarDataBR(projeccao) : "informe a vigência"}
                     </p>
                     <p className="text-[10.5px] text-slate-700">
@@ -383,7 +406,7 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
                 value={observacao}
                 onChange={(evento) => setObservacao(evento.target.value)}
                 placeholder="Ex.: publicação no Diário Oficial nº 1.204, processo 2024/004512"
-                className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13px] text-white outline-none placeholder:text-slate-600 focus:border-brand-500/70"
+                className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13px] text-ink-950 outline-none placeholder:text-slate-400 focus:border-brand-500/70"
               />
             </label>
 
@@ -421,7 +444,7 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
                 <button
                   type="button"
                   onClick={limparFormulario}
-                  className="rounded-xl border border-brand-700/16 px-4 py-3 text-[13px] text-white transition hover:text-white"
+                  className="rounded-xl border border-brand-700/16 px-4 py-3 text-[13px] text-ink-950 transition hover:text-ink-950"
                 >
                   Cancelar edição
                 </button>
@@ -434,7 +457,7 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
 
           <div className="rounded-2xl border border-slate-200 bg-white p-4">
             <div className="flex items-center justify-between">
-              <p className="font-display text-[14px] font-bold text-white">
+              <p className="font-display text-[14px] font-bold text-ink-950">
                 Quinquênios lançados
               </p>
               <span className="rounded-full border border-slate-200 px-2.5 py-1 text-[11px] text-slate-700">
@@ -464,7 +487,7 @@ export function AtsModal({ aberto, servidores, servidorInicial, onFechar, onAtua
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <p className="font-display text-[13.5px] font-bold text-white">
+                        <p className="font-display text-[13.5px] font-bold text-ink-950">
                           {TIPOS[item.tipo - 1]?.label ?? `${item.tipo}º Quinquênio`}
                           <span className="ml-2 rounded-full bg-gold-100 px-2 py-0.5 text-[10.5px] font-semibold text-gold-400">
                             +{item.tipo * PERCENTUAL_POR_QUINQUENIO}%

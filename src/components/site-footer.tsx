@@ -84,7 +84,10 @@ export function SiteFooter() {
         </div>
 
         <div className="hairline mt-12 flex flex-col gap-4 pt-6 text-[12px] text-slate-600 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} SERVIDOR 360 · Plataforma de gestão de pessoas públicas.</p>
+          <p>
+            © {new Date().getFullYear()} SERVIDOR 360 · EE Profa. Marlene Frattini · Gestão de
+            pessoas e vantagens funcionais.
+          </p>
           <p className="flex flex-wrap items-center gap-4">
             <span className="flex items-center gap-1.5 text-jade-500">
               <span className="relative flex h-2 w-2">

@@ -129,10 +129,12 @@ export async function PUT(request: Request) {
     const [servidor] = await db.select().from(servidores).where(eq(servidores.id, servidorId)).limit(1);
     if (!servidor) return Response.json({ erro: "Servidor não encontrado." }, { status: 404 });
 
-    const base = corpo.base ?? servidor.di;
-    if (!base) {
+    // O DI é o dígito de identificação do cargo (texto), não uma data.
+    // A geração em série exige uma DATA BASE informada pelo gestor (ex.: início do exercício).
+    const base = corpo.base ?? null;
+    if (!base || !/^\d{4}-\d{2}-\d{2}$/.test(base)) {
       return Response.json(
-        { erro: "DI (data de ingresso) não informada no cadastro. Informe uma data base para a geração." },
+        { erro: "Informe a data base (início do exercício) para gerar os quinquênios em série." },
         { status: 400 },
       );
     }
@@ -157,7 +159,7 @@ export async function PUT(request: Request) {
         dataVigencia: vigencia,
         dataDoe: corpo.dataDoe ?? null,
         dataProximoProjetada: projetarProximoQuinquenio(vigencia),
-        observacao: `Gerado automaticamente a partir da DI ${base} (+${DIAS_QUINQUENIO} dias por quinquênio).`,
+        observacao: `Gerado em série a partir da data base ${base} (+${DIAS_QUINQUENIO} dias por quinquênio).`,
         criadoPor: "Motor de regras",
       });
       criados.push(tipo);

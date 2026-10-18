@@ -1,8 +1,9 @@
-import { eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import { db } from "@/db";
 import { servidores } from "@/db/schema";
 import { listarServidoresComAts, registrarAuditoria } from "@/lib/consultas";
 import { apenasDigitos, cpfValido, nomeDeBusca, titulo } from "@/lib/planilha";
+import { normalizarDi } from "@/lib/ats";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -41,19 +42,27 @@ export async function POST(request: Request) {
       return Response.json({ erro: "CPF inválido (dígitos verificadores)." }, { status: 400 });
     }
     if (cpf) {
+      const diNovo = normalizarDi(corpo.di?.toString());
       const existente = await db
         .select({ id: servidores.id })
         .from(servidores)
-        .where(eq(servidores.cpf, cpf))
+        .where(and(eq(servidores.cpf, cpf), diNovo ? eq(servidores.di, diNovo) : isNull(servidores.di)))
         .limit(1);
       if (existente.length > 0) {
-        return Response.json({ erro: "Já existe servidor cadastrado com este CPF." }, { status: 409 });
+        return Response.json(
+          {
+            erro: diNovo
+              ? `Já existe vínculo deste CPF com o DI ${diNovo}. Use outro DI para cadastrar um novo vínculo.`
+              : "Já existe cadastro deste CPF sem DI. Informe o DI para diferenciar o vínculo.",
+          },
+          { status: 409 },
+        );
       }
     }
 
     const pendencias: string[] = [];
     if (!cpf) pendencias.push("CPF não informado.");
-    if (!corpo.di) pendencias.push("DI (data de ingresso) não informada.");
+    if (!corpo.di) pendencias.push("DI (dígito de identificação do cargo) não informado.");
     if (!corpo.cargo) pendencias.push("Cargo não informado.");
     if (!corpo.lotacao) pendencias.push("Lotação não informada.");
 
@@ -64,7 +73,7 @@ export async function POST(request: Request) {
         nomeBusca: nomeDeBusca(nome),
         cpf,
         rgcin: corpo.rgcin ? corpo.rgcin.toString().trim() : null,
-        di: corpo.di ? corpo.di.toString().slice(0, 10) : null,
+        di: normalizarDi(corpo.di?.toString()),
         dtnasc: corpo.dtnasc ? corpo.dtnasc.toString().slice(0, 10) : null,
         tel: corpo.tel ? apenasDigitos(corpo.tel.toString()) : null,
         email: corpo.email ? corpo.email.toString().trim().toLowerCase() : null,

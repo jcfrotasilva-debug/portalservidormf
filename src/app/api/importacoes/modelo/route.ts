@@ -25,7 +25,7 @@ const EXEMPLOS: (string | number | null)[][] = [
     "MARIANA ALVES DE SOUZA",
     "52998224725",
     "12.345.678-9 SSP/SP",
-    "04/03/2013",
+    "1",
     "18/07/1988",
     "(11) 98877-6655",
     "mariana.souza@orgao.gov.br",
@@ -40,7 +40,7 @@ const EXEMPLOS: (string | number | null)[][] = [
     "joao pedro ferreira",
     "11144477735",
     "MG-9988776",
-    "10/01/2019",
+    "2",
     "02/02/1990",
     "31988887777",
     "JOAO.FERREIRA@ORGAO.GOV.BR",
@@ -55,7 +55,7 @@ const EXEMPLOS: (string | number | null)[][] = [
     "CÉLIA MARIA ROCHA",
     "39053344705",
     null,
-    "15/06/2008 00:00:00",
+    "ACT-F",
     "30/09/1979",
     "11 3344 5566",
     "celia.rocha@orgao",
@@ -70,7 +70,7 @@ const EXEMPLOS: (string | number | null)[][] = [
     "Rafael Teixeira Lima",
     null,
     "1234567-8",
-    "2016-08-22",
+    null,
     null,
     null,
     null,
@@ -85,7 +85,7 @@ const EXEMPLOS: (string | number | null)[][] = [
     "Antônia da Silva Barros",
     "15350946056",
     "CIN 4455667",
-    "01/03/2001",
+    "1",
     "11/11/1971",
     "62991112233",
     "antonia.barros@orgao.gov.br",
@@ -105,7 +105,9 @@ export async function GET() {
   const planilha = workbook.addWorksheet("Pre-cadastro");
 
   planilha.addRow(["PLATAFORMA SERVIDOR 360 - MODELO DE PRE-CADASTRO DE SERVIDORES"]);
-  planilha.addRow(["Preencha uma linha por servidor. Celulas vazias sao tratadas pelo sistema."]);
+  planilha.addRow([
+    "Uma linha por VINCULO. O DI (digito de identificacao do cargo) diferencia vinculos do mesmo servidor.",
+  ]);
   planilha.addRow([]);
 
   const cabecalho = planilha.addRow(CABECALHOS);

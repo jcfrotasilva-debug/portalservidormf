@@ -2,6 +2,7 @@ import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { sql } from "drizzle-orm";
 import { db, descricaoConexao } from "@/db";
+import { gestorProtegido } from "@/lib/gestor";
 
 export type StatusItem = "ok" | "atencao" | "bloqueio";
 
@@ -131,17 +132,17 @@ export async function gerarRelatorio(): Promise<RelatorioProntidao> {
   });
 
   // --- autenticação do gestor ---
-  const gestorProtegido = Boolean(process.env.GESTOR_SENHA && process.env.GESTOR_SENHA.length >= 8);
+  const painelProtegido = await gestorProtegido();
   itens.push({
     id: "gestor-auth",
     titulo: "Área do gestor protegida",
-    status: gestorProtegido ? "ok" : "bloqueio",
-    detalhe: gestorProtegido
-      ? "Painel do gestor exige senha de acesso (GESTOR_SENHA)."
-      : "O painel do gestor está aberto: qualquer pessoa com o link pode editar cadastros e vantagens.",
-    comoResolver: gestorProtegido
+    status: painelProtegido ? "ok" : "bloqueio",
+    detalhe: painelProtegido
+      ? "Painel do gestor exige senha de acesso (GESTOR_SENHA ou senha gravada no banco)."
+      : "ATENÇÃO: o painel do gestor está aberto sem senha — configure GESTOR_SENHA ou crie a senha pela tela /acesso-gestor.",
+    comoResolver: painelProtegido
       ? undefined
-      : "Defina GESTOR_SENHA (mínimo 8 caracteres) nas variáveis de ambiente para exigir login em /gestor.",
+      : "Abra /acesso-gestor para criar a senha administrativa, ou defina GESTOR_SENHA nas variáveis de ambiente.",
   });
 
   itens.push({

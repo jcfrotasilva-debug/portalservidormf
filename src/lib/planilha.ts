@@ -59,7 +59,7 @@ const ALIASES: Record<keyof PayloadServidor, string[]> = {
   nome: ["NOME", "NOME COMPLETO", "NOMEDOSERVIDOR", "SERVIDOR", "SERVIDORA"],
   cpf: ["CPF", "NUCPF", "CPF SERVIDOR", "NUMERO CPF"],
   rgcin: ["RGCIN", "RG", "RGCINRG", "RG CIN", "CIN", "IDENTIDADE", "RG CIN SSP"],
-  di: ["DI", "D.I", "DI DATA DE INGRESSO", "DATA DE INGRESSO", "DATA INGRESSO", "DTINGRESSO", "DT DE INGRESSO", "DATAADMISSAO", "DATA DE ADMISSAO", "ADMISSAO"],
+  di: ["DI", "D I", "D.I", "DIGITO", "DIGITO DE IDENTIFICACAO", "DIG", "DI CARGO", "DIGITO CARGO", "IDENTIFICADOR DO CARGO", "VINCULO DI"],
   dtnasc: ["DTNASC", "DT NASC", "DATA DE NASCIMENTO", "DATA NASCIMENTO", "DTNASCIMENTO", "NASCIMENTO", "DATA NASC"],
   tel: ["TEL", "TELEFONE", "CELULAR", "FONE", "CONTATO", "TELEFONE CELULAR"],
   email: ["EMAIL", "E MAIL", "EMAIL INSTITUCIONAL", "CORREIO ELETRONICO"],
@@ -167,9 +167,15 @@ export function nomeDeBusca(nome: string): string {
   return normalizarTexto(nome).toLowerCase();
 }
 
-export function chaveServidor(payload: Pick<PayloadServidor, "cpf" | "nome" | "lotacao">) {
-  if (payload.cpf) return `cpf:${payload.cpf}`;
-  return `nm:${nomeDeBusca(payload.nome)}|${normalizarTexto(payload.lotacao ?? "")}`;
+/**
+ * Chave de deduplicação.
+ * O DI diferencia vínculos distintos do MESMO servidor (ex.: ACT-F e Efetivo),
+ * por isso compõe a chave junto do CPF.
+ */
+export function chaveServidor(payload: Pick<PayloadServidor, "cpf" | "nome" | "lotacao" | "di">) {
+  const di = (payload.di ?? "").trim().toUpperCase();
+  if (payload.cpf) return `cpf:${payload.cpf}|di:${di}`;
+  return `nm:${nomeDeBusca(payload.nome)}|${normalizarTexto(payload.lotacao ?? "")}|di:${di}`;
 }
 
 function anoBissexto(ano: number) {
@@ -408,7 +414,10 @@ function lerCsv(texto: string): { linhas: string[][]; avisos: string[] } {
 export async function processarPlanilha(
   buffer: Buffer,
   arquivo: string,
-  existentes: { cpfs: Set<string>; chaves: Set<string> } = { cpfs: new Set(), chaves: new Set() },
+  existentes: { cpfs: Set<string>; chaves: Set<string>; cpfsSemDi?: Set<string> } = {
+    cpfs: new Set(),
+    chaves: new Set(),
+  },
   limiteLinhas = 2000,
 ): Promise<ResultadoProcessamento> {
   const ehCsv = /\.(csv|txt|tsv)$/i.test(arquivo);
@@ -538,13 +547,16 @@ export async function processarPlanilha(
     const rgcin = bruto.rgcin?.trim() || null;
     if (!rgcin) registrarVazio("rgcin");
 
+    // DI = Dígito de Identificação do cargo/vínculo (texto curto, ex.: "1", "2", "ACT-F").
     const diBruto = bruto.di ?? "";
-    const di = diBruto ? parseDataFlexivel(diBruto) : null;
-    if (!diBruto) {
-      registrarVazio("di");
-      pendencias.push("DI vazia: não é possível gerar quinquênios automaticamente para este servidor.");
-    } else if (!di) {
-      pendencias.push(`DI ilegível ("${diBruto}") — use o formato dd/mm/aaaa.`);
+    const di = diBruto ? diBruto.trim().toUpperCase().replace(/\s+/g, " ") : null;
+    if (!di) {
+      registrarVazio("di", "DI vazio: vínculo tratado como único para este CPF.");
+      pendencias.push(
+        "DI não informado — dígito que diferencia vínculos distintos do mesmo servidor.",
+      );
+    } else if (di.length > 20) {
+      pendencias.push(`DI "${di}" parece longo demais para um dígito de identificação.`);
     }
 
     const nascBruto = bruto.dtnasc ?? "";
@@ -625,14 +637,21 @@ export async function processarPlanilha(
     const chaveAnterior = chavesNoArquivo.get(chave);
     if (chaveAnterior) {
       status = "duplicada";
-      motivo = `Mesmo registro da linha ${chaveAnterior} (${cpf ? "CPF" : "nome + lotação"} repetido).`;
+      motivo = `Mesmo registro da linha ${chaveAnterior} (${cpf ? "CPF" : "nome + lotação"} e DI repetidos).`;
       destino = null;
-    } else if (payload.cpf && existentes.cpfs.has(payload.cpf)) {
-      status = "atualizar";
-      destino = "Servidor já cadastrado (CPF) — dados serão atualizados";
     } else if (existentes.chaves.has(chave)) {
       status = "atualizar";
-      destino = "Servidor já cadastrado (nome + lotação) — dados serão atualizados";
+      destino = payload.cpf
+        ? "Vínculo já cadastrado (CPF + DI) — dados serão atualizados"
+        : "Vínculo já cadastrado (nome + lotação + DI) — dados serão atualizados";
+    } else if (payload.cpf && payload.di && existentes.cpfsSemDi?.has(payload.cpf)) {
+      // Registro legado importado antes do DI existir: o DI será preenchido nele.
+      status = "atualizar";
+      destino = `Cadastro existente sem DI — receberá o DI ${payload.di}`;
+    } else if (payload.cpf && existentes.cpfs.has(payload.cpf)) {
+      status = "nova";
+      destino = "Novo vínculo do mesmo servidor (CPF já existe com outro DI)";
+      chavesNoArquivo.set(chave, numeroLinha);
     } else {
       chavesNoArquivo.set(chave, numeroLinha);
     }

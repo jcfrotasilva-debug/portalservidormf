@@ -138,7 +138,7 @@ export function Audience() {
           <span className="inline-flex items-center gap-2 rounded-full border border-gold-600/30 bg-gold-100 px-3 py-1 text-[11.5px] font-semibold uppercase tracking-[0.18em] text-gold-400">
             {current.badge}
           </span>
-          <h3 className="mt-5 font-display text-2xl font-extrabold leading-snug text-white sm:text-[1.75rem]">
+          <h3 className="mt-5 font-display text-2xl font-extrabold leading-snug text-ink-950 sm:text-[1.75rem]">
             {current.title}
           </h3>
           <p className="mt-4 text-[15.5px] leading-relaxed text-slate-700">
@@ -151,7 +151,7 @@ export function Audience() {
                 key={item.label}
                 className="rounded-2xl border border-slate-200 bg-white p-4.5 transition hover:border-brand-500/35 hover:bg-brand-50"
               >
-                <p className="flex items-center gap-2 font-display text-[14px] font-bold text-white">
+                <p className="flex items-center gap-2 font-display text-[14px] font-bold text-ink-950">
                   <Icon name="check" className="h-4 w-4 text-jade-400" strokeWidth={2.2} />
                   {item.label}
                 </p>
@@ -189,7 +189,7 @@ function PanelFrame({
         <p className="text-[11.5px] text-slate-600">app.servidor360.gov</p>
       </div>
       <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-4.5">
-        <p className="font-display text-[15px] font-bold text-white">{title}</p>
+        <p className="font-display text-[15px] font-bold text-ink-950">{title}</p>
         <p className="mt-1 text-[12px] text-slate-600">{subtitle}</p>
         <div className="mt-4 space-y-3">{children}</div>
       </div>
@@ -230,7 +230,7 @@ function ServantPanel() {
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-100 text-brand-600">
             <Icon name={row.icon} className="h-4 w-4" />
           </span>
-          <p className="text-[12.5px] text-white">{row.text}</p>
+          <p className="text-[12.5px] text-ink-950">{row.text}</p>
         </div>
       ))}
     </PanelFrame>
@@ -247,7 +247,7 @@ function ManagerPanel() {
           { label: "Vantagens a vencer", value: "112" },
         ].map((item) => (
           <div key={item.label} className="rounded-xl border border-slate-200 bg-white/5 p-3">
-            <p className="font-display text-[18px] font-extrabold text-white">{item.value}</p>
+            <p className="font-display text-[18px] font-extrabold text-ink-950">{item.value}</p>
             <p className="mt-1 text-[10.5px] leading-tight text-slate-600">{item.label}</p>
           </div>
         ))}
@@ -265,7 +265,7 @@ function ManagerPanel() {
           ].map((row) => (
             <div key={row.name} className="flex items-center justify-between gap-2">
               <div className="min-w-0">
-                <p className="truncate text-[12.5px] font-semibold text-white">{row.name}</p>
+                <p className="truncate text-[12.5px] font-semibold text-ink-950">{row.name}</p>
                 <p className="truncate text-[11px] text-slate-600">{row.act}</p>
               </div>
               <span

@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { servidores } from "@/db/schema";
 import { obterServidor, registrarAuditoria } from "@/lib/consultas";
 import { apenasDigitos, nomeDeBusca, titulo } from "@/lib/planilha";
+import { normalizarDi } from "@/lib/ats";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -59,7 +60,7 @@ export async function PATCH(request: Request, contexto: Contexto) {
       nomeBusca: nomeDeBusca(nome),
       cpf: corpo.cpf !== undefined ? (apenasDigitos(corpo.cpf ?? "") || null) : atual[0].cpf,
       rgcin: corpo.rgcin !== undefined ? corpo.rgcin : atual[0].rgcin,
-      di: corpo.di !== undefined ? corpo.di : atual[0].di,
+      di: corpo.di !== undefined ? normalizarDi(corpo.di) : atual[0].di,
       dtnasc: corpo.dtnasc !== undefined ? corpo.dtnasc : atual[0].dtnasc,
       tel: corpo.tel !== undefined ? apenasDigitos(corpo.tel ?? "") || null : atual[0].tel,
       email: corpo.email !== undefined ? corpo.email : atual[0].email,

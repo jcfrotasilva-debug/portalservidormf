@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import { db } from "@/db";
 import { importacoes, servidores } from "@/db/schema";
 import { registrarAuditoria, listarImportacoes } from "@/lib/consultas";
@@ -76,21 +76,43 @@ export async function POST(request: Request) {
       const camposVazios = (linha.camposVazios ?? []) as CampoVazio[];
       if (pendencias.length > 0) comPendencias += 1;
 
-      const existente = payload.cpf
+      // Mesmo CPF pode ter vários vínculos: o DI faz parte da identidade do registro.
+      const filtroDi = payload.di ? eq(servidores.di, payload.di) : isNull(servidores.di);
+      let existente = payload.cpf
         ? (
             await db
               .select({ id: servidores.id })
               .from(servidores)
-              .where(eq(servidores.cpf, payload.cpf))
+              .where(and(eq(servidores.cpf, payload.cpf), filtroDi))
               .limit(1)
           )[0]
         : (
             await db
               .select({ id: servidores.id })
               .from(servidores)
-              .where(and(eq(servidores.nomeBusca, dados.nomeBusca)))
+              .where(and(eq(servidores.nomeBusca, dados.nomeBusca), filtroDi))
               .limit(1)
           )[0];
+
+      // Cadastro legado (importado antes do DI existir): completa o DI em vez de duplicar.
+      if (!existente && payload.di) {
+        const legado = payload.cpf
+          ? (
+              await db
+                .select({ id: servidores.id })
+                .from(servidores)
+                .where(and(eq(servidores.cpf, payload.cpf), isNull(servidores.di)))
+                .limit(1)
+            )[0]
+          : (
+              await db
+                .select({ id: servidores.id })
+                .from(servidores)
+                .where(and(eq(servidores.nomeBusca, dados.nomeBusca), isNull(servidores.di)))
+                .limit(1)
+            )[0];
+        if (legado) existente = legado;
+      }
 
       if (existente) {
         await db.update(servidores)
@@ -103,7 +125,9 @@ export async function POST(request: Request) {
           })
           .where(eq(servidores.id, existente.id));
         atualizadas += 1;
-        detalhes.push(`Linha ${linha.linha}: atualizado cadastro de ${dados.nome}.`);
+        detalhes.push(
+          `Linha ${linha.linha}: atualizado ${dados.nome}${dados.di ? ` (DI ${dados.di})` : ""}.`,
+        );
       } else {
         await db.insert(servidores).values({
           ...dados,
@@ -113,7 +137,9 @@ export async function POST(request: Request) {
           importacaoId: importacao.id,
         });
         novas += 1;
-        detalhes.push(`Linha ${linha.linha}: cadastrado ${dados.nome}.`);
+        detalhes.push(
+          `Linha ${linha.linha}: cadastrado ${dados.nome}${dados.di ? ` (DI ${dados.di})` : ""}.`,
+        );
       }
     }
 

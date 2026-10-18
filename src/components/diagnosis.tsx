@@ -68,7 +68,7 @@ export function Diagnosis() {
                   {problem.tag}
                 </span>
               </div>
-              <h3 className="mt-6 font-display text-[19px] font-bold leading-snug text-white">
+              <h3 className="mt-6 font-display text-[19px] font-bold leading-snug text-ink-950">
                 {problem.title}
               </h3>
               <p className="mt-3 text-[14.5px] leading-relaxed text-slate-700">{problem.text}</p>
@@ -87,13 +87,13 @@ export function Diagnosis() {
               <p className="text-[11.5px] font-semibold uppercase tracking-[0.22em] text-gold-600">
                 A proposta
               </p>
-              <h3 className="mt-2 font-display text-2xl font-extrabold text-white sm:text-[1.75rem]">
+              <h3 className="mt-2 font-display text-2xl font-extrabold text-ink-950 sm:text-[1.75rem]">
                 Uma plataforma, três compromissos
               </h3>
             </div>
             <a
               href="#ambientes"
-              className="group inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/5 px-5 py-3 text-[13.5px] font-semibold text-white transition hover:border-brand-500/50 hover:bg-brand-50"
+              className="group inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/5 px-5 py-3 text-[13.5px] font-semibold text-ink-950 transition hover:border-brand-500/50 hover:bg-brand-50"
             >
               Ver os dois ambientes
               <Icon
@@ -107,14 +107,14 @@ export function Diagnosis() {
             {PILLARS.map((pillar, index) => (
               <div key={pillar.title} className="rounded-2xl border border-slate-200 bg-white p-5">
                 <div className="flex items-center gap-3">
-                  <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-400/25 to-gold-400/20 text-white">
+                  <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-400/25 to-gold-400/20 text-ink-950">
                     <Icon name={pillar.icon} className="h-4.5 w-4.5" />
                   </span>
                   <span className="font-display text-[13px] font-bold text-brand-600">
                     0{index + 1}
                   </span>
                 </div>
-                <p className="mt-4 font-display text-[15.5px] font-bold text-white">
+                <p className="mt-4 font-display text-[15.5px] font-bold text-ink-950">
                   {pillar.title}
                 </p>
                 <p className="mt-2 text-[13.5px] leading-relaxed text-slate-700">{pillar.text}</p>

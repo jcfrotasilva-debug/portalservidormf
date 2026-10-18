@@ -21,7 +21,7 @@ export default function PaginaServidor() {
               <Icon name="layers" className="h-4.5 w-4.5 text-white" />
             </span>
             <span className="leading-tight">
-              <span className="block font-display text-[15.5px] font-extrabold text-white">
+              <span className="block font-display text-[15.5px] font-extrabold text-ink-950">
                 SERVIDOR<span className="text-gold-600">360</span>
               </span>
               <span className="block text-[10.5px] uppercase tracking-[0.2em] text-brand-600">
@@ -32,13 +32,13 @@ export default function PaginaServidor() {
           <div className="flex items-center gap-2.5">
             <Link
               href="/gestor"
-              className="rounded-full border border-brand-700/16 px-4 py-2.5 text-[12.5px] font-semibold text-white transition hover:border-brand-500/50 hover:text-white"
+              className="rounded-full border border-brand-700/16 px-4 py-2.5 text-[12.5px] font-semibold text-ink-950 transition hover:border-brand-500/50 hover:text-ink-950"
             >
               Sou gestor
             </Link>
             <Link
               href="/"
-              className="hidden rounded-full border border-brand-700/16 px-4 py-2.5 text-[12.5px] font-semibold text-white transition hover:border-brand-500/50 hover:text-white sm:block"
+              className="hidden rounded-full border border-brand-700/16 px-4 py-2.5 text-[12.5px] font-semibold text-ink-950 transition hover:border-brand-500/50 hover:text-ink-950 sm:block"
             >
               Apresentação
             </Link>

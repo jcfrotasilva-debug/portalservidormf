@@ -48,7 +48,7 @@ function Stat({
   const current = useCountUp(value, active);
   return (
     <div className="relative px-2 py-6 text-center sm:px-4">
-      <p className="font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+      <p className="font-display text-4xl font-extrabold tracking-tight text-ink-950 sm:text-5xl">
         {current}
         <span className="text-gold-600">{suffix}</span>
       </p>

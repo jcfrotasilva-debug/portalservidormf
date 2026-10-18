@@ -119,8 +119,10 @@ export function ImportarWizard() {
           </h2>
           <p className="mt-2 max-w-md text-[13px] text-slate-700">
             Colunas esperadas: NOME, CPF, RGCIN, DI, DTNASC, TEL, E-MAIL, CLASSE, CARGO, CATEGORIA,
-            JORNADA, LOTACAO, SITUACAO. Aceita <strong className="text-white">.xlsx</strong> e{" "}
-            <strong className="text-white">.csv</strong>. Células vazias são tratadas
+            JORNADA, LOTACAO, SITUACAO. O <strong className="text-ink-950">DI</strong> é o dígito de
+            identificação do cargo e diferencia vínculos do mesmo servidor. Aceita{" "}
+            <strong className="text-ink-950">.xlsx</strong> e{" "}
+            <strong className="text-ink-950">.csv</strong>. Células vazias são tratadas
             automaticamente e as divergências viram pendências do RH.
           </p>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
@@ -134,7 +136,7 @@ export function ImportarWizard() {
             </button>
             <a
               href="/api/importacoes/modelo"
-              className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-5 py-3 text-[13.5px] font-semibold text-white transition hover:border-brand-500/50 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-5 py-3 text-[13.5px] font-semibold text-ink-950 transition hover:border-brand-500/50 hover:text-ink-950"
             >
               <Icon name="download" className="h-4 w-4" />
               Baixar modelo XLSX
@@ -161,13 +163,14 @@ export function ImportarWizard() {
         </div>
 
         <div className="glass-soft rounded-3xl p-5">
-          <p className="font-display text-[15px] font-bold text-white">
+          <p className="font-display text-[15px] font-bold text-ink-950">
             Como o sistema trata células vazias
           </p>
           <ul className="mt-4 space-y-3">
             {[
               "SITUACAO vazia → registrada como “Ativo” e sinalizada para revisão.",
-              "CPF vazio ou inválido → linha mantida, deduplicada por nome + lotação.",
+              "CPF vazio ou inválido → linha mantida, deduplicada por nome + lotação + DI.",
+              "Mesmo CPF com DI diferente → novo vínculo, não é tratado como duplicidade.",
               "Datas em qualquer formato (dd/mm/aaaa, aaaa-mm-dd, serial do Excel) são convertidas.",
               "Telefone e e-mail são higienizados; formatos inválidos viram pendência.",
               "Linhas de total, subtotal e rodapé são descartadas automaticamente.",
@@ -189,7 +192,7 @@ export function ImportarWizard() {
               <Icon name="badge-check" className="h-5.5 w-5.5" />
             </span>
             <div>
-              <p className="font-display text-[16.5px] font-extrabold text-white">
+              <p className="font-display text-[16.5px] font-extrabold text-ink-950">
                 Importação concluída
               </p>
               <p className="text-[12.5px] text-slate-700">
@@ -252,7 +255,7 @@ export function ImportarWizard() {
           <div className="glass-soft rounded-3xl p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="font-display text-[15px] font-bold text-white">
+                <p className="font-display text-[15px] font-bold text-ink-950">
                   Pré-visualização · {resultado.arquivo}
                 </p>
                 <p className="mt-1 text-[11.5px] text-slate-600">
@@ -307,7 +310,7 @@ export function ImportarWizard() {
                     className="flex w-full flex-wrap items-center justify-between gap-3 px-4 py-3 text-left"
                   >
                     <div className="min-w-0">
-                      <p className="font-display text-[13.5px] font-bold text-white">
+                      <p className="font-display text-[13.5px] font-bold text-ink-950">
                         <span className="mr-2 text-[11px] font-medium text-slate-600">
                           linha {linha.linha}
                         </span>
@@ -317,7 +320,7 @@ export function ImportarWizard() {
                         {linha.payload
                           ? `${formatarCpf(linha.payload.cpf)} · ${linha.payload.cargo ?? "cargo vazio"} · ${
                               linha.payload.lotacao ?? "lotação vazia"
-                            } · DI ${formatarDataBR(linha.payload.di)}`
+                            } · ${linha.payload.di ? `DI ${linha.payload.di}` : "sem DI"}`
                           : linha.motivo}
                       </p>
                     </div>
@@ -354,12 +357,12 @@ export function ImportarWizard() {
                                   <span className="text-slate-600">
                                     {LABELS_CAMPOS[campo] ?? campo}
                                   </span>
-                                  <span className="text-right font-medium text-white">
+                                  <span className="text-right font-medium text-ink-950">
                                     {valor === null || valor === ""
                                       ? "— vazio —"
                                       : campo === "cpf"
                                         ? formatarCpf(valor as string)
-                                        : campo === "di" || campo === "dtnasc"
+                                        : campo === "dtnasc"
                                           ? formatarDataBR(valor as string)
                                           : (valor as string)}
                                   </span>

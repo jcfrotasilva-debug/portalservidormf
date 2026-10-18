@@ -91,7 +91,7 @@ export function ModulesGrid() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
               </div>
-              <h3 className="mt-5 font-display text-[16.5px] font-bold leading-snug text-white">
+              <h3 className="mt-5 font-display text-[16.5px] font-bold leading-snug text-ink-950">
                 {module.title}
               </h3>
               <p className="mt-2.5 text-[13.5px] leading-relaxed text-slate-700">

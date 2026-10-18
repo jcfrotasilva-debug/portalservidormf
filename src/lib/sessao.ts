@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { servidores } from "@/db/schema";
+import { gestorProtegido } from "@/lib/gestor";
 
 const COOKIE = "s360_sessao";
 const COOKIE_GESTOR = "s360_gestor";
@@ -54,22 +55,8 @@ export async function servidorDaSessao() {
 export const NOME_COOKIE = COOKIE;
 
 /* ------------------------------------------------------------------ */
-/* Acesso do gestor (protegido quando GESTOR_SENHA está configurada)   */
+/* Sessão do gestor                                                    */
 /* ------------------------------------------------------------------ */
-
-export function gestorProtegido() {
-  const senha = process.env.GESTOR_SENHA;
-  return Boolean(senha && senha.length >= 8);
-}
-
-export function senhaGestorCorreta(senha: string) {
-  const esperada = process.env.GESTOR_SENHA ?? "";
-  if (!esperada) return true;
-  const a = Buffer.from(String(senha));
-  const b = Buffer.from(esperada);
-  if (a.length !== b.length) return false;
-  return timingSafeEqual(a, b);
-}
 
 function assinarGestor() {
   return createHmac("sha256", `${SEGREDO}:gestor`).update("gestor360").digest("hex").slice(0, 32);
@@ -90,9 +77,13 @@ export async function encerrarSessaoGestor() {
   jar.delete(COOKIE_GESTOR);
 }
 
-/** true quando o painel está liberado (sem senha) ou o cookie é válido. */
-export async function gestorAutenticado() {
-  if (!gestorProtegido()) return true;
+/**
+ * true apenas quando o painel está liberado (acesso livre explícito no
+ * ambiente local) OU quando o cookie de sessão do gestor é válido.
+ * Nunca abre sem senha configurada automaticamente.
+ */
+export async function gestorAutenticado(): Promise<boolean> {
+  if (!(await gestorProtegido())) return true;
   const jar = await cookies();
   const valor = jar.get(COOKIE_GESTOR)?.value ?? "";
   const esperado = assinarGestor();

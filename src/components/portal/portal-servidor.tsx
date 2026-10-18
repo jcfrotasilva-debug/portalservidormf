@@ -13,7 +13,7 @@ import {
   formatarTelefone,
   hojeISO,
   idade,
-  tempoDeServico,
+  rotuloVinculo,
 } from "@/lib/ats";
 import { resumoVazio, rotuloTipoEvolucao } from "@/lib/evolucao";
 import { resumirCertidao } from "@/lib/licenca";
@@ -38,6 +38,7 @@ type Dados = {
   resumo?: ResumoAts;
   resumoEvolucao?: ResumoEvolucao;
   resumoLicenca?: ResumoLicenca;
+  tempo?: { anos: number; meses: number; dias: number; totalDias: number } | null;
   celulasVazias?: string[];
 };
 
@@ -102,10 +103,10 @@ export function PortalServidor() {
     return (
       <div className="mx-auto grid max-w-4xl gap-6 lg:grid-cols-[1fr_0.9fr]">
         <div className="glass rounded-3xl p-7">
-          <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-brand-400/30 to-gold-400/20 text-white">
+          <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-brand-400/30 to-gold-400/20 text-ink-950">
             <Icon name="fingerprint" className="h-5.5 w-5.5" />
           </span>
-          <h1 className="mt-5 font-display text-2xl font-extrabold text-white">
+          <h1 className="mt-5 font-display text-2xl font-extrabold text-ink-950">
             Área exclusiva do servidor
           </h1>
           <p className="mt-2 text-[13.5px] leading-relaxed text-slate-700">
@@ -123,7 +124,7 @@ export function PortalServidor() {
                 onChange={(evento) => setCpf(evento.target.value)}
                 placeholder="000.000.000-00 ou nome do cadastro"
                 autoComplete="username"
-                className="w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-[14px] text-white outline-none placeholder:text-slate-600 focus:border-brand-500/70"
+                className="w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-[14px] text-ink-950 outline-none placeholder:text-slate-400 focus:border-brand-500/70"
               />
             </label>
             <label className="block">
@@ -134,7 +135,7 @@ export function PortalServidor() {
                 type="date"
                 value={dtnasc}
                 onChange={(evento) => setDtnasc(evento.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-[14px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
+                className="w-full rounded-xl border border-slate-200 bg-white/70 px-4 py-3 text-[14px] text-ink-950 outline-none focus:border-brand-500/70"
               />
             </label>
             {erro ? (
@@ -154,14 +155,14 @@ export function PortalServidor() {
           </div>
 
           <p className="mt-4 text-[11.5px] text-slate-600">
-            Servidores importados da planilha podem entrar pelo CPF <strong className="text-white">ou pelo nome completo</strong>.
+            Servidores importados da planilha podem entrar pelo CPF <strong className="text-ink-950">ou pelo nome completo</strong>.
             Quando a data de nascimento veio vazia, o acesso é liberado só com a identificação e a
             pendência fica registrada para o RH completar o cadastro.
           </p>
         </div>
 
         <div className="glass-soft rounded-3xl p-7">
-          <p className="font-display text-[15.5px] font-bold text-white">O que você encontra aqui</p>
+          <p className="font-display text-[15.5px] font-bold text-ink-950">O que você encontra aqui</p>
           <ul className="mt-4 space-y-3">
             {[
               { icon: "clock" as const, texto: "Tempo de serviço e ATS acumulado (quinquênios)." },
@@ -169,7 +170,7 @@ export function PortalServidor() {
               { icon: "file" as const, texto: "Ficha com CPF, RGCIN, DI, nascimento, telefone, e-mail, classe, cargo, categoria, jornada e lotação." },
               { icon: "badge-check" as const, texto: "Apontamento de dados pendentes para regularização com o RH." },
             ].map((item) => (
-              <li key={item.texto} className="flex gap-3 text-[12.5px] leading-relaxed text-white">
+              <li key={item.texto} className="flex gap-3 text-[12.5px] leading-relaxed text-ink-950">
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-100 text-brand-600">
                   <Icon name={item.icon} className="h-4 w-4" />
                 </span>
@@ -199,7 +200,7 @@ export function PortalServidor() {
     emGozo: 0,
     temCertidao: false,
   };
-  const tempo = tempoDeServico(servidor.di);
+  const tempo = dados.tempo ?? null;
   const anos = idade(servidor.dtnasc);
   const ultimo = quinquenios[quinquenios.length - 1];
   const progresso = ultimo
@@ -227,13 +228,12 @@ export function PortalServidor() {
               <p className="text-[11.5px] uppercase tracking-[0.2em] text-brand-600">
                 Bem-vindo(a) à sua área exclusiva
               </p>
-              <h1 className="mt-1 font-display text-2xl font-extrabold text-white">{servidor.nome}</h1>
+              <h1 className="mt-1 font-display text-2xl font-extrabold text-ink-950">{servidor.nome}</h1>
               <p className="mt-1 text-[13px] text-slate-700">
                 {servidor.cargo ?? "cargo não informado"} · {servidor.lotacao ?? "lotação não informada"}
               </p>
               <p className="mt-2 text-[12px] text-slate-600">
-                Matrícula interna {servidor.id} · CPF {formatarCpf(servidor.cpf)} · Situação{" "}
-                {servidor.situacao}
+                Registro {servidor.id} · CPF {formatarCpf(servidor.cpf)} · Situação {servidor.situacao}
               </p>
             </div>
           </div>
@@ -241,7 +241,7 @@ export function PortalServidor() {
             <button
               type="button"
               onClick={() => window.print()}
-              className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-2.5 text-[12.5px] font-semibold text-white transition hover:border-brand-500/50 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-2.5 text-[12.5px] font-semibold text-ink-950 transition hover:border-brand-500/50 hover:text-ink-950"
             >
               <Icon name="file" className="h-4 w-4" />
               Imprimir meu extrato
@@ -249,7 +249,7 @@ export function PortalServidor() {
             <button
               type="button"
               onClick={sair}
-              className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-2.5 text-[12.5px] font-semibold text-white transition hover:border-red-400/40 hover:text-red-400"
+              className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-2.5 text-[12.5px] font-semibold text-ink-950 transition hover:border-red-400/40 hover:text-red-400"
             >
               <Icon name="lock" className="h-4 w-4" />
               Sair
@@ -261,9 +261,9 @@ export function PortalServidor() {
           {[
             {
               label: "Tempo de serviço",
-              valor: tempo ? `${tempo.anos} anos e ${tempo.meses} meses` : "aguardando DI",
-              detalhe: servidor.di ? `ingresso em ${formatarDataBR(servidor.di)}` : "DI não informada",
-              tom: "text-white",
+              valor: tempo ? `${tempo.anos} anos e ${tempo.meses} meses` : "aguardando ATS",
+              detalhe: tempo ? "estimado pelo 1º quinquênio" : "sem quinquênio lançado",
+              tom: "text-ink-950",
             },
             {
               label: "ATS acumulado",
@@ -286,7 +286,7 @@ export function PortalServidor() {
               label: "Idade",
               valor: anos ? `${anos} anos` : "não informada",
               detalhe: `nascimento ${formatarDataBR(servidor.dtnasc)}`,
-              tom: "text-white",
+              tom: "text-ink-950",
             },
           ].map((card) => (
             <div key={card.label} className="rounded-2xl border border-slate-200 bg-white p-4">
@@ -303,7 +303,7 @@ export function PortalServidor() {
       <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="glass-soft rounded-3xl p-5">
           <div className="flex items-center justify-between">
-            <p className="font-display text-[15px] font-bold text-white">
+            <p className="font-display text-[15px] font-bold text-ink-950">
               Minhas vantagens · ATS (quinquênios)
             </p>
             <span className="rounded-full border border-slate-200 px-3 py-1 text-[11px] text-slate-700">
@@ -318,7 +318,7 @@ export function PortalServidor() {
                   <p className="text-[11.5px] uppercase tracking-[0.16em] text-brand-600">
                     Ciclo atual do {ultimo.tipo}º quinquênio
                   </p>
-                  <p className="mt-1 font-display text-xl font-extrabold text-white">
+                  <p className="mt-1 font-display text-xl font-extrabold text-ink-950">
                     Próximo em {formatarDataLonga(resumo.proximaProjetada)}
                   </p>
                   <p className="mt-1 text-[12px] text-slate-700">
@@ -346,7 +346,7 @@ export function PortalServidor() {
             {quinquenios.map((item) => (
               <li key={item.id} className="rounded-xl border border-slate-200 bg-white p-3.5">
                 <div className="flex items-center justify-between gap-3">
-                  <p className="font-display text-[13px] font-bold text-white">
+                  <p className="font-display text-[13px] font-bold text-ink-950">
                     {item.tipo}º Quinquênio · vigência {formatarDataBR(item.dataVigencia)}
                   </p>
                   <span className="shrink-0 rounded-full bg-gold-100 px-2 py-0.5 text-[10.5px] font-semibold text-gold-400">
@@ -368,7 +368,7 @@ export function PortalServidor() {
         <div className="space-y-6">
           <div className="glass-soft rounded-3xl border border-jade-400/30 p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="font-display text-[15px] font-bold text-white">Minha evolução funcional</p>
+              <p className="font-display text-[15px] font-bold text-ink-950">Minha evolução funcional</p>
               <span className="rounded-full border border-jade-400/35 bg-jade-100 px-3 py-1 text-[11px] font-semibold text-jade-400">
                 {resumoEv.nivelAtualRotulo}
               </span>
@@ -385,7 +385,7 @@ export function PortalServidor() {
                 <p className="text-[11px] uppercase tracking-[0.14em] text-slate-600">
                   Requisitos da próxima faixa
                 </p>
-                <p className="mt-1 font-display text-[13px] font-bold text-white">
+                <p className="mt-1 font-display text-[13px] font-bold text-ink-950">
                   Nível {resumoEv.proximaRegra.origem} → {resumoEv.proximaRegra.destino}
                 </p>
                 <p className="mt-0.5 text-[11.5px] text-slate-700">
@@ -409,7 +409,7 @@ export function PortalServidor() {
               {evolucoesLista.map((item) => (
                 <li key={item.id} className="rounded-xl border border-slate-200 bg-white p-3">
                   <div className="flex items-center justify-between gap-2">
-                    <p className="font-display text-[12.5px] font-bold text-white">
+                    <p className="font-display text-[12.5px] font-bold text-ink-950">
                       {rotuloTipoEvolucao(item.tipo)} · Nível {item.nivelOrigem} → {item.nivelDestino}
                     </p>
                     <span className="shrink-0 rounded-full bg-jade-200 px-2 py-0.5 text-[10px] font-semibold text-jade-400">
@@ -427,14 +427,14 @@ export function PortalServidor() {
 
           <div className="glass-soft rounded-3xl border border-gold-600/25 p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="font-display text-[15px] font-bold text-white">Minha licença-prêmio</p>
+              <p className="font-display text-[15px] font-bold text-ink-950">Minha licença-prêmio</p>
               <span className="rounded-full border border-gold-600/30 bg-gold-100 px-3 py-1 text-[11px] font-semibold text-gold-400">
                 {resumoLp.saldo} dia(s) de saldo
               </span>
             </div>
             <div className="mt-3 grid grid-cols-4 gap-2 text-center">
               {[
-                { label: "certidões", valor: resumoLp.certidoes, tom: "text-white" },
+                { label: "certidões", valor: resumoLp.certidoes, tom: "text-ink-950" },
                 { label: "gozo", valor: resumoLp.diasGozo, tom: "text-jade-400" },
                 { label: "pecúnia", valor: resumoLp.diasPecunia, tom: "text-gold-600" },
                 { label: "concedidos", valor: resumoLp.diasConcedidos, tom: "text-brand-600" },
@@ -461,7 +461,7 @@ export function PortalServidor() {
                 return (
                   <li key={certidao.id} className="rounded-xl border border-slate-200 bg-white p-3">
                     <div className="flex items-center justify-between gap-2">
-                      <p className="font-display text-[12.5px] font-bold text-white">
+                      <p className="font-display text-[12.5px] font-bold text-ink-950">
                         Certidão {certidao.numero}/{certidao.ano}
                       </p>
                       <span className="rounded-full bg-gold-100 px-2 py-0.5 text-[10px] font-semibold text-gold-400">
@@ -497,14 +497,14 @@ export function PortalServidor() {
           </div>
 
           <div className="glass-soft rounded-3xl p-5">
-            <p className="font-display text-[15px] font-bold text-white">Meus dados cadastrais</p>
+            <p className="font-display text-[15px] font-bold text-ink-950">Meus dados cadastrais</p>
             <dl className="mt-4 grid gap-x-6 gap-y-2.5 sm:grid-cols-2">
               {(
                 [
                   ["Nome", servidor.nome],
                   ["CPF", formatarCpf(servidor.cpf)],
                   ["RGCIN", servidor.rgcin ?? "—"],
-                  ["DI (ingresso)", formatarDataBR(servidor.di)],
+                  ["DI (dígito de identificação)", servidor.di ?? "—"],
                   ["Nascimento", formatarDataBR(servidor.dtnasc)],
                   ["Telefone", formatarTelefone(servidor.tel)],
                   ["E-mail", servidor.email ?? "—"],
@@ -517,7 +517,7 @@ export function PortalServidor() {
               ).map(([rotulo, valor]) => (
                 <div key={rotulo} className="flex items-baseline justify-between gap-3 border-b border-slate-200 pb-2">
                   <dt className="text-[11.5px] text-slate-600">{rotulo}</dt>
-                  <dd className="text-right text-[12.5px] font-medium text-white">{valor}</dd>
+                  <dd className="text-right text-[12.5px] font-medium text-ink-950">{valor}</dd>
                 </div>
               ))}
             </dl>
@@ -525,7 +525,7 @@ export function PortalServidor() {
 
           {(dados.celulasVazias ?? []).length > 0 || (servidor.pendencias ?? []).length > 0 ? (
             <div className="glass-soft rounded-3xl border border-gold-600/25 p-5">
-              <p className="flex items-center gap-2 font-display text-[15px] font-bold text-white">
+              <p className="flex items-center gap-2 font-display text-[15px] font-bold text-ink-950">
                 <Icon name="bell" className="h-4.5 w-4.5 text-gold-600" />
                 Regularize seu cadastro
               </p>
@@ -534,7 +534,7 @@ export function PortalServidor() {
               </p>
               <ul className="mt-3 space-y-1.5">
                 {(servidor.pendencias ?? []).map((pendencia) => (
-                  <li key={pendencia} className="text-[12px] text-white/85">
+                  <li key={pendencia} className="text-[12px] text-ink-950/85">
                     • {pendencia}
                   </li>
                 ))}
@@ -547,7 +547,7 @@ export function PortalServidor() {
             </div>
           ) : (
             <div className="glass-soft rounded-3xl border border-jade-400/30 p-5">
-              <p className="flex items-center gap-2 font-display text-[15px] font-bold text-white">
+              <p className="flex items-center gap-2 font-display text-[15px] font-bold text-ink-950">
                 <Icon name="badge-check" className="h-4.5 w-4.5 text-jade-400" />
                 Cadastro completo
               </p>
@@ -559,12 +559,12 @@ export function PortalServidor() {
           )}
 
           <div className="glass-soft rounded-3xl p-5">
-            <p className="font-display text-[15px] font-bold text-white">Próximos direitos previstos</p>
+            <p className="font-display text-[15px] font-bold text-ink-950">Próximos direitos previstos</p>
             <ul className="mt-3 space-y-2.5">
               <li className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-3.5">
                 <Icon name="clock" className="mt-0.5 h-4 w-4 text-gold-600" />
                 <div>
-                  <p className="text-[12.5px] font-semibold text-white">
+                  <p className="text-[12.5px] font-semibold text-ink-950">
                     {resumo.proximoTipo ?? 1}º Quinquênio (+{(resumo.proximoTipo ?? 1) * PERCENTUAL_POR_QUINQUENIO}% de ATS)
                   </p>
                   <p className="text-[11.5px] text-slate-700">
@@ -576,7 +576,7 @@ export function PortalServidor() {
               <li className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-3.5">
                 <Icon name="plane" className="mt-0.5 h-4 w-4 text-brand-600" />
                 <div>
-                  <p className="text-[12.5px] font-semibold text-white">
+                  <p className="text-[12.5px] font-semibold text-ink-950">
                     Licença-prêmio: {resumo.quantidade * 3} meses adquiridos
                   </p>
                   <p className="text-[11.5px] text-slate-700">
@@ -587,7 +587,7 @@ export function PortalServidor() {
               <li className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-3.5">
                 <Icon name="calendar" className="mt-0.5 h-4 w-4 text-jade-400" />
                 <div>
-                  <p className="text-[12.5px] font-semibold text-white">
+                  <p className="text-[12.5px] font-semibold text-ink-950">
                     Férias: {(tempo?.anos ?? 0) * 30} dias acumulados em carreira
                   </p>
                   <p className="text-[11.5px] text-slate-700">

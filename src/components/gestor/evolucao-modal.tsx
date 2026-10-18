@@ -186,7 +186,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
               <Icon name="graduation" className="h-5 w-5" />
             </span>
             <div>
-              <h2 className="font-display text-xl font-extrabold text-white">Evolução Funcional</h2>
+              <h2 className="font-display text-xl font-extrabold text-ink-950">Evolução Funcional</h2>
               <p className="mt-1 text-[12.5px] text-slate-700">
                 Registro das concessões já publicadas · interstício, pontuação mínima e pesos por fator
                 aplicados pela tabela do quadro
@@ -196,7 +196,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
           <button
             type="button"
             onClick={onFechar}
-            className="grid h-10 w-10 place-items-center rounded-xl border border-brand-700/16 text-white transition hover:bg-brand-50 hover:text-white"
+            className="grid h-10 w-10 place-items-center rounded-xl border border-brand-700/16 text-ink-950 transition hover:bg-brand-50 hover:text-ink-950"
             aria-label="Fechar"
           >
             <Icon name="close" className="h-4.5 w-4.5" />
@@ -215,7 +215,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
                   value={buscaServidor}
                   onChange={(evento) => setBuscaServidor(evento.target.value)}
                   placeholder="Filtrar por nome, CPF ou cargo"
-                  className="mb-2 w-full rounded-xl border border-slate-200 bg-white/70 py-2.5 pl-10 pr-3 text-[13px] text-white outline-none placeholder:text-slate-600 focus:border-brand-500/70"
+                  className="mb-2 w-full rounded-xl border border-slate-200 bg-white/70 py-2.5 pl-10 pr-3 text-[13px] text-ink-950 outline-none placeholder:text-slate-400 focus:border-brand-500/70"
                 />
                 <select
                   value={servidorId}
@@ -225,14 +225,15 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
                     setMensagem(null);
                   }}
                   size={5}
-                  className="w-full rounded-xl border border-slate-200 bg-white/70 p-2 text-[13px] text-white outline-none focus:border-brand-500/70"
+                  className="w-full rounded-xl border border-slate-200 bg-white/70 p-2 text-[13px] text-ink-950 outline-none focus:border-brand-500/70"
                 >
-                  <option value="" className="bg-brand-100">
+                  <option value="" className="bg-white">
                     — selecione o servidor —
                   </option>
                   {listaFiltrada.map((item) => (
-                    <option key={item.id} value={item.id} className="bg-brand-100">
-                      {item.nome} · {item.cargo ?? "sem cargo"} · Nível {item.evolucao.nivelAtual}
+                    <option key={item.id} value={item.id} className="bg-white">
+                      {item.nome}{item.di ? ` · DI ${item.di}` : ""} · {item.cargo ?? "sem cargo"} · Nível{" "}
+                      {item.evolucao.nivelAtual}
                     </option>
                   ))}
                 </select>
@@ -243,7 +244,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
               <div className="rounded-2xl border border-slate-200 bg-white p-4">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <p className="font-display text-[15px] font-bold text-white">{servidorSelecionado.nome}</p>
+                    <p className="font-display text-[15px] font-bold text-ink-950">{servidorSelecionado.nome}</p>
                     <p className="text-[12px] text-slate-700">
                       {servidorSelecionado.cargo ?? "cargo não informado"} · {servidorSelecionado.lotacao ?? "lotação não informada"}
                     </p>
@@ -254,7 +255,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
                 </div>
                 <div className="mt-3 grid grid-cols-3 gap-2 text-center">
                   <div className="rounded-xl border border-slate-200 bg-white p-2.5">
-                    <p className="font-display text-base font-bold text-white">{servidorSelecionado.evolucao.quantidade}</p>
+                    <p className="font-display text-base font-bold text-ink-950">{servidorSelecionado.evolucao.quantidade}</p>
                     <p className="text-[10.5px] text-slate-600">evoluções</p>
                   </div>
                   <div className="rounded-xl border border-slate-200 bg-white p-2.5">
@@ -287,12 +288,12 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
                 <select
                   value={quadro}
                   onChange={(evento) => setQuadro(evento.target.value as QuadroKey)}
-                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-2.5 text-[12.5px] text-white outline-none focus:border-brand-500/70"
+                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-2.5 text-[12.5px] text-ink-950 outline-none focus:border-brand-500/70"
                 >
-                  <option value="docente" className="bg-brand-100">
+                  <option value="docente" className="bg-white">
                     Tabela 1 · Docentes (PEB-I e PEB-II)
                   </option>
-                  <option value="suporte" className="bg-brand-100">
+                  <option value="suporte" className="bg-white">
                     Tabela 2 · Suporte Pedagógico
                   </option>
                 </select>
@@ -305,10 +306,10 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
                 <select
                   value={tipo}
                   onChange={(evento) => setTipo(Number(evento.target.value))}
-                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
+                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-2.5 text-[13px] text-ink-950 outline-none focus:border-brand-500/70"
                 >
                   {TIPOS.map((item) => (
-                    <option key={item.tipo} value={item.tipo} className="bg-brand-100">
+                    <option key={item.tipo} value={item.tipo} className="bg-white">
                       {item.label} · Nível {regraPorTipo(quadro, item.tipo).origem} →{" "}
                       {regraPorTipo(quadro, item.tipo).destino}
                     </option>
@@ -329,7 +330,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
                   type="date"
                   value={dataVigencia}
                   onChange={(evento) => setDataVigencia(evento.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13.5px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
+                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13.5px] text-ink-950 outline-none focus:border-brand-500/70"
                 />
               </label>
 
@@ -341,7 +342,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
                   type="date"
                   value={dataDoe}
                   onChange={(evento) => setDataDoe(evento.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13.5px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
+                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13.5px] text-ink-950 outline-none focus:border-brand-500/70"
                 />
               </label>
 
@@ -368,11 +369,11 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
                       type="date"
                       value={dataProxima}
                       onChange={(evento) => setDataProxima(evento.target.value)}
-                      className="w-full rounded-lg border border-brand-700/16 bg-white/70 px-3 py-2 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
+                      className="w-full rounded-lg border border-brand-700/16 bg-white/70 px-3 py-2 text-[13px] text-ink-950 outline-none focus:border-brand-500/70"
                     />
                   ) : (
                     <div>
-                      <p className="font-display text-[15px] font-bold text-white">
+                      <p className="font-display text-[15px] font-bold text-ink-950">
                         {proximaCalculada ? formatarDataBR(proximaCalculada) : "informe a vigência"}
                       </p>
                       <p className="text-[10.5px] text-slate-700">
@@ -392,7 +393,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
                   onChange={(evento) => setPontuacao(evento.target.value)}
                   inputMode="numeric"
                   placeholder={`${regra.pontuacaoMinima}`}
-                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13px] text-white outline-none placeholder:text-slate-600 focus:border-brand-500/70"
+                  className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13px] text-ink-950 outline-none placeholder:text-slate-400 focus:border-brand-500/70"
                 />
                 {atendePontuacao !== null ? (
                   <span className={`mt-1.5 block text-[11px] ${atendePontuacao ? "text-jade-400" : "text-gold-400"}`}>
@@ -412,7 +413,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
                 value={observacao}
                 onChange={(evento) => setObservacao(evento.target.value)}
                 placeholder="Ex.: DOE nº 2.845, processo 2026/003471, comissão de avaliação"
-                className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13px] text-white outline-none placeholder:text-slate-600 focus:border-brand-500/70"
+                className="w-full rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13px] text-ink-950 outline-none placeholder:text-slate-400 focus:border-brand-500/70"
               />
             </label>
 
@@ -442,7 +443,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
                 <button
                   type="button"
                   onClick={limpar}
-                  className="rounded-xl border border-brand-700/16 px-4 py-3 text-[13px] text-white transition hover:text-white"
+                  className="rounded-xl border border-brand-700/16 px-4 py-3 text-[13px] text-ink-950 transition hover:text-ink-950"
                 >
                   Cancelar edição
                 </button>
@@ -460,7 +461,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
               </p>
               <div className="mt-2.5 grid grid-cols-2 gap-2 text-center">
                 <div className="rounded-xl border border-slate-200 bg-white p-2.5">
-                  <p className="font-display text-base font-bold text-white">{regra.intersticioAnos} anos</p>
+                  <p className="font-display text-base font-bold text-ink-950">{regra.intersticioAnos} anos</p>
                   <p className="text-[10.5px] text-slate-600">interstício</p>
                 </div>
                 <div className="rounded-xl border border-slate-200 bg-white p-2.5">
@@ -528,7 +529,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
 
             <div className="rounded-2xl border border-slate-200 bg-white p-4">
               <div className="flex items-center justify-between">
-                <p className="font-display text-[14px] font-bold text-white">Evoluções registradas</p>
+                <p className="font-display text-[14px] font-bold text-ink-950">Evoluções registradas</p>
                 <span className="rounded-full border border-slate-200 px-2.5 py-1 text-[11px] text-slate-700">
                   {registros.length}/{TIPO_EVOLUCAO_MAX}
                 </span>
@@ -551,7 +552,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
                     <li key={item.id} className="rounded-xl border border-slate-200 bg-white p-3">
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
-                          <p className="font-display text-[12.5px] font-bold text-white">
+                          <p className="font-display text-[12.5px] font-bold text-ink-950">
                             {rotuloTipoEvolucao(item.tipo)} · Nível {item.nivelOrigem} → {item.nivelDestino}
                           </p>
                           <p className="mt-0.5 text-[11px] text-slate-700">
@@ -580,7 +581,7 @@ export function EvolucaoModal({ aberto, servidores, servidorInicial, onFechar, o
                               setObservacao(item.observacao ?? "");
                               setMensagem(null);
                             }}
-                            className="grid h-7 w-7 place-items-center rounded-lg border border-slate-200 text-slate-700 transition hover:border-brand-500/40 hover:text-white"
+                            className="grid h-7 w-7 place-items-center rounded-lg border border-slate-200 text-slate-700 transition hover:border-brand-500/40 hover:text-ink-950"
                             aria-label="Editar"
                           >
                             <Icon name="file" className="h-3 w-3" />

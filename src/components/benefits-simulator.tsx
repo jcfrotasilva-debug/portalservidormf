@@ -79,7 +79,7 @@ export function BenefitsSimulator() {
                 Tempo de serviço
               </label>
               <div className="mt-3 flex items-baseline gap-2">
-                <span className="font-display text-5xl font-extrabold text-white">{years}</span>
+                <span className="font-display text-5xl font-extrabold text-ink-950">{years}</span>
                 <span className="text-lg text-slate-700">{years === 1 ? "ano" : "anos"}</span>
                 <span className="ml-auto rounded-full border border-slate-200 bg-white px-3 py-1 text-[12px] text-slate-700">
                   {result.quinquenios} quinquênio{result.quinquenios === 1 ? "" : "s"} completo
@@ -123,7 +123,7 @@ export function BenefitsSimulator() {
                     const value = Number(event.target.value);
                     setBasePay(Number.isFinite(value) ? Math.max(0, value) : 0);
                   }}
-                  className="w-40 rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 font-display text-[15px] font-bold text-white outline-none transition focus:border-brand-500/70"
+                  className="w-40 rounded-xl border border-brand-700/16 bg-white/70 px-4 py-3 font-display text-[15px] font-bold text-ink-950 outline-none transition focus:border-brand-500/70"
                 />
                 <div className="flex flex-wrap gap-2">
                   {[4200, 8240, 12500].map((value) => (
@@ -131,7 +131,7 @@ export function BenefitsSimulator() {
                       key={value}
                       type="button"
                       onClick={() => setBasePay(value)}
-                      className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-[11.5px] text-slate-700 transition hover:border-brand-500/40 hover:text-white"
+                      className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-[11.5px] text-slate-700 transition hover:border-brand-500/40 hover:text-ink-950"
                     >
                       {formatBRL(value)}
                     </button>
@@ -187,7 +187,7 @@ export function BenefitsSimulator() {
                     <p className="text-[11.5px] uppercase tracking-[0.18em] text-brand-600">
                       Remuneração estimada com vantagens
                     </p>
-                    <p className="mt-1.5 font-display text-3xl font-extrabold text-white">
+                    <p className="mt-1.5 font-display text-3xl font-extrabold text-ink-950">
                       {formatBRL(result.total)}
                     </p>
                   </div>
@@ -231,7 +231,7 @@ export function BenefitsSimulator() {
 
             <div className="relative">
               <div className="flex items-center justify-between">
-                <p className="font-display text-[15.5px] font-bold text-white">
+                <p className="font-display text-[15.5px] font-bold text-ink-950">
                   Linha do tempo da carreira
                 </p>
                 <span className="rounded-full border border-slate-200 px-3 py-1 text-[11.5px] text-slate-700">
@@ -255,7 +255,7 @@ export function BenefitsSimulator() {
                           <span
                             className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${
                               reached
-                                ? "bg-gradient-to-br from-brand-400/30 to-gold-400/22 text-white"
+                                ? "bg-gradient-to-br from-brand-400/30 to-gold-400/22 text-ink-950"
                                 : "bg-white text-slate-600"
                             }`}
                           >
@@ -267,7 +267,7 @@ export function BenefitsSimulator() {
                         </div>
                         <div className="min-w-0">
                           <div className="flex flex-wrap items-center gap-2">
-                            <p className="font-display text-[14.5px] font-bold text-white">
+                            <p className="font-display text-[14.5px] font-bold text-ink-950">
                               {milestone.title}
                             </p>
                             <span

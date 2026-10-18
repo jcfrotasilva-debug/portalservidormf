@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { servidores } from "@/db/schema";
-import { processarPlanilha } from "@/lib/planilha";
+import { chaveServidor, processarPlanilha } from "@/lib/planilha";
 import type { ResultadoProcessamento } from "@/lib/planilha";
 
 export const runtime = "nodejs";
@@ -26,26 +26,34 @@ export async function POST(request: Request) {
       return Response.json({ erro: "Arquivo acima de 12 MB." }, { status: 413 });
     }
 
-    const existentes = await db.select({ cpf: servidores.cpf, nome: servidores.nome, lotacao: servidores.lotacao }).from(servidores);
+    const existentes = await db
+      .select({
+        cpf: servidores.cpf,
+        nome: servidores.nome,
+        lotacao: servidores.lotacao,
+        di: servidores.di,
+      })
+      .from(servidores);
     const cpfs = new Set(existentes.map((item) => item.cpf).filter((cpf): cpf is string => Boolean(cpf)));
     const chaves = new Set(
-      existentes.map(
-        (item) =>
-          `nm:${item.nome
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .toLowerCase()}|${(item.lotacao ?? "")
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/[^A-Za-z0-9]+/g, " ")
-            .trim()
-            .toUpperCase()}`,
+      existentes.map((item) =>
+        chaveServidor({
+          cpf: item.cpf,
+          nome: item.nome,
+          lotacao: item.lotacao,
+          di: item.di,
+        }),
       ),
+    );
+
+    const cpfsSemDi = new Set(
+      existentes.filter((item) => item.cpf && !item.di).map((item) => item.cpf as string),
     );
 
     const resultado: ResultadoProcessamento = await processarPlanilha(buffer, arquivo.name, {
       cpfs,
       chaves,
+      cpfsSemDi,
     });
 
     return Response.json({ ok: true, resultado });

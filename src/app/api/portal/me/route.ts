@@ -3,7 +3,7 @@ import { db } from "@/db";
 import { atsQuinquenios, evolucoes, licencaCertidoes, licencaFruicoes } from "@/db/schema";
 import { resumirEvolucao, resumirAts } from "@/lib/consultas";
 import { resumirLicenca } from "@/lib/licenca";
-import { LABELS_CAMPOS, idade, tempoDeServico, type CampoVazio } from "@/lib/ats";
+import { LABELS_CAMPOS, idade, somarDias, tempoDeServico, type CampoVazio } from "@/lib/ats";
 import { servidorDaSessao } from "@/lib/sessao";
 import type { LinhaPortal } from "@/lib/tipos";
 
@@ -37,6 +37,9 @@ export async function GET() {
       .where(eq(licencaFruicoes.servidorId, servidor.id)),
   ]);
 
+  const primeiroAts = [...quinquenios].sort((a, b) => a.tipo - b.tipo)[0];
+  const baseTempo = primeiroAts ? somarDias(primeiroAts.dataVigencia, -1825) : null;
+
   const camposVazios: CampoVazio[] = (servidor.camposVazios ?? []) as CampoVazio[];
 
   const payload: LinhaPortal = {
@@ -48,7 +51,9 @@ export async function GET() {
     resumo: resumirAts(quinquenios),
     resumoEvolucao: resumirEvolucao(evolucoesLista),
     resumoLicenca: resumirLicenca(certidoesLista, fruicoesLista),
-    tempo: tempoDeServico(servidor.di),
+    // Sem data de admissão na planilha, o tempo é estimado pelo 1º quinquênio
+    // (vigência do 1º ATS − 5 anos). Null quando não há ATS lançado.
+    tempo: tempoDeServico(baseTempo),
     idade: idade(servidor.dtnasc),
     celulasVazias: camposVazios.map((campo) => LABELS_CAMPOS[campo] ?? campo),
   };

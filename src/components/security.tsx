@@ -71,7 +71,7 @@ export function Security() {
                   <span className="grid h-10 w-10 place-items-center rounded-xl bg-jade-200 text-jade-400">
                     <Icon name={control.icon} className="h-4.5 w-4.5" />
                   </span>
-                  <p className="mt-4 font-display text-[14.5px] font-bold text-white">
+                  <p className="mt-4 font-display text-[14.5px] font-bold text-ink-950">
                     {control.title}
                   </p>
                   <p className="mt-2 text-[13px] leading-relaxed text-slate-700">
@@ -88,7 +88,7 @@ export function Security() {
                   className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/5 px-3.5 py-2 text-[12px] text-slate-700"
                 >
                   <Icon name="badge-check" className="h-3.5 w-3.5 text-jade-400" />
-                  <strong className="font-semibold text-white">{badge.label}</strong>
+                  <strong className="font-semibold text-ink-950">{badge.label}</strong>
                   <span className="text-slate-600">{badge.detail}</span>
                 </span>
               ))}
@@ -108,7 +108,7 @@ export function Security() {
                 <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/45 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
                   <div className="glass-soft rounded-2xl px-4 py-3">
-                    <p className="font-display text-lg font-extrabold text-white">100%</p>
+                    <p className="font-display text-lg font-extrabold text-ink-950">100%</p>
                     <p className="text-[11px] text-slate-700">das alterações auditadas</p>
                   </div>
                   <div className="glass-soft rounded-2xl px-4 py-3">
@@ -126,7 +126,7 @@ export function Security() {
                     <Icon name={control.icon} className="h-4.5 w-4.5" />
                   </span>
                   <div>
-                    <p className="font-display text-[14.5px] font-bold text-white">
+                    <p className="font-display text-[14.5px] font-bold text-ink-950">
                       {control.title}
                     </p>
                     <p className="mt-1.5 text-[13px] leading-relaxed text-slate-700">

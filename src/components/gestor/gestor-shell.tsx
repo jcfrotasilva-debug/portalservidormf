@@ -28,7 +28,7 @@ export function GestorShell({
                 <Icon name="layers" className="h-4.5 w-4.5 text-white" />
               </span>
               <span className="leading-tight">
-                <span className="block font-display text-[15.5px] font-extrabold text-white">
+                <span className="block font-display text-[15.5px] font-extrabold text-ink-950">
                   SERVIDOR<span className="text-gold-600">360</span>
                 </span>
                 <span className="block text-[10.5px] uppercase tracking-[0.2em] text-brand-600">
@@ -61,7 +61,7 @@ export function GestorShell({
             </span>
             <Link
               href="/servidor"
-              className="inline-flex items-center gap-2 rounded-full border border-brand-700/16 px-4 py-2.5 text-[12.5px] font-semibold text-white transition hover:border-brand-500/50 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-brand-700/16 px-4 py-2.5 text-[12.5px] font-semibold text-ink-950 transition hover:border-brand-500/50 hover:text-ink-950"
             >
               <Icon name="fingerprint" className="h-4 w-4" />
               Portal do servidor
@@ -77,7 +77,7 @@ export function GestorShell({
       <main className="mx-auto max-w-[1500px] px-5 py-8 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="font-display text-[26px] font-extrabold tracking-tight text-white sm:text-3xl">
+            <h1 className="font-display text-[26px] font-extrabold tracking-tight text-ink-950 sm:text-3xl">
               {titulo}
             </h1>
             <p className="mt-1.5 max-w-2xl text-[13.5px] text-slate-700">{descricao}</p>

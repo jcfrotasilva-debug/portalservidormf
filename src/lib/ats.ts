@@ -95,11 +95,11 @@ export function formatarTelefone(tel: string | null | undefined): string {
   return tel;
 }
 
-/** Tempo de serviço em anos/meses/dias a partir da data de ingresso. */
-export function tempoDeServico(di: string | null | undefined) {
-  if (!di) return null;
+/** Tempo de serviço em anos/meses/dias a partir de uma data base informada. */
+export function tempoDeServico(dataBase: string | null | undefined) {
+  if (!dataBase) return null;
   const hoje = hojeISO();
-  const dias = diasEntre(di, hoje);
+  const dias = diasEntre(dataBase, hoje);
   if (dias < 0) return { anos: 0, meses: 0, dias: 0, totalDias: 0, negativo: true };
   return {
     anos: Math.floor(dias / 365.25),
@@ -141,7 +141,7 @@ export const LABELS_CAMPOS: Record<string, string> = {
   nome: "Nome",
   cpf: "CPF",
   rgcin: "RGCIN",
-  di: "DI (ingresso)",
+  di: "DI (dígito de identificação)",
   dtnasc: "Data de nascimento",
   tel: "Telefone",
   email: "E-mail",
@@ -154,3 +154,18 @@ export const LABELS_CAMPOS: Record<string, string> = {
 };
 
 export type CampoVazio = keyof typeof LABELS_CAMPOS;
+
+/** Normaliza o DI (dígito de identificação do cargo/vínculo). */
+export function normalizarDi(valor: string | null | undefined): string | null {
+  if (valor === null || valor === undefined) return null;
+  const texto = String(valor).trim().toUpperCase().replace(/\s+/g, " ");
+  return texto.length ? texto : null;
+}
+
+/** Rótulo amigável do vínculo: "DI 2 · Efetivo". */
+export function rotuloVinculo(di: string | null | undefined, categoria?: string | null) {
+  const partes: string[] = [];
+  if (di) partes.push(`DI ${di}`);
+  if (categoria) partes.push(categoria);
+  return partes.length ? partes.join(" · ") : "vínculo não identificado";
+}

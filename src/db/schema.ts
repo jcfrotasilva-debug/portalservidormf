@@ -25,7 +25,9 @@ export const servidores = pgTable(
     nomeBusca: text("nome_busca").notNull(),
     cpf: text("cpf"),
     rgcin: text("rgcin"),
-    di: date("di"),
+    /** DI = Dígito de Identificação do cargo/vínculo (ex.: "1", "2", "ACT-F").
+     *  Diferencia vínculos distintos do MESMO servidor. Não é data. */
+    di: text("di"),
     dtnasc: date("dtnasc"),
     tel: text("tel"),
     email: text("email"),
@@ -43,7 +45,8 @@ export const servidores = pgTable(
     atualizadoEm: timestamp("atualizado_em", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [
-    uniqueIndex("servidores_cpf_unico").on(table.cpf),
+    // Mesmo CPF pode ter mais de um vínculo, diferenciado pelo DI.
+    uniqueIndex("servidores_cpf_di_unico").on(table.cpf, table.di),
     index("servidores_nome_busca_idx").on(table.nomeBusca),
   ],
 );
@@ -181,6 +184,13 @@ export const importacoes = pgTable("importacoes", {
   celulasVaziasTratadas: integer("celulas_vazias_tratadas").notNull().default(0),
   criadoPor: text("criado_por").notNull().default("Gestor"),
   criadoEm: timestamp("criado_em", { withTimezone: true }).notNull().defaultNow(),
+});
+
+/** Configurações internas da plataforma (ex.: senha do gestor). */
+export const configs = pgTable("configs", {
+  chave: text("chave").primaryKey(),
+  valor: text("valor").notNull(),
+  atualizadoEm: timestamp("atualizado_em", { withTimezone: true }).notNull().defaultNow(),
 });
 
 /** Trilha de auditoria de tudo que o gestor faz na base. */

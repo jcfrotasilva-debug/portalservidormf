@@ -174,7 +174,7 @@ export function PainelGestor() {
               </span>
               <span className={`font-display text-3xl font-extrabold ${card.tom}`}>{card.valor}</span>
             </div>
-            <p className="mt-3 text-[13px] font-semibold text-white">{card.label}</p>
+            <p className="mt-3 text-[13px] font-semibold text-ink-950">{card.label}</p>
             <p className="mt-0.5 text-[11.5px] text-slate-600">{card.detalhe}</p>
           </div>
         ))}
@@ -191,24 +191,24 @@ export function PainelGestor() {
               value={busca}
               onChange={(evento) => setBusca(evento.target.value)}
               placeholder="Buscar por nome, CPF, cargo ou lotação"
-              className="w-full rounded-xl border border-slate-200 bg-white/70 py-3 pl-10 pr-3 text-[13px] text-white outline-none placeholder:text-slate-600 focus:border-brand-500/70"
+              className="w-full rounded-xl border border-slate-200 bg-white/70 py-3 pl-10 pr-3 text-[13px] text-ink-950 outline-none placeholder:text-slate-400 focus:border-brand-500/70"
             />
           </div>
           <select
             value={situacao}
             onChange={(evento) => setSituacao(evento.target.value)}
-            className="rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13px] text-white outline-none focus:border-brand-500/70"
+            className="rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[13px] text-ink-950 outline-none focus:border-brand-500/70"
           >
-            <option value="todas" className="bg-brand-100">
+            <option value="todas" className="bg-white">
               Todas as situações
             </option>
             {situacoes.map((item) => (
-              <option key={item} value={item} className="bg-brand-100">
+              <option key={item} value={item} className="bg-white">
                 {item}
               </option>
             ))}
           </select>
-          <label className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[12.5px] text-white">
+          <label className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-[12.5px] text-ink-950">
             <input
               type="checkbox"
               checked={somenteAts}
@@ -244,14 +244,14 @@ export function PainelGestor() {
           <button
             type="button"
             onClick={() => setNovoServidor((valor) => !valor)}
-            className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-3 text-[13px] font-semibold text-white transition hover:border-brand-500/50 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-3 text-[13px] font-semibold text-ink-950 transition hover:border-brand-500/50 hover:text-ink-950"
           >
             <Icon name="users" className="h-4 w-4" />
             Cadastro manual
           </button>
           <Link
             href="/gestor/importar"
-            className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-3 text-[13px] font-semibold text-white transition hover:border-brand-500/50 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-3 text-[13px] font-semibold text-ink-950 transition hover:border-brand-500/50 hover:text-ink-950"
           >
             <Icon name="download" className="h-4 w-4" />
             Importar planilha
@@ -264,28 +264,28 @@ export function PainelGestor() {
               <input
                 value={form.nome}
                 onChange={(evento) => setForm({ ...form, nome: evento.target.value })}
-                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
+                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-ink-950 outline-none focus:border-brand-500/70"
               />
             </Campo>
             <Campo rotulo="CPF">
               <input
                 value={form.cpf}
                 onChange={(evento) => setForm({ ...form, cpf: evento.target.value })}
-                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
+                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-ink-950 outline-none focus:border-brand-500/70"
               />
             </Campo>
             <Campo rotulo="Cargo">
               <input
                 value={form.cargo}
                 onChange={(evento) => setForm({ ...form, cargo: evento.target.value })}
-                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
+                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-ink-950 outline-none focus:border-brand-500/70"
               />
             </Campo>
             <Campo rotulo="Lotação">
               <input
                 value={form.lotacao}
                 onChange={(evento) => setForm({ ...form, lotacao: evento.target.value })}
-                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
+                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-ink-950 outline-none focus:border-brand-500/70"
               />
             </Campo>
             <Campo rotulo="DI">
@@ -293,7 +293,7 @@ export function PainelGestor() {
                 type="date"
                 value={form.di}
                 onChange={(evento) => setForm({ ...form, di: evento.target.value })}
-                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
+                className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-ink-950 outline-none focus:border-brand-500/70"
               />
             </Campo>
             <div className="flex items-end">
@@ -313,7 +313,7 @@ export function PainelGestor() {
 
       <div className="glass-soft overflow-hidden rounded-2xl">
         <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
-          <p className="font-display text-[15px] font-bold text-white">
+          <p className="font-display text-[15px] font-bold text-ink-950">
             Cadastro funcional
             <span className="ml-2 text-[12px] font-medium text-slate-600">
               {carregando ? "carregando…" : `${servidores.length} registro(s)`}
@@ -329,7 +329,7 @@ export function PainelGestor() {
             <thead>
               <tr className="bg-white text-[11px] uppercase tracking-[0.14em] text-slate-600">
                 <th className="px-4 py-3">Servidor</th>
-                <th className="px-4 py-3">CPF / RGCIN</th>
+                <th className="px-4 py-3">CPF / DI</th>
                 <th className="px-4 py-3">Cargo / classe</th>
                 <th className="px-4 py-3">Lotação</th>
                 <th className="px-4 py-3">Jornada</th>
@@ -347,12 +347,12 @@ export function PainelGestor() {
                   <td className="px-4 py-3.5">
                     <Link
                       href={`/gestor/servidores/${item.id}`}
-                      className="font-display text-[13.5px] font-bold text-white hover:text-brand-600"
+                      className="font-display text-[13.5px] font-bold text-ink-950 hover:text-brand-600"
                     >
                       {item.nome}
                     </Link>
                     <p className="mt-0.5 text-[11px] text-slate-600">
-                      DI {formatarDataBR(item.di)} · {formatarTelefone(item.tel)}
+                      {item.di ? `DI ${item.di}` : "sem DI"} · {formatarTelefone(item.tel)}
                     </p>
                     {(item.pendencias ?? []).length > 0 ? (
                       <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-gold-100 px-2 py-0.5 text-[10.5px] font-semibold text-gold-400">
@@ -361,22 +361,22 @@ export function PainelGestor() {
                       </span>
                     ) : null}
                   </td>
-                  <td className="px-4 py-3.5 text-[12.5px] text-white">
+                  <td className="px-4 py-3.5 text-[12.5px] text-ink-950">
                     {formatarCpf(item.cpf)}
                     <span className="mt-0.5 block text-[11px] text-slate-600">
                       {item.rgcin ?? "RGCIN não informado"}
                     </span>
                   </td>
-                  <td className="px-4 py-3.5 text-[12.5px] text-white">
+                  <td className="px-4 py-3.5 text-[12.5px] text-ink-950">
                     {item.cargo ?? "—"}
                     <span className="mt-0.5 block text-[11px] text-slate-600">
                       {item.classe ?? "—"} · {item.categoria ?? "—"}
                     </span>
                   </td>
-                  <td className="px-4 py-3.5 text-[12.5px] text-white">
+                  <td className="px-4 py-3.5 text-[12.5px] text-ink-950">
                     {item.lotacao ?? "—"}
                   </td>
-                  <td className="px-4 py-3.5 text-[12.5px] text-white">
+                  <td className="px-4 py-3.5 text-[12.5px] text-ink-950">
                     {item.jornada ?? "—"}
                   </td>
                   <td className="px-4 py-3.5">
@@ -407,7 +407,7 @@ export function PainelGestor() {
                   <td className="px-4 py-3.5">
                     {item.ats.proximaProjetada ? (
                       <>
-                        <p className="text-[12.5px] font-semibold text-white">
+                        <p className="text-[12.5px] font-semibold text-ink-950">
                           {formatarDataBR(item.ats.proximaProjetada)}
                         </p>
                         <p className="text-[11px] text-slate-600">
@@ -421,7 +421,7 @@ export function PainelGestor() {
                     )}
                   </td>
                   <td className="px-4 py-3.5">
-                    <p className="text-[12.5px] font-semibold text-white">
+                    <p className="text-[12.5px] font-semibold text-ink-950">
                       Nível {item.evolucao.nivelAtual}
                     </p>
                     <p className="text-[11px] text-slate-600">
@@ -437,7 +437,7 @@ export function PainelGestor() {
                     ) : null}
                   </td>
                   <td className="px-4 py-3.5">
-                    <p className="text-[12.5px] font-semibold text-white">
+                    <p className="text-[12.5px] font-semibold text-ink-950">
                       {item.licenca.saldo} dia(s) de saldo
                     </p>
                     <p className="text-[11px] text-slate-600">
@@ -473,7 +473,7 @@ export function PainelGestor() {
                       </button>
                       <Link
                         href={`/gestor/servidores/${item.id}`}
-                        className="rounded-lg border border-slate-200 px-3 py-1.5 text-[11.5px] font-semibold text-white transition hover:border-brand-500/40 hover:text-white"
+                        className="rounded-lg border border-slate-200 px-3 py-1.5 text-[11.5px] font-semibold text-ink-950 transition hover:border-brand-500/40 hover:text-ink-950"
                       >
                         Ficha
                       </Link>
@@ -507,7 +507,7 @@ export function PainelGestor() {
 
       <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="glass-soft rounded-2xl p-5">
-          <p className="font-display text-[15px] font-bold text-white">Últimos lançamentos de ATS</p>
+          <p className="font-display text-[15px] font-bold text-ink-950">Últimos lançamentos de ATS</p>
           <ul className="mt-4 space-y-3">
             {atividades.length === 0 ? (
               <li className="text-[12.5px] text-slate-600">
@@ -520,7 +520,7 @@ export function PainelGestor() {
                   <Icon name="clock" className="h-4 w-4" />
                 </span>
                 <div className="min-w-0">
-                  <p className="text-[13px] font-semibold text-white">
+                  <p className="text-[13px] font-semibold text-ink-950">
                     {item.tipo}º Quinquênio · {item.nome}
                   </p>
                   <p className="text-[11.5px] text-slate-700">
@@ -538,14 +538,14 @@ export function PainelGestor() {
 
         <div className="space-y-6">
           <div className="glass-soft rounded-2xl p-5">
-            <p className="font-display text-[15px] font-bold text-white">Cargas de planilha</p>
+            <p className="font-display text-[15px] font-bold text-ink-950">Cargas de planilha</p>
             <ul className="mt-4 space-y-3">
               {importacoes.length === 0 ? (
                 <li className="text-[12.5px] text-slate-600">Nenhuma importação realizada.</li>
               ) : null}
               {importacoes.map((item) => (
                 <li key={item.id} className="rounded-xl border border-slate-200 bg-white p-3.5">
-                  <p className="text-[13px] font-semibold text-white">{item.arquivo}</p>
+                  <p className="text-[13px] font-semibold text-ink-950">{item.arquivo}</p>
                   <p className="mt-1 text-[11.5px] text-slate-700">
                     {item.novas} novos · {item.atualizadas} atualizados · {item.ignoradas} ignorados ·{" "}
                     {item.celulasVaziasTratadas} células vazias tratadas
@@ -559,7 +559,7 @@ export function PainelGestor() {
           </div>
 
           <div className="glass-soft rounded-2xl p-5">
-            <p className="font-display text-[15px] font-bold text-white">
+            <p className="font-display text-[15px] font-bold text-ink-950">
               Pendências para saneamento
             </p>
             <p className="mt-1 text-[12px] text-slate-600">
@@ -568,7 +568,7 @@ export function PainelGestor() {
             <ul className="mt-4 space-y-2.5">
               {comPendencia.slice(0, 6).map((item) => (
                 <li key={item.id} className="rounded-xl border border-gold-600/20 bg-gold-50 p-3.5">
-                  <p className="text-[12.5px] font-semibold text-white">{item.nome}</p>
+                  <p className="text-[12.5px] font-semibold text-ink-950">{item.nome}</p>
                   <ul className="mt-1.5 space-y-1">
                     {(item.pendencias ?? []).slice(0, 3).map((pendencia) => (
                       <li key={pendencia} className="text-[11.5px] text-ink-900/85">

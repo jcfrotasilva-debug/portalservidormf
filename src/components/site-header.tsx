@@ -70,7 +70,7 @@ export function SiteHeader() {
               <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-gold-400 ring-2 ring-ink-950" />
             </span>
             <span className="leading-tight">
-              <span className="block font-display text-[17px] font-extrabold tracking-tight text-white">
+              <span className="block font-display text-[17px] font-extrabold tracking-tight text-ink-950">
                 SERVIDOR<span className="text-gold-600">360</span>
               </span>
               <span className="block text-[11px] uppercase tracking-[0.22em] text-brand-600">
@@ -121,7 +121,7 @@ export function SiteHeader() {
             onClick={() => setOpen((value) => !value)}
             aria-label="Abrir menu"
             aria-expanded={open}
-            className="grid h-11 w-11 place-items-center rounded-xl border border-brand-700/16 text-white md:hidden"
+            className="grid h-11 w-11 place-items-center rounded-xl border border-brand-700/16 text-ink-950 md:hidden"
           >
             <Icon name={open ? "close" : "menu"} className="h-5 w-5" />
           </button>
@@ -135,7 +135,7 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-xl px-3 py-3 text-sm font-medium text-white transition hover:bg-brand-50"
+                  className="rounded-xl px-3 py-3 text-sm font-medium text-ink-950 transition hover:bg-brand-50"
                 >
                   {item.label}
                 </a>

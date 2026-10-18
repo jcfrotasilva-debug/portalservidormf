@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SERVIDOR 360 · Gestão de Cadastro Funcional e Vantagens Pessoais",
+  title: "SERVIDOR 360 · EE Profa. Marlene Frattini · Gestão de Cadastro Funcional",
   description:
-    "Plataforma de gestão do cadastro de servidores públicos, com área exclusiva para o servidor acompanhar vencimentos, licenças e vantagens adquiridas ao longo da carreira.",
+    "Plataforma de gestão do cadastro funcional dos servidores da EE Profa. Marlene Frattini, com área exclusiva para o servidor acompanhar ATS, evolução funcional e licença-prêmio.",
   keywords: [
     "gestão de servidores",
     "cadastro funcional",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "quinquênio",
   ],
   openGraph: {
-    title: "SERVIDOR 360 · Gestão de cadastro funcional e vantagens pessoais",
+    title: "SERVIDOR 360 · EE Profa. Marlene Frattini",
     description:
       "Dossiê funcional completo, área exclusiva do servidor e painel do gestor em um só sistema.",
     type: "website",

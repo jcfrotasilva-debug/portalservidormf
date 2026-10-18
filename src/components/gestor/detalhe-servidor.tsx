@@ -14,6 +14,8 @@ import {
   formatarDataBR,
   formatarTelefone,
   idade,
+  rotuloVinculo,
+  somarDias,
   tempoDeServico,
 } from "@/lib/ats";
 import { rotuloTipoEvolucao } from "@/lib/evolucao";
@@ -78,7 +80,9 @@ export function DetalheServidor({
     situacao: servidor.situacao,
   });
 
-  const tempo = tempoDeServico(servidor.di);
+  const primeiroAts = [...quinquenios].sort((a, b) => a.tipo - b.tipo)[0];
+  const baseTempo = primeiroAts ? somarDias(primeiroAts.dataVigencia, -1825) : null;
+  const tempo = tempoDeServico(baseTempo);
   const anos = idade(servidor.dtnasc);
   const vazios = (servidor.camposVazios ?? []) as (keyof typeof LABELS_CAMPOS)[];
   const pendentes = servidor.pendencias ?? [];
@@ -135,7 +139,7 @@ export function DetalheServidor({
                 .join("")}
             </span>
             <div>
-              <h1 className="font-display text-2xl font-extrabold text-white">{servidor.nome}</h1>
+              <h1 className="font-display text-2xl font-extrabold text-ink-950">{servidor.nome}</h1>
               <p className="mt-1 text-[13px] text-slate-700">
                 {servidor.cargo ?? "cargo não informado"} · {servidor.lotacao ?? "lotação não informada"}
               </p>
@@ -196,14 +200,14 @@ export function DetalheServidor({
             <button
               type="button"
               onClick={() => setEditar((valor) => !valor)}
-              className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-2.5 text-[13px] font-semibold text-white transition hover:border-brand-500/50 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-2.5 text-[13px] font-semibold text-ink-950 transition hover:border-brand-500/50 hover:text-ink-950"
             >
               <Icon name="file" className="h-4 w-4" />
               {editar ? "Fechar edição" : "Editar cadastro"}
             </button>
             <Link
               href="/gestor"
-              className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-2.5 text-[13px] font-semibold text-white transition hover:border-brand-500/50 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-xl border border-brand-700/16 px-4 py-2.5 text-[13px] font-semibold text-ink-950 transition hover:border-brand-500/50 hover:text-ink-950"
             >
               Voltar
             </Link>
@@ -222,8 +226,8 @@ export function DetalheServidor({
           {[
             {
               label: "Tempo de serviço",
-              valor: tempo ? `${tempo.anos}a ${tempo.meses}m` : "DI não informada",
-              detalhe: servidor.di ? `desde ${formatarDataBR(servidor.di)}` : "—",
+              valor: tempo ? `${tempo.anos}a ${tempo.meses}m` : "sem ATS lançado",
+              detalhe: baseTempo ? `estimado desde ${formatarDataBR(baseTempo)}` : "informe o 1º quinquênio",
             },
             {
               label: "ATS acumulado",
@@ -248,7 +252,7 @@ export function DetalheServidor({
           ].map((card) => (
             <div key={card.label} className="rounded-2xl border border-slate-200 bg-white p-4">
               <p className="text-[11px] uppercase tracking-[0.14em] text-slate-600">{card.label}</p>
-              <p className="mt-1.5 font-display text-[17px] font-extrabold text-white">{card.valor}</p>
+              <p className="mt-1.5 font-display text-[17px] font-extrabold text-ink-950">{card.valor}</p>
               <p className="mt-0.5 text-[11.5px] text-slate-600">{card.detalhe}</p>
             </div>
           ))}
@@ -263,7 +267,7 @@ export function DetalheServidor({
 
       {pendentes.length || vazios.length ? (
         <div className="glass-soft rounded-3xl border border-gold-600/25 p-5">
-          <p className="flex items-center gap-2 font-display text-[15px] font-bold text-white">
+          <p className="flex items-center gap-2 font-display text-[15px] font-bold text-ink-950">
             <Icon name="bell" className="h-4.5 w-4.5 text-gold-600" />
             Pendências herdadas da planilha
           </p>
@@ -304,7 +308,7 @@ export function DetalheServidor({
                   ["nome", "Nome completo", "text"],
                   ["cpf", "CPF", "text"],
                   ["rgcin", "RGCIN", "text"],
-                  ["di", "DI (ingresso)", "date"],
+                  ["di", "DI (dígito de identificação)", "text"],
                   ["dtnasc", "Data de nascimento", "date"],
                   ["tel", "Telefone", "text"],
                   ["email", "E-mail", "text"],
@@ -323,7 +327,7 @@ export function DetalheServidor({
                     type={tipo}
                     value={form[campo]}
                     onChange={(evento) => setForm({ ...form, [campo]: evento.target.value })}
-                    className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none [color-scheme:dark] focus:border-brand-500/70"
+                    className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-ink-950 outline-none focus:border-brand-500/70"
                   />
                 </label>
               ))}
@@ -334,10 +338,10 @@ export function DetalheServidor({
                 <select
                   value={form.situacao}
                   onChange={(evento) => setForm({ ...form, situacao: evento.target.value })}
-                  className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-white outline-none focus:border-brand-500/70"
+                  className="w-full rounded-lg border border-slate-200 bg-white/70 px-3 py-2.5 text-[13px] text-ink-950 outline-none focus:border-brand-500/70"
                 >
                   {SITUACOES.map((item) => (
-                    <option key={item} value={item} className="bg-brand-100">
+                    <option key={item} value={item} className="bg-white">
                       {item}
                     </option>
                   ))}
@@ -350,7 +354,7 @@ export function DetalheServidor({
                 [
                   ["CPF", formatarCpf(servidor.cpf)],
                   ["RGCIN", servidor.rgcin ?? "—"],
-                  ["DI (ingresso)", formatarDataBR(servidor.di)],
+                  ["DI (dígito de identificação)", servidor.di ?? "—"],
                   ["Data de nascimento", formatarDataBR(servidor.dtnasc)],
                   ["Telefone", formatarTelefone(servidor.tel)],
                   ["E-mail", servidor.email ?? "—"],
@@ -364,7 +368,7 @@ export function DetalheServidor({
               ).map(([rotulo, valor]) => (
                 <div key={rotulo} className="flex items-baseline justify-between gap-3 border-b border-slate-200 pb-2">
                   <dt className="text-[11.5px] text-slate-600">{rotulo}</dt>
-                  <dd className="text-right text-[12.5px] font-medium text-white">{valor}</dd>
+                  <dd className="text-right text-[12.5px] font-medium text-ink-950">{valor}</dd>
                 </div>
               ))}
             </dl>
@@ -374,7 +378,7 @@ export function DetalheServidor({
         <div className="space-y-6">
           <div className="glass-soft rounded-3xl p-5">
             <div className="flex items-center justify-between">
-              <p className="font-display text-[15px] font-bold text-white">
+              <p className="font-display text-[15px] font-bold text-ink-950">
                 ATS · quinquênios ({quinquenios.length}/10)
               </p>
               <button
@@ -395,7 +399,7 @@ export function DetalheServidor({
               {quinquenios.map((item) => (
                 <li key={item.id} className="rounded-xl border border-slate-200 bg-white p-3.5">
                   <div className="flex items-center justify-between gap-3">
-                    <p className="font-display text-[13px] font-bold text-white">
+                    <p className="font-display text-[13px] font-bold text-ink-950">
                       {item.tipo}º Quinquênio
                     </p>
                     <span className="rounded-full bg-gold-100 px-2 py-0.5 text-[10.5px] font-semibold text-gold-400">
@@ -415,7 +419,7 @@ export function DetalheServidor({
 
           <div className="glass-soft rounded-3xl border border-jade-400/30 p-5">
             <div className="flex items-center justify-between">
-              <p className="font-display text-[15px] font-bold text-white">
+              <p className="font-display text-[15px] font-bold text-ink-950">
                 Evolução funcional · {resumoEvolucao.nivelAtualRotulo}
               </p>
               <button
@@ -449,7 +453,7 @@ export function DetalheServidor({
               {evolucoes.map((item) => (
                 <li key={item.id} className="rounded-xl border border-slate-200 bg-white p-3.5">
                   <div className="flex items-center justify-between gap-3">
-                    <p className="font-display text-[13px] font-bold text-white">
+                    <p className="font-display text-[13px] font-bold text-ink-950">
                       {rotuloTipoEvolucao(item.tipo)} · Nível {item.nivelOrigem} → {item.nivelDestino}
                     </p>
                     <span className="shrink-0 rounded-full bg-jade-200 px-2 py-0.5 text-[10.5px] font-semibold text-jade-400">
@@ -470,7 +474,7 @@ export function DetalheServidor({
 
           <div className="glass-soft rounded-3xl border border-gold-600/25 p-5">
             <div className="flex items-center justify-between">
-              <p className="font-display text-[15px] font-bold text-white">Licença-prêmio</p>
+              <p className="font-display text-[15px] font-bold text-ink-950">Licença-prêmio</p>
               <button
                 type="button"
                 onClick={() => setModalLicenca(true)}
@@ -506,7 +510,7 @@ export function DetalheServidor({
                 return (
                   <li key={certidao.id} className="rounded-xl border border-slate-200 bg-white p-3">
                     <div className="flex items-center justify-between gap-2">
-                      <p className="font-display text-[12.5px] font-bold text-white">
+                      <p className="font-display text-[12.5px] font-bold text-ink-950">
                         Certidão {certidao.numero}/{certidao.ano}
                       </p>
                       <span className="rounded-full bg-gold-100 px-2 py-0.5 text-[10.5px] font-semibold text-gold-400">
@@ -527,11 +531,11 @@ export function DetalheServidor({
           </div>
 
           <div className="glass-soft rounded-3xl p-5">
-            <p className="font-display text-[15px] font-bold text-white">Trilha de auditoria</p>
+            <p className="font-display text-[15px] font-bold text-ink-950">Trilha de auditoria</p>
             <ul className="mt-4 space-y-3">
               {[...historico, ...historicoAts].slice(0, 10).map((item) => (
                 <li key={`${item.id}-${item.criadoEm}`} className="border-l-2 border-brand-500/35 pl-3.5">
-                  <p className="text-[12.5px] font-semibold text-white">{item.acao}</p>
+                  <p className="text-[12.5px] font-semibold text-ink-950">{item.acao}</p>
                   {item.detalhe ? (
                     <p className="mt-0.5 text-[11.5px] leading-relaxed text-slate-700">{item.detalhe}</p>
                   ) : null}

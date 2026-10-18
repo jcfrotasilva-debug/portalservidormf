@@ -1,16 +1,17 @@
 import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
-import { gestorAutenticado, gestorProtegido } from "@/lib/sessao";
+import { gestorAutenticado } from "@/lib/sessao";
 
 export const dynamic = "force-dynamic";
 
 /**
  * Protege todo o painel do gestor.
- * Requer GESTOR_SENHA configurada nas variáveis de ambiente; sem ela, o painel
- * permanece aberto (não recomendado em produção).
+ * Exige sessão válida: a senha vem de GESTOR_SENHA ou do hash gravado no
+ * banco (criado/trocado em /acesso-gestor). Fora do modo acesso-livre local,
+ * o painel nunca abre sem senha.
  */
 export default async function GestorLayout({ children }: { children: ReactNode }) {
-  if (gestorProtegido() && !(await gestorAutenticado())) {
+  if (!(await gestorAutenticado())) {
     redirect("/acesso-gestor");
   }
   return <>{children}</>;
